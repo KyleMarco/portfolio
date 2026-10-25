@@ -30,10 +30,23 @@ body {
 }
 
 button,
+a,
+[role='button'],
 input,
+input[type='button'],
+input[type='submit'],
+input[type='reset'],
 textarea,
 select {
   font: inherit;
+  cursor: pointer;
+}
+
+button:disabled,
+input:disabled,
+select:disabled,
+textarea:disabled {
+  cursor: not-allowed;
 }
 
 #root {
