@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import type { AppDispatch, RootState } from '../../app/store'
 import {
@@ -71,7 +72,8 @@ function ProductPagination({
             aria-current={page === pageNumber ? 'page' : undefined}
             aria-label={`Page ${pageNumber}`}
             className={[
-              'relative -ml-px inline-flex h-9 min-w-9 items-center justify-center border px-3 text-sm font-medium transition focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-blue-600',
+              'relative -ml-px h-9 min-w-9 items-center justify-center border px-3 text-sm font-medium transition focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-blue-600',
+              pageNumber === page ? 'inline-flex' : 'hidden sm:inline-flex',
               page === pageNumber
                 ? 'z-10 border-blue-600 bg-blue-600 text-white'
                 : 'border-slate-300 bg-white text-slate-900 hover:bg-slate-100',
@@ -109,6 +111,10 @@ export default function ShopPage() {
   const [filter, setFilter] = useState<FilterValue>('all')
   const [currentPage, setCurrentPage] = useState(1)
   const [selectedQuantities, setSelectedQuantities] = useState<Record<string, number>>({})
+  const [isCartOpen, setIsCartOpen] = useState(false)
+  const cartTriggerRef = useRef<HTMLButtonElement>(null)
+  const cartCloseRef = useRef<HTMLButtonElement>(null)
+  const cartDialogRef = useRef<HTMLElement>(null)
 
   const { addToCartMutation, clearCartMutation } = useCartMutations()
   const { data: catalogData = [], isLoading, isError } = useCartCatalog()
@@ -163,6 +169,59 @@ export default function ShopPage() {
     (sum, item) => sum + (item.discountedPrice ?? item.price) * item.cartQuantity,
     0,
   )
+
+  useEffect(() => {
+    if (!isCartOpen) {
+      return
+    }
+
+    const previousOverflow = document.body.style.overflow
+    const cartTrigger = cartTriggerRef.current
+    document.body.style.overflow = 'hidden'
+    cartCloseRef.current?.focus()
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsCartOpen(false)
+        return
+      }
+
+      if (event.key !== 'Tab') {
+        return
+      }
+
+      const focusableElements = cartDialogRef.current?.querySelectorAll<HTMLElement>(
+        'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      )
+      const firstElement = focusableElements?.[0]
+      const lastElement = focusableElements?.[focusableElements.length - 1]
+
+      if (!firstElement || !lastElement) {
+        event.preventDefault()
+      } else if (!cartDialogRef.current?.contains(document.activeElement)) {
+        event.preventDefault()
+        if (event.shiftKey) {
+          lastElement.focus()
+        } else {
+          firstElement.focus()
+        }
+      } else if (event.shiftKey && document.activeElement === firstElement) {
+        event.preventDefault()
+        lastElement.focus()
+      } else if (!event.shiftKey && document.activeElement === lastElement) {
+        event.preventDefault()
+        firstElement.focus()
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      document.body.style.overflow = previousOverflow
+      window.removeEventListener('keydown', handleKeyDown)
+      cartTrigger?.focus()
+    }
+  }, [isCartOpen])
 
   const handleQuantityChange = (itemId: string, value: string) => {
     const quantity = Number(value)
@@ -273,7 +332,7 @@ export default function ShopPage() {
         ))}
       </div>
 
-      <div className="grid min-w-0 gap-4 sm:gap-6 xl:grid-cols-[1.6fr_0.9fr]">
+      <div className="grid min-w-0 gap-4 sm:gap-6">
         <section className="grid min-w-0 gap-4 md:grid-cols-2 sm:gap-5">
           <ProductPagination
             page={page}
@@ -393,20 +452,94 @@ export default function ShopPage() {
           />
         </section>
 
-        <aside className="min-w-0 rounded-3xl border border-slate-200 bg-white p-4 shadow-xl shadow-slate-900/5 sm:p-6">
-          <div className="mb-5 flex items-center justify-between gap-3">
-            <h2 className="font-serif text-2xl font-semibold text-slate-900">Cart</h2>
-            {cartProducts.length > 0 && (
-              <button
-                type="button"
-                onClick={() => void handleClearCart()}
-                className="text-sm font-medium text-slate-600 transition hover:text-slate-900"
-              >
-                Clear all
-              </button>
-            )}
-          </div>
+      </div>
 
+      <button
+        ref={cartTriggerRef}
+        type="button"
+        onClick={() => setIsCartOpen(true)}
+        aria-label={`Open cart, ${totalItems} ${totalItems === 1 ? 'item' : 'items'}`}
+        aria-haspopup="dialog"
+        aria-expanded={isCartOpen}
+        className="fixed bottom-5 right-5 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-blue-700 text-white shadow-xl shadow-blue-950/25 transition hover:bg-blue-800 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-700 sm:bottom-8 sm:right-8 sm:h-16 sm:w-16"
+      >
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" className="h-7 w-7">
+          <path
+            d="M3 4h2l2.2 11.1a2 2 0 0 0 2 1.6h8.9a2 2 0 0 0 2-1.6L22 8H6"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1.8"
+          />
+          <circle cx="10" cy="20" r="1" fill="currentColor" />
+          <circle cx="18" cy="20" r="1" fill="currentColor" />
+        </svg>
+        {totalItems > 0 && (
+          <span className="absolute -right-1 -top-1 flex h-6 min-w-6 items-center justify-center rounded-full bg-rose-600 px-1 text-xs font-bold text-white ring-2 ring-white">
+            {totalItems}
+          </span>
+        )}
+      </button>
+
+      {isCartOpen &&
+        createPortal(
+          <div className="fixed inset-0 z-50 flex justify-end">
+            <button
+              type="button"
+              onClick={() => setIsCartOpen(false)}
+              aria-label="Close cart"
+              tabIndex={-1}
+              className="absolute inset-0 h-full w-full cursor-default bg-slate-950/50"
+            />
+            <aside
+              ref={cartDialogRef}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="cart-dialog-title"
+              className="relative z-10 flex h-full w-full max-w-xl flex-col bg-white shadow-2xl"
+            >
+              <div className="flex items-center justify-between gap-3 border-b border-slate-200 p-4 sm:p-6">
+                <div>
+                  <h2
+                    id="cart-dialog-title"
+                    className="font-serif text-2xl font-semibold text-slate-900"
+                  >
+                    Cart
+                  </h2>
+                  <p className="mt-1 text-sm text-slate-600">
+                    {totalItems} {totalItems === 1 ? 'item' : 'items'}
+                  </p>
+                </div>
+                <div className="flex items-center gap-4">
+                  {cartProducts.length > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => void handleClearCart()}
+                      className="text-sm font-medium text-slate-600 transition hover:text-slate-900"
+                    >
+                      Clear all
+                    </button>
+                  )}
+                  <button
+                    ref={cartCloseRef}
+                    type="button"
+                    onClick={() => setIsCartOpen(false)}
+                    aria-label="Close cart"
+                    className="flex h-10 w-10 items-center justify-center rounded-full text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-blue-600"
+                  >
+                    <svg aria-hidden="true" viewBox="0 0 20 20" fill="none" className="h-5 w-5">
+                      <path
+                        d="m5 5 10 10M15 5 5 15"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeWidth="1.75"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <div className="min-h-0 flex-1 overflow-y-auto p-4 sm:p-6">
           {cartProducts.length === 0 ? (
             <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-6 text-center text-slate-600">
               Your cart is empty.
@@ -510,8 +643,11 @@ export default function ShopPage() {
               </span>
             </div>
           </div>
-        </aside>
-      </div>
+              </div>
+            </aside>
+          </div>,
+          document.body,
+        )}
     </main>
   )
 }

@@ -77,6 +77,12 @@ npm run build
 npm run lint
 ```
 
+### Run unit tests
+
+```bash
+npm test
+```
+
 ### Preview the production build
 
 ```bash

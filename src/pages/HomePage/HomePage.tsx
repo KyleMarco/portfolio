@@ -319,7 +319,7 @@ export default function HomePage() {
                           current === experience.company ? null : experience.company,
                         )
                       }
-                      className="w-full rounded-2xl text-left transition hover:bg-slate-50/80 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-slate-900"
+                      className="w-full rounded-2xl text-left transition-all duration-200 hover:bg-slate-50/80 p-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-slate-900"
                     >
                       <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-start">
                         <div>
