@@ -37,28 +37,55 @@ export const cartApi = {
       const catalog = carts.flatMap((cart) =>
         (cart.products ?? []).map((product, productIndex) => {
           const productId = product.id ?? cart.id * 1000 + productIndex
+          const cartProductId = `${cart.id}-${productId}`
           const name = product.title ?? `Cart product ${productId}`
           const productPrice = Number(product.price ?? product.total ?? 0)
           const price = Number.isFinite(productPrice) && productPrice > 0 ? productPrice : 49
+          const discountPercentage = Number(product.discountPercentage)
+          const hasDiscountPercentage =
+            Number.isFinite(discountPercentage) &&
+            discountPercentage > 0 &&
+            discountPercentage <= 100
+          const productDiscountedPrice = Number(product.discountedPrice)
+          const discountedPrice =
+            Number.isFinite(productDiscountedPrice) && productDiscountedPrice >= 0
+              ? productDiscountedPrice
+              : hasDiscountPercentage
+                ? price * (1 - discountPercentage / 100)
+                : undefined
+          const effectiveDiscountPercentage =
+            hasDiscountPercentage
+              ? discountPercentage
+              : discountedPrice !== undefined && discountedPrice < price
+                ? ((price - discountedPrice) / price) * 100
+                : undefined
+          const responseQuantity = Number(product.quantity)
           const image =
             Array.isArray(product.images) && product.images.length > 0
-              ? product.images[0]
+                ? product.images[0]
               : product.thumbnail ??
                 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=80'
 
           return {
-            id: productId,
+            id: cartProductId,
+            productId,
             name,
             price,
+            discountedPrice,
+            discountPercentage: effectiveDiscountPercentage,
             category: 'Cart Products',
             description: `${name} is a product loaded from the DummyJSON carts API.`,
             available: true,
             image,
+            quantity:
+              Number.isFinite(responseQuantity) && responseQuantity >= 0
+                ? Math.floor(responseQuantity)
+                : 0,
           } satisfies CatalogItem
         }),
       )
 
-      return catalog
+      return [...new Map(catalog.map((product) => [product.id, product])).values()]
     } catch (error) {
       console.warn('DummyJSON carts API unavailable, returning an empty catalog.', error)
       return []

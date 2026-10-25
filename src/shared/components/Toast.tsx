@@ -82,15 +82,15 @@ function ToastViewport({ toasts }: ToastViewportProps) {
 
   const variants: Record<ToastVariant, string> = {
     success:
-      'border-emerald-500/40 bg-emerald-500/15 text-emerald-100 ring-emerald-500/30',
-    error: 'border-rose-500/40 bg-rose-500/15 text-rose-100 ring-rose-500/30',
-    info: 'border-sky-500/40 bg-sky-500/15 text-sky-100 ring-sky-500/30',
+      'border-emerald-700/30 bg-white text-emerald-950 ring-emerald-700/20',
+    error: 'border-rose-700/30 bg-white text-rose-900 ring-rose-700/20',
+    info: 'border-slate-300 bg-white text-slate-900 ring-slate-900/10',
   }
 
   const iconStyles: Record<ToastVariant, string> = {
-    success: 'bg-emerald-500 text-slate-950',
-    error: 'bg-rose-500 text-slate-950',
-    info: 'bg-sky-500 text-slate-950',
+    success: 'bg-emerald-600 text-white',
+    error: 'bg-rose-700 text-white',
+    info: 'bg-slate-900 text-white',
   }
 
   const symbols: Record<ToastVariant, string> = {
@@ -106,7 +106,7 @@ function ToastViewport({ toasts }: ToastViewportProps) {
           key={toast.id}
           role="status"
           aria-live="polite"
-          className={`pointer-events-auto flex items-center gap-3 rounded-2xl border px-4 py-3 text-sm font-medium shadow-xl shadow-slate-950/30 ring-1 backdrop-blur-sm ${variants[toast.variant]}`}
+          className={`pointer-events-auto flex items-center gap-3 rounded-2xl border px-4 py-3 text-sm font-medium shadow-xl shadow-slate-900/10 ring-1 backdrop-blur-sm ${variants[toast.variant]}`}
         >
           <span
             className={`flex h-6 w-6 items-center justify-center rounded-full text-base font-bold ${iconStyles[toast.variant]}`}

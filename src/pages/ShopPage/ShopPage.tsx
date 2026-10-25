@@ -15,13 +15,100 @@ import { Button } from '../../shared/components/Button'
 import { useToast } from '../../shared/components/Toast'
 
 type FilterValue = 'all' | 'available' | 'unavailable'
+const ITEMS_PER_PAGE = 10
+
+type ProductPaginationProps = {
+  page: number
+  totalPages: number
+  totalProducts: number
+  onPageChange: (page: number) => void
+  position: 'top' | 'bottom'
+}
+
+function ProductPagination({
+  page,
+  totalPages,
+  totalProducts,
+  onPageChange,
+  position,
+}: ProductPaginationProps) {
+  if (totalPages <= 1) {
+    return null
+  }
+
+  return (
+    <nav
+      aria-label={`Product pages ${position}`}
+      className="flex w-full min-w-0 flex-col items-center justify-between gap-3 sm:flex-row md:col-span-2"
+    >
+      <p className="text-center text-sm text-slate-600 sm:text-left">
+        Showing {(page - 1) * ITEMS_PER_PAGE + 1}–
+        {Math.min(page * ITEMS_PER_PAGE, totalProducts)} of {totalProducts} products
+      </p>
+      <div className="inline-flex max-w-full items-center rounded-md shadow-sm">
+        <button
+          type="button"
+          onClick={() => onPageChange(page - 1)}
+          disabled={page === 1}
+          aria-label="Previous page"
+          className="relative inline-flex h-9 w-9 items-center justify-center rounded-l-md border border-slate-300 bg-white text-slate-900 transition hover:bg-slate-100 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-blue-600 disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          <svg aria-hidden="true" viewBox="0 0 20 20" fill="none" className="h-4 w-4">
+            <path
+              d="m12.5 4.5-5 5.5 5 5.5"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="1.75"
+            />
+          </svg>
+        </button>
+        {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
+          <button
+            key={pageNumber}
+            type="button"
+            onClick={() => onPageChange(pageNumber)}
+            aria-current={page === pageNumber ? 'page' : undefined}
+            aria-label={`Page ${pageNumber}`}
+            className={[
+              'relative -ml-px inline-flex h-9 min-w-9 items-center justify-center border px-3 text-sm font-medium transition focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-blue-600',
+              page === pageNumber
+                ? 'z-10 border-blue-600 bg-blue-600 text-white'
+                : 'border-slate-300 bg-white text-slate-900 hover:bg-slate-100',
+            ].join(' ')}
+          >
+            {pageNumber}
+          </button>
+        ))}
+        <button
+          type="button"
+          onClick={() => onPageChange(page + 1)}
+          disabled={page === totalPages}
+          aria-label="Next page"
+          className="relative -ml-px inline-flex h-9 w-9 items-center justify-center rounded-r-md border border-slate-300 bg-white text-slate-900 transition hover:bg-slate-100 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-blue-600 disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          <svg aria-hidden="true" viewBox="0 0 20 20" fill="none" className="h-4 w-4">
+            <path
+              d="m7.5 4.5 5 5.5-5 5.5"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="1.75"
+            />
+          </svg>
+        </button>
+      </div>
+    </nav>
+  )
+}
 
 export default function ShopPage() {
   const dispatch = useDispatch<AppDispatch>()
   const cartItems = useSelector((state: RootState) => state.cart.items)
   const { success } = useToast()
   const [filter, setFilter] = useState<FilterValue>('all')
-  const [selectedQuantities, setSelectedQuantities] = useState<Record<number, number>>({})
+  const [currentPage, setCurrentPage] = useState(1)
+  const [selectedQuantities, setSelectedQuantities] = useState<Record<string, number>>({})
 
   const { addToCartMutation, clearCartMutation } = useCartMutations()
   const { data: catalogData = [], isLoading, isError } = useCartCatalog()
@@ -46,6 +133,13 @@ export default function ShopPage() {
     })
   }, [filter, products])
 
+  const totalPages = Math.max(1, Math.ceil(visibleProducts.length / ITEMS_PER_PAGE))
+  const page = Math.min(currentPage, totalPages)
+  const paginatedProducts = visibleProducts.slice(
+    (page - 1) * ITEMS_PER_PAGE,
+    page * ITEMS_PER_PAGE,
+  )
+
   const cartProducts = useMemo(
     () =>
       cartItems.flatMap((line) => {
@@ -55,18 +149,22 @@ export default function ShopPage() {
           return []
         }
 
-        return [{ ...item, quantity: line.quantity }]
+        return [{ ...item, cartQuantity: line.quantity }]
       }),
     [cartItems, products],
   )
 
-  const totalItems = cartProducts.reduce((sum, item) => sum + item.quantity, 0)
+  const totalItems = cartProducts.reduce((sum, item) => sum + item.cartQuantity, 0)
   const totalPrice = cartProducts.reduce(
-    (sum, item) => sum + item.price * item.quantity,
+    (sum, item) => sum + item.price * item.cartQuantity,
+    0,
+  )
+  const discountedTotal = cartProducts.reduce(
+    (sum, item) => sum + (item.discountedPrice ?? item.price) * item.cartQuantity,
     0,
   )
 
-  const handleQuantityChange = (itemId: number, value: string) => {
+  const handleQuantityChange = (itemId: string, value: string) => {
     const quantity = Number(value)
     setSelectedQuantities((current) => ({
       ...current,
@@ -74,19 +172,26 @@ export default function ShopPage() {
     }))
   }
 
-  const handleAddToCart = async (itemId: number) => {
+  const handleAddToCart = async (itemId: string) => {
     const product = products.find((item) => item.id === itemId)
 
     if (!product || !product.available) {
       return
     }
 
-    const quantity = selectedQuantities[itemId] ?? 1
+    const currentQuantity =
+      cartItems.find((item) => item.itemId === itemId)?.quantity ?? 0
+    const remainingQuantity = Math.max(product.quantity - currentQuantity, 0)
+    const quantity = Math.min(selectedQuantities[itemId] ?? 1, remainingQuantity)
+
+    if (quantity <= 0) {
+      return
+    }
 
     try {
       await addToCartMutation.mutateAsync({
         userId: 1,
-        products: [{ id: itemId, quantity }],
+        products: [{ id: product.productId, quantity }],
       })
 
       dispatch(addToCart({ itemId, quantity }))
@@ -109,32 +214,36 @@ export default function ShopPage() {
   }
 
   return (
-    <main className="mx-auto max-w-7xl px-5 py-10 sm:px-6 lg:px-8">
-      <header className="mb-8 rounded-3xl border border-slate-700 bg-slate-900/80 p-8 shadow-2xl shadow-slate-950/30">
+    <main className="mx-auto max-w-7xl px-3 py-6 sm:px-6 sm:py-10 lg:px-8">
+      <header className="mb-6 rounded-3xl border border-white/10 bg-[#0f172a] p-4 text-white shadow-2xl shadow-slate-900/10 sm:mb-8 sm:rounded-[2rem] sm:p-8">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <p className="mb-2 text-xs font-bold uppercase tracking-[0.25em] text-sky-400">
+            <p className="mb-2 text-xs font-bold uppercase tracking-[0.25em] text-blue-300">
               Product catalog
             </p>
-            <h1 className="text-3xl font-bold text-white sm:text-4xl">
+            <h1 className="font-serif text-2xl font-medium leading-tight sm:text-4xl">
               Shop available products
             </h1>
           </div>
 
-          <div className="rounded-2xl border border-sky-500/30 bg-sky-500/10 px-4 py-3 text-sm text-sky-100">
-            {totalItems} items in cart • ${totalPrice.toFixed(2)}
+          <div className="w-fit max-w-full break-words rounded-2xl border border-blue-300/25 bg-blue-300/10 px-4 py-3 text-sm text-blue-100">
+            {totalItems} items in cart •{' '}
+            {discountedTotal < totalPrice && (
+              <span className="mr-1 line-through">${totalPrice.toFixed(2)}</span>
+            )}
+            <span>${discountedTotal.toFixed(2)}</span>
           </div>
         </div>
       </header>
 
       {isLoading && (
-        <div className="mb-6 rounded-2xl border border-slate-700 bg-slate-900/80 p-4 text-slate-300">
+        <div className="mb-6 rounded-2xl border border-slate-200 bg-white p-4 text-slate-700">
           Loading products...
         </div>
       )}
 
       {isError && (
-        <div className="mb-6 rounded-2xl border border-rose-500/40 bg-rose-500/10 p-4 text-rose-200">
+        <div className="mb-6 rounded-2xl border border-rose-700/30 bg-rose-100 p-4 text-rose-900">
           Unable to load the product catalog.
         </div>
       )}
@@ -144,12 +253,15 @@ export default function ShopPage() {
           <button
             key={option}
             type="button"
-            onClick={() => setFilter(option)}
+            onClick={() => {
+              setFilter(option)
+              setCurrentPage(1)
+            }}
             className={[
               'rounded-full border px-4 py-2 text-sm font-medium transition',
               filter === option
-                ? 'border-sky-400 bg-sky-500 text-slate-950'
-                : 'border-slate-700 bg-slate-900 text-slate-200 hover:bg-slate-800',
+                ? 'border-blue-600 bg-blue-600 text-white'
+                : 'border-slate-300 bg-white text-slate-900 hover:bg-slate-50',
             ].join(' ')}
           >
             {option === 'all'
@@ -161,61 +273,93 @@ export default function ShopPage() {
         ))}
       </div>
 
-      <div className="grid gap-6 xl:grid-cols-[1.6fr_0.9fr]">
-        <section className="grid gap-5 md:grid-cols-2">
-          {visibleProducts.map((item) => {
-            const quantity = selectedQuantities[item.id] ?? 1
+      <div className="grid min-w-0 gap-4 sm:gap-6 xl:grid-cols-[1.6fr_0.9fr]">
+        <section className="grid min-w-0 gap-4 md:grid-cols-2 sm:gap-5">
+          <ProductPagination
+            page={page}
+            totalPages={totalPages}
+            totalProducts={visibleProducts.length}
+            onPageChange={setCurrentPage}
+            position="top"
+          />
+          {paginatedProducts.map((item) => {
+            const cartQuantity =
+              cartItems.find((cartItem) => cartItem.itemId === item.id)?.quantity ?? 0
+            const remainingQuantity = Math.max(item.quantity - cartQuantity, 0)
+            const quantity = Math.min(
+              selectedQuantities[item.id] ?? 1,
+              Math.max(remainingQuantity, 1),
+            )
+            const hasDiscount =
+              item.discountedPrice !== undefined && item.discountedPrice < item.price
 
             return (
               <article
                 key={item.id}
-                className="overflow-hidden rounded-3xl border border-slate-700 bg-slate-900/80 shadow-lg shadow-slate-950/20"
+                className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-lg shadow-slate-900/5"
               >
-                <div className="relative">
+                <div className="group relative overflow-hidden">
                   <img
                     src={item.image}
                     alt={item.name}
-                    className="h-56 w-full object-cover"
+                    className="h-56 w-full object-cover transition-transform duration-500 ease-out group-hover:scale-110 motion-reduce:transition-none"
                   />
                   <span
                     className={[
                       'absolute right-3 top-3 rounded-full px-2.5 py-1 text-xs font-semibold',
                       item.available
-                        ? 'bg-emerald-500/20 text-emerald-300 ring-1 ring-emerald-500/40'
-                        : 'bg-amber-500/20 text-amber-200 ring-1 ring-amber-500/40',
+                        ? 'bg-emerald-100 text-emerald-900 ring-1 ring-emerald-700/30'
+                        : 'bg-amber-100 text-amber-900 ring-1 ring-amber-700/30',
                     ].join(' ')}
                   >
                     {item.available ? 'Available' : 'Unavailable'}
                   </span>
                 </div>
 
-                <div className="space-y-4 p-5">
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <p className="text-xs uppercase tracking-[0.2em] text-slate-400">
+                <div className="space-y-4 p-4 sm:p-5">
+                  <div className="flex flex-col items-start gap-2 sm:flex-row sm:justify-between sm:gap-3">
+                    <div className="min-w-0">
+                      <p className="text-xs uppercase tracking-[0.2em] text-slate-500">
                         {item.category}
                       </p>
-                      <h2 className="mt-2 text-2xl font-semibold text-white">
+                      <h2 className="mt-2 break-words text-xl font-semibold text-slate-900 sm:text-2xl">
                         {item.name}
                       </h2>
                     </div>
-                    <span className="text-lg font-bold text-sky-300">
-                      ${item.price}
-                    </span>
+                    <div className="flex flex-wrap items-center gap-x-2 sm:flex-col sm:items-end">
+                      <div className="flex items-center gap-2">
+                        {hasDiscount && (
+                          <del className="text-sm text-slate-500">
+                            ${item.price.toFixed(2)}
+                          </del>
+                        )}
+                        <span className="text-lg font-bold text-blue-700">
+                          ${(item.discountedPrice ?? item.price).toFixed(2)}
+                        </span>
+                      </div>
+                      {hasDiscount && item.discountPercentage !== undefined && (
+                        <span className="text-xs font-semibold text-emerald-800">
+                          {item.discountPercentage.toFixed(2).replace(/\.?0+$/, '')}% off
+                        </span>
+                      )}
+                    </div>
                   </div>
 
-                  <p className="text-sm leading-6 text-slate-300">{item.description}</p>
+                  <p className="text-sm leading-6 text-slate-700">{item.description}</p>
 
-                  <div className="flex items-center gap-3 pt-2">
-                    <label className="flex items-center gap-2 text-sm text-slate-300">
+                  <div className="flex flex-col items-stretch gap-3 pt-2 sm:flex-row sm:items-center">
+                    <label className="flex items-center gap-2 text-sm text-slate-700">
                       Qty
                       <select
                         value={quantity}
                         onChange={(event) => handleQuantityChange(item.id, event.target.value)}
-                        className="rounded-lg border border-slate-700 bg-slate-950 px-2 py-1.5 text-slate-100 focus:border-sky-400"
-                        disabled={!item.available}
+                        className="rounded-lg border border-slate-300 bg-white px-2 py-1.5 text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
+                        disabled={!item.available || remainingQuantity === 0}
                       >
-                        {Array.from({ length: 5 }, (_, index) => index + 1).map((value) => (
+                        {Array.from(
+                          { length: Math.max(remainingQuantity, 1) },
+                          (_, index) => index + 1,
+                        ).map((value) => (
                           <option key={value} value={value}>
                             {value}
                           </option>
@@ -226,26 +370,37 @@ export default function ShopPage() {
                     <Button
                       onClick={() => void handleAddToCart(item.id)}
                       variant="primary"
-                      disabled={!item.available}
-                      className="flex-1"
+                      disabled={!item.available || remainingQuantity === 0}
+                      className="w-full sm:flex-1"
                     >
-                      {item.available ? 'Add to cart' : 'Unavailable'}
+                      {!item.available
+                        ? 'Unavailable'
+                        : remainingQuantity === 0
+                          ? 'Maximum reached'
+                          : 'Add to cart'}
                     </Button>
                   </div>
                 </div>
               </article>
             )
           })}
+          <ProductPagination
+            page={page}
+            totalPages={totalPages}
+            totalProducts={visibleProducts.length}
+            onPageChange={setCurrentPage}
+            position="bottom"
+          />
         </section>
 
-        <aside className="rounded-3xl border border-slate-700 bg-slate-900/80 p-6 shadow-xl shadow-slate-950/20">
+        <aside className="min-w-0 rounded-3xl border border-slate-200 bg-white p-4 shadow-xl shadow-slate-900/5 sm:p-6">
           <div className="mb-5 flex items-center justify-between gap-3">
-            <h2 className="text-2xl font-semibold text-white">Cart</h2>
+            <h2 className="font-serif text-2xl font-semibold text-slate-900">Cart</h2>
             {cartProducts.length > 0 && (
               <button
                 type="button"
                 onClick={() => void handleClearCart()}
-                className="text-sm font-medium text-slate-300 transition hover:text-white"
+                className="text-sm font-medium text-slate-600 transition hover:text-slate-900"
               >
                 Clear all
               </button>
@@ -253,7 +408,7 @@ export default function ShopPage() {
           </div>
 
           {cartProducts.length === 0 ? (
-            <div className="rounded-2xl border border-dashed border-slate-700 bg-slate-950/40 p-6 text-center text-slate-400">
+            <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-6 text-center text-slate-600">
               Your cart is empty.
             </div>
           ) : (
@@ -261,7 +416,7 @@ export default function ShopPage() {
               {cartProducts.map((item) => (
                 <li
                   key={item.id}
-                  className="flex gap-3 rounded-2xl border border-slate-700 bg-slate-950/40 p-3"
+                  className="flex gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-3"
                 >
                   <img
                     src={item.image}
@@ -271,20 +426,20 @@ export default function ShopPage() {
 
                   <div className="min-w-0 flex-1">
                     <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <p className="font-medium text-white">{item.name}</p>
-                        <p className="text-sm text-slate-400">${item.price} each</p>
+                      <div className="min-w-0">
+                        <p className="break-words font-medium text-slate-900">{item.name}</p>
+                        <p className="text-sm text-slate-600">${item.price} each</p>
                       </div>
                       <button
                         type="button"
                         onClick={() => dispatch(removeFromCart(item.id))}
-                        className="text-xs font-medium text-rose-300 hover:text-rose-200"
+                        className="text-xs font-medium text-rose-700 hover:text-rose-900"
                       >
                         Remove
                       </button>
                     </div>
 
-                    <div className="mt-3 flex items-center justify-between gap-3">
+                    <div className="mt-3 flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:justify-between">
                       <div className="flex items-center gap-2">
                         <button
                           type="button"
@@ -292,16 +447,16 @@ export default function ShopPage() {
                             dispatch(
                               updateCartQuantity({
                                 itemId: item.id,
-                                quantity: Math.max(item.quantity - 1, 0),
+                                quantity: Math.max(item.cartQuantity - 1, 0),
                               }),
                             )
                           }
-                          className="h-8 w-8 rounded-full border border-slate-600 bg-slate-800 text-lg text-slate-200 hover:border-slate-500"
+                          className="h-8 w-8 rounded-full border border-slate-300 bg-slate-100 text-lg text-slate-900 hover:border-slate-400 focus-visible:outline-2 focus-visible:outline-blue-600"
                         >
                           −
                         </button>
-                        <span className="min-w-8 text-center text-sm font-semibold text-white">
-                          {item.quantity}
+                        <span className="min-w-8 text-center text-sm font-semibold text-slate-900">
+                          {item.cartQuantity}
                         </span>
                         <button
                           type="button"
@@ -309,18 +464,27 @@ export default function ShopPage() {
                             dispatch(
                               updateCartQuantity({
                                 itemId: item.id,
-                                quantity: item.quantity + 1,
+                                quantity: item.cartQuantity + 1,
                               }),
                             )
                           }
-                          className="h-8 w-8 rounded-full border border-slate-600 bg-slate-800 text-lg text-slate-200 hover:border-slate-500"
+                          disabled={item.cartQuantity >= item.quantity}
+                          className="h-8 w-8 rounded-full border border-slate-300 bg-slate-100 text-lg text-slate-900 hover:border-slate-400 focus-visible:outline-2 focus-visible:outline-blue-600 disabled:cursor-not-allowed disabled:opacity-50"
                         >
                           +
                         </button>
                       </div>
 
-                      <span className="font-semibold text-sky-300">
-                        ${(item.price * item.quantity).toFixed(2)}
+                      <span className="flex w-full flex-wrap items-center justify-end gap-x-2 font-semibold text-blue-700 sm:w-auto">
+                        {item.discountedPrice !== undefined &&
+                          item.discountedPrice < item.price && (
+                            <del className="text-sm font-normal text-slate-500">
+                              ${(item.price * item.cartQuantity).toFixed(2)}
+                            </del>
+                          )}
+                        <span>
+                          ${((item.discountedPrice ?? item.price) * item.cartQuantity).toFixed(2)}
+                        </span>
                       </span>
                     </div>
                   </div>
@@ -329,14 +493,21 @@ export default function ShopPage() {
             </ul>
           )}
 
-          <div className="mt-6 space-y-3 border-t border-slate-700 pt-5 text-sm text-slate-300">
+          <div className="mt-6 space-y-3 border-t border-slate-200 pt-5 text-sm text-slate-600">
             <div className="flex items-center justify-between">
               <span>Items</span>
               <span>{totalItems}</span>
             </div>
-            <div className="flex items-center justify-between text-lg font-semibold text-white">
+            <div className="flex items-center justify-between text-lg font-semibold text-slate-900">
               <span>Total</span>
-              <span>${totalPrice.toFixed(2)}</span>
+              <span className="flex items-center gap-2">
+                {discountedTotal < totalPrice && (
+                  <del className="text-sm font-normal text-slate-500">
+                    ${totalPrice.toFixed(2)}
+                  </del>
+                )}
+                <span>${discountedTotal.toFixed(2)}</span>
+              </span>
             </div>
           </div>
         </aside>
