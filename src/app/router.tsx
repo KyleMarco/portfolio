@@ -16,7 +16,7 @@ const navClass = ({ isActive }: NavLinkRenderProps) =>
 
 export function AppRouter() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <div className="min-h-screen bg-[#f1f5f9] text-[#0f172a]">
         <header className="border-b border-white/10 bg-[#0f172a] text-white shadow-lg shadow-slate-900/10">
           <nav className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4 sm:px-6 lg:px-8">
