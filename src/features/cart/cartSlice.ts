@@ -53,10 +53,7 @@ const cartSlice = createSlice({
       const existingItem = state.items.find((item) => item.itemId === itemId);
 
       if (existingItem) {
-        existingItem.quantity = Math.min(
-          existingItem.quantity + requestedQuantity,
-          maxQuantity,
-        );
+        existingItem.quantity = Math.min(existingItem.quantity + requestedQuantity, maxQuantity);
         return;
       }
 
@@ -65,10 +62,7 @@ const cartSlice = createSlice({
     removeFromCart: (state, action: PayloadAction<string>) => {
       state.items = state.items.filter((item) => item.itemId !== action.payload);
     },
-    updateCartQuantity: (
-      state,
-      action: PayloadAction<{ itemId: string; quantity: number }>,
-    ) => {
+    updateCartQuantity: (state, action: PayloadAction<{ itemId: string; quantity: number }>) => {
       const { itemId, quantity } = action.payload;
       const existingItem = state.items.find((item) => item.itemId === itemId);
 
@@ -95,7 +89,6 @@ const cartSlice = createSlice({
   },
 });
 
-export const { addToCart, removeFromCart, updateCartQuantity, clearCart } =
-  cartSlice.actions;
+export const { addToCart, removeFromCart, updateCartQuantity, clearCart } = cartSlice.actions;
 
 export default cartSlice.reducer;

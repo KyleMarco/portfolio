@@ -35,9 +35,9 @@ describe('HomePage experience details', () => {
     const focusAreasButton = screen.getByRole('button', { name: 'Focus areas' });
     fireEvent.click(focusAreasButton);
     expect(focusAreasButton.getAttribute('aria-pressed')).toBe('true');
-    expect(
-      screen.getByText(educationTracks[1].content).classList.contains('motion-enter'),
-    ).toBe(true);
+    expect(screen.getByText(educationTracks[1].content).classList.contains('motion-enter')).toBe(
+      true,
+    );
 
     const toolsButton = screen.getByRole('button', {
       name: skillGroups[1].label,

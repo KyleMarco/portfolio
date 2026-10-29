@@ -1,0 +1,14 @@
+node_modules
+.dist
+.vite
+coverage
+dist
+build
+
+# Lockfiles
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Generated assets
+public/*.svg

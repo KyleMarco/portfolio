@@ -35,8 +35,7 @@ export function PopupDialog({
       'button:not([disabled]):not([tabindex="-1"]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
     );
     const firstFocusableElement = focusableElements?.[0];
-    const initialFocus =
-      initialFocusRef?.current ?? firstFocusableElement ?? dialogRef.current;
+    const initialFocus = initialFocusRef?.current ?? firstFocusableElement ?? dialogRef.current;
     initialFocus?.focus();
 
     const handleKeyDown = (event: KeyboardEvent) => {

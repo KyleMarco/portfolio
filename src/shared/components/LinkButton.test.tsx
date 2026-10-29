@@ -25,8 +25,6 @@ describe('LinkButton', () => {
       </MemoryRouter>,
     );
 
-    expect(screen.getByRole('link', { name: 'Go home' }).className).toContain(
-      'bg-blue-600',
-    );
+    expect(screen.getByRole('link', { name: 'Go home' }).className).toContain('bg-blue-600');
   });
 });

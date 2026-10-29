@@ -27,13 +27,11 @@ function SectionHeading({ eyebrow, title }: { eyebrow: string; title: string }) 
 }
 
 export default function HomePage() {
-  const [selectedExperience, setSelectedExperience] = useState<
-    (typeof experiences)[number] | null
-  >(null);
-  const [activeSkillGroup, setActiveSkillGroup] = useState(skillGroups[0].label);
-  const [activeEducationTrack, setActiveEducationTrack] = useState(
-    educationTracks[0].label,
+  const [selectedExperience, setSelectedExperience] = useState<(typeof experiences)[number] | null>(
+    null,
   );
+  const [activeSkillGroup, setActiveSkillGroup] = useState(skillGroups[0].label);
+  const [activeEducationTrack, setActiveEducationTrack] = useState(educationTracks[0].label);
   const [activeInterest, setActiveInterest] = useState(interests[0].id);
   const experienceTriggerRef = useRef<HTMLButtonElement>(null);
   const experienceCloseRef = useRef<HTMLButtonElement>(null);
@@ -44,8 +42,7 @@ export default function HomePage() {
   const selectedSkillGroup =
     skillGroups.find((group) => group.label === activeSkillGroup) ?? skillGroups[0];
   const selectedEducationTrack =
-    educationTracks.find((track) => track.label === activeEducationTrack) ??
-    educationTracks[0];
+    educationTracks.find((track) => track.label === activeEducationTrack) ?? educationTracks[0];
   const selectedInterest =
     interests.find((interest) => interest.id === activeInterest) ?? interests[0];
 
@@ -173,9 +170,7 @@ export default function HomePage() {
                             <h3 className="mt-2 text-xl font-bold tracking-tight text-slate-950 sm:text-2xl">
                               {experience.company}
                             </h3>
-                            <p className="mt-1 font-medium text-slate-600">
-                              {experience.role}
-                            </p>
+                            <p className="mt-1 font-medium text-slate-600">{experience.role}</p>
                             <span className="mt-3 inline-block text-sm font-semibold text-blue-700 group-hover:underline">
                               View experience highlights <span aria-hidden="true">↗</span>
                             </span>
@@ -294,9 +289,7 @@ export default function HomePage() {
                   <h3 className="mb-3 text-xs font-bold uppercase tracking-[0.14em] text-slate-500">
                     Strengths
                   </h3>
-                  <p className="text-sm leading-7 text-slate-700">
-                    {strengths.join(' · ')}
-                  </p>
+                  <p className="text-sm leading-7 text-slate-700">{strengths.join(' · ')}</p>
                 </div>
               </div>
             </section>
@@ -307,9 +300,7 @@ export default function HomePage() {
                 data-interactive-card
                 className="space-y-4 rounded-2xl border border-slate-200 bg-slate-50/70 p-4 sm:p-5"
               >
-                <p className="font-serif text-xl font-medium text-slate-900">
-                  Curious by nature.
-                </p>
+                <p className="font-serif text-xl font-medium text-slate-900">Curious by nature.</p>
                 <div className="flex flex-wrap gap-2">
                   {interests.map((interest) => (
                     <button
@@ -332,9 +323,7 @@ export default function HomePage() {
                   className="motion-enter rounded-2xl border border-slate-200 bg-white p-4"
                 >
                   <div className="mb-2 text-2xl">{selectedInterest.emoji}</div>
-                  <p className="text-sm leading-7 text-slate-700">
-                    {selectedInterest.note}
-                  </p>
+                  <p className="text-sm leading-7 text-slate-700">{selectedInterest.note}</p>
                 </div>
               </div>
             </section>
@@ -375,10 +364,7 @@ export default function HomePage() {
               </p>
               <div className="flex flex-wrap items-center gap-2">
                 <span className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-white/80 px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-sm">
-                  <span
-                    aria-hidden="true"
-                    className="h-1.5 w-1.5 rounded-full bg-blue-600"
-                  />
+                  <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-blue-600" />
                   {selectedExperience.dates}
                 </span>
                 {selectedExperience.location && (
@@ -439,9 +425,7 @@ export default function HomePage() {
                   >
                     Technologies
                   </h3>
-                  <p className="mt-0.5 text-xs text-slate-500">
-                    Tools and technologies used
-                  </p>
+                  <p className="mt-0.5 text-xs text-slate-500">Tools and technologies used</p>
                 </div>
               </div>
               <ul className="mt-6 flex flex-wrap gap-3">

@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "format": "prettier --write .",
-    "format:check": "prettier --check .",
+    "format:check": "prettier --check . --ignore-path .gitignore --ignore-path .prettierignore",
     "lint": "oxlint .",
     "test": "vitest run",
     "preview": "vite preview"

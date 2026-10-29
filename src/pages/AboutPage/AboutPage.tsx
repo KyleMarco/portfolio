@@ -44,9 +44,7 @@ export default function AboutPage() {
   return (
     <main className="mx-auto max-w-5xl px-5 py-12 sm:px-6 lg:px-8">
       <div className="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-2xl shadow-slate-900/5 sm:p-10">
-        <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-blue-700">
-          About
-        </p>
+        <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-blue-700">About</p>
 
         <div className="mt-8 grid gap-4 sm:grid-cols-2">
           {highlights.map((item) => (

@@ -59,8 +59,7 @@ export const experiences = [
     dates: 'September 2017 – April 2021',
     location: 'Cebu City, Philippines',
     accent: 'bg-blue-600',
-    technologies:
-      'ReactJS, Redux, Redux-Thunk, Redux-Saga, Material UI, React Hooks, Jest, VB.NET',
+    technologies: 'ReactJS, Redux, Redux-Thunk, Redux-Saga, Material UI, React Hooks, Jest, VB.NET',
     highlights: [
       'Developed reusable ReactJS pages and UI components with class components, functional components, and React Hooks.',
       'Converted Adobe XD designs into functional ReactJS UI components.',

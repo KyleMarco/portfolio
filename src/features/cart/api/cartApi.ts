@@ -40,8 +40,7 @@ export const cartApi = {
           const cartProductId = `${cart.id}-${productId}`;
           const name = product.title ?? `Cart product ${productId}`;
           const productPrice = Number(product.price ?? product.total ?? 0);
-          const price =
-            Number.isFinite(productPrice) && productPrice > 0 ? productPrice : 49;
+          const price = Number.isFinite(productPrice) && productPrice > 0 ? productPrice : 49;
           const discountPercentage = Number(product.discountPercentage);
           const hasDiscountPercentage =
             Number.isFinite(discountPercentage) &&
@@ -91,13 +90,7 @@ export const cartApi = {
       return [];
     }
   },
-  addToCart: async ({
-    userId,
-    products,
-  }: {
-    userId: number;
-    products: DummyJsonCartProduct[];
-  }) => {
+  addToCart: async ({ userId, products }: { userId: number; products: DummyJsonCartProduct[] }) => {
     const response = await fetch('https://dummyjson.com/carts/add', {
       method: 'POST',
       headers: {

@@ -44,10 +44,7 @@ describe('cart reducer', () => {
   });
 
   it('floors and caps updated quantities, and removes an item when set to zero', () => {
-    const initialState = cartReducer(
-      undefined,
-      addToCart({ itemId: 'item-1', quantity: 2 }),
-    );
+    const initialState = cartReducer(undefined, addToCart({ itemId: 'item-1', quantity: 2 }));
     const flooredState = cartReducer(
       initialState,
       updateCartQuantity({ itemId: 'item-1', quantity: 3.9 }),
@@ -67,10 +64,7 @@ describe('cart reducer', () => {
   });
 
   it('ignores non-finite quantity updates', () => {
-    const initialState = cartReducer(
-      undefined,
-      addToCart({ itemId: 'item-1', quantity: 2 }),
-    );
+    const initialState = cartReducer(undefined, addToCart({ itemId: 'item-1', quantity: 2 }));
     const updatedState = cartReducer(
       initialState,
       updateCartQuantity({ itemId: 'item-1', quantity: Number.NaN }),
@@ -80,10 +74,7 @@ describe('cart reducer', () => {
   });
 
   it('removes an item and clears all cart items', () => {
-    const populatedState = cartReducer(
-      undefined,
-      addToCart({ itemId: 'item-1', quantity: 2 }),
-    );
+    const populatedState = cartReducer(undefined, addToCart({ itemId: 'item-1', quantity: 2 }));
     const removedState = cartReducer(populatedState, removeFromCart('item-1'));
     const clearedState = cartReducer(populatedState, clearCart());
 

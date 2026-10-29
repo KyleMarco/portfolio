@@ -43,8 +43,8 @@ function ProductPagination({
       className="flex w-full min-w-0 flex-col items-center justify-between gap-3 sm:flex-row md:col-span-2"
     >
       <p className="text-center text-sm text-slate-600 sm:text-left">
-        Showing {(page - 1) * ITEMS_PER_PAGE + 1}–
-        {Math.min(page * ITEMS_PER_PAGE, totalProducts)} of {totalProducts} products
+        Showing {(page - 1) * ITEMS_PER_PAGE + 1}–{Math.min(page * ITEMS_PER_PAGE, totalProducts)}{' '}
+        of {totalProducts} products
       </p>
       <div className="inline-flex max-w-full items-center rounded-md shadow-sm">
         <button
@@ -110,9 +110,7 @@ export default function ShopPage() {
   const { success } = useToast();
   const [filter, setFilter] = useState<FilterValue>('all');
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedQuantities, setSelectedQuantities] = useState<Record<string, number>>(
-    {},
-  );
+  const [selectedQuantities, setSelectedQuantities] = useState<Record<string, number>>({});
   const [isCartOpen, setIsCartOpen] = useState(false);
   const cartTriggerRef = useRef<HTMLButtonElement>(null);
   const cartCloseRef = useRef<HTMLButtonElement>(null);
@@ -162,10 +160,7 @@ export default function ShopPage() {
   );
 
   const totalItems = cartProducts.reduce((sum, item) => sum + item.cartQuantity, 0);
-  const totalPrice = cartProducts.reduce(
-    (sum, item) => sum + item.price * item.cartQuantity,
-    0,
-  );
+  const totalPrice = cartProducts.reduce((sum, item) => sum + item.price * item.cartQuantity, 0);
   const discountedTotal = cartProducts.reduce(
     (sum, item) => sum + (item.discountedPrice ?? item.price) * item.cartQuantity,
     0,
@@ -190,8 +185,7 @@ export default function ShopPage() {
       return;
     }
 
-    const currentQuantity =
-      cartItems.find((item) => item.itemId === itemId)?.quantity ?? 0;
+    const currentQuantity = cartItems.find((item) => item.itemId === itemId)?.quantity ?? 0;
     const remainingQuantity = Math.max(product.quantity - currentQuantity, 0);
     const quantity = Math.min(selectedQuantities[itemId] ?? 1, remainingQuantity);
 
@@ -236,8 +230,8 @@ export default function ShopPage() {
               Sample product catalog
             </h1>
             <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-300 sm:text-base">
-              This is a sample page using product and cart data from DummyJSON. No real
-              products are sold and no purchases are processed.
+              This is a sample page using product and cart data from DummyJSON. No real products are
+              sold and no purchases are processed.
             </p>
           </div>
 
@@ -346,9 +340,7 @@ export default function ShopPage() {
                     <div className="flex flex-wrap items-center gap-x-2 sm:flex-col sm:items-end">
                       <div className="flex items-center gap-2">
                         {hasDiscount && (
-                          <del className="text-sm text-slate-500">
-                            ${item.price.toFixed(2)}
-                          </del>
+                          <del className="text-sm text-slate-500">${item.price.toFixed(2)}</del>
                         )}
                         <span className="text-lg font-bold text-blue-700">
                           ${(item.discountedPrice ?? item.price).toFixed(2)}
@@ -369,9 +361,7 @@ export default function ShopPage() {
                       Qty
                       <select
                         value={quantity}
-                        onChange={(event) =>
-                          handleQuantityChange(item.id, event.target.value)
-                        }
+                        onChange={(event) => handleQuantityChange(item.id, event.target.value)}
                         className="rounded-lg border border-slate-300 bg-white px-2 py-1.5 text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
                         disabled={!item.available || remainingQuantity === 0}
                       >
@@ -480,12 +470,7 @@ export default function ShopPage() {
                 aria-label="Close cart"
                 className="flex h-10 w-10 items-center justify-center rounded-full text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-blue-600"
               >
-                <svg
-                  aria-hidden="true"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  className="h-5 w-5"
-                >
+                <svg aria-hidden="true" viewBox="0 0 20 20" fill="none" className="h-5 w-5">
                   <path
                     d="m5 5 10 10M15 5 5 15"
                     stroke="currentColor"
@@ -519,9 +504,7 @@ export default function ShopPage() {
                     <div className="min-w-0 flex-1">
                       <div className="flex items-start justify-between gap-3">
                         <div className="min-w-0">
-                          <p className="break-words font-medium text-slate-900">
-                            {item.name}
-                          </p>
+                          <p className="break-words font-medium text-slate-900">{item.name}</p>
                           <p className="text-sm text-slate-600">${item.price} each</p>
                         </div>
                         <button
@@ -577,10 +560,7 @@ export default function ShopPage() {
                               </del>
                             )}
                           <span>
-                            $
-                            {(
-                              (item.discountedPrice ?? item.price) * item.cartQuantity
-                            ).toFixed(2)}
+                            ${((item.discountedPrice ?? item.price) * item.cartQuantity).toFixed(2)}
                           </span>
                         </span>
                       </div>

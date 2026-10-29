@@ -43,8 +43,6 @@ describe('ToastProvider', () => {
   it('throws when useToast is used outside its provider', () => {
     vi.spyOn(console, 'error').mockImplementation(() => {});
 
-    expect(() => render(<ToastControls />)).toThrow(
-      'useToast must be used within a ToastProvider',
-    );
+    expect(() => render(<ToastControls />)).toThrow('useToast must be used within a ToastProvider');
   });
 });
