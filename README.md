@@ -1,16 +1,14 @@
-# React Storefront Demo
+# Kyle Marco Cabiling — Portfolio
 
-A Vite + React + TypeScript portfolio and storefront application.
+A minimal portfolio website for a Senior Frontend Developer, with an interactive storefront demo.
 
 ## Overview
 
-This project includes:
+The home page presents selected work, professional experience, technical expertise, and contact details. It also includes:
 
-- Redux Toolkit state management for the cart
-- TanStack Query for fetching and caching the product catalog
-- React Router navigation across home, shop, and about pages
-- Reusable UI patterns with dark-mode utility styling
-- Client-side cart interactions and toast feedback
+- A responsive React and TypeScript portfolio
+- An interactive storefront at `/demo` demonstrating catalog and cart behavior
+- An About URL redirect and a not-found route
 
 ## Tech stack
 
@@ -38,25 +36,26 @@ This project includes:
 
 ## Features
 
-### Shop experience
+### Portfolio
+
+- Selected project previews link to the live storefront demo and this repository.
+- Professional experience and technical expertise are sourced from `src/routes/homePageData.ts`.
+- Contact links include email, phone, LinkedIn, and a résumé request by email.
+
+### Storefront demo
 
 - Product catalog rendered from DummyJSON cart data
 - Availability filters: All, Available, and Unavailable
 - Quantity selection before adding products to the cart
 - Cart summary with total items and total price
 - Clear cart action with graceful API fallback handling
-
-### Global state and async data
-
-- Cart state is managed in Redux via a dedicated slice
-- Product catalog data is fetched and cached with TanStack Query
-- Toast notifications provide user feedback for cart actions
+- Redux Toolkit cart state, TanStack Query catalog fetching, and toast feedback
 
 ### Routing
 
-- Home page with quick navigation to shop and about views
-- Shop page for catalog browsing and cart operations
-- About page for app description and overview
+- Portfolio home page with project, about, experience, and contact sections
+- `/demo` storefront page for catalog browsing and cart operations
+- `/about` redirects to the portfolio home page
 - Not found route for unmatched paths
 
 ## Getting started

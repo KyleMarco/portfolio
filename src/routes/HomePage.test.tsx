@@ -1,54 +1,39 @@
-import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
 import HomePage from './HomePage';
-import { educationTracks, experiences, interests, skillGroups } from './homePageData';
+import { experiences, profile, projects } from './homePageData';
+import { MemoryRouter } from 'react-router-dom';
 
 afterEach(cleanup);
 
-describe('HomePage experience details', () => {
-  it('shows experience highlights in a portal only after an experience is selected', () => {
-    render(<HomePage />);
-
-    expect(screen.queryByRole('dialog')).toBeNull();
-    expect(screen.queryByText(experiences[0].highlights[0])).toBeNull();
-
-    const trigger = screen.getByRole('button', {
-      name: `View ${experiences[0].company} experience highlights`,
-    });
-    fireEvent.click(trigger);
-
-    const dialog = screen.getByRole('dialog', { name: experiences[0].company });
-    expect(within(dialog).getByText(experiences[0].highlights[0])).toBeTruthy();
-    expect(within(dialog).getByText(experiences[0].role)).toBeTruthy();
-    expect(within(dialog).getByRole('heading', { name: 'Technologies' })).toBeTruthy();
-    expect(within(dialog).getByText('ReactJS')).toBeTruthy();
-
-    fireEvent.keyDown(window, { key: 'Escape' });
-
-    expect(screen.queryByRole('dialog')).toBeNull();
-    expect(document.activeElement).toBe(trigger);
-  });
-
-  it('updates the education, skill, and interest panels when selected', () => {
-    render(<HomePage />);
-
-    const focusAreasButton = screen.getByRole('button', { name: 'Focus areas' });
-    fireEvent.click(focusAreasButton);
-    expect(focusAreasButton.getAttribute('aria-pressed')).toBe('true');
-    expect(screen.getByText(educationTracks[1].content).classList.contains('motion-enter')).toBe(
-      true,
+describe('HomePage', () => {
+  it('shows the portfolio sections and verified project links', () => {
+    render(
+      <MemoryRouter>
+        <HomePage />
+      </MemoryRouter>,
     );
 
-    const toolsButton = screen.getByRole('button', {
-      name: skillGroups[1].label,
-    });
-    fireEvent.click(toolsButton);
-    expect(toolsButton.getAttribute('aria-pressed')).toBe('true');
-    expect(screen.getByText('Jira')).toBeTruthy();
+    expect(
+      screen.getByRole('heading', { name: `${profile.firstName} ${profile.lastName}` }),
+    ).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Projects' })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Approach' })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Experience' })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Let’s make something thoughtful.' })).toBeTruthy();
 
-    const fitnessButton = screen.getByRole('button', { name: /Fitness/ });
-    fireEvent.click(fitnessButton);
-    expect(fitnessButton.getAttribute('aria-pressed')).toBe('true');
-    expect(screen.getByText(interests[1].note)).toBeTruthy();
+    for (const project of projects) {
+      expect(screen.getByRole('heading', { name: project.title })).toBeTruthy();
+      expect(screen.getByRole('img', { name: project.screenshotAlt })).toBeTruthy();
+      expect(screen.getByRole('link', { name: project.demoLabel }).getAttribute('href')).toBe(
+        project.demoHref,
+      );
+    }
+
+    expect(screen.getAllByRole('link', { name: 'GitHub' })).toHaveLength(projects.length);
+    expect(screen.getByRole('link', { name: 'Request a copy' }).getAttribute('href')).toBe(
+      `mailto:${profile.email}?subject=Request%20for%20resume`,
+    );
+    expect(screen.getByText(experiences[0].company)).toBeTruthy();
   });
 });

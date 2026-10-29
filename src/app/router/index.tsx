@@ -1,30 +1,52 @@
-import type { NavLinkRenderProps } from 'react-router-dom';
-import { BrowserRouter, Navigate, NavLink, Route, Routes } from 'react-router-dom';
-import { AboutPage, HomePage, NotFoundPage, ShopPage } from '../../routes';
-
-const navClass = ({ isActive }: NavLinkRenderProps) =>
-  [
-    'rounded-full px-4 py-2 text-sm font-medium transition',
-    isActive ? 'bg-blue-600 text-white' : 'bg-white/10 text-slate-100 hover:bg-white/20',
-  ].join(' ');
+import { BrowserRouter, Link, Navigate, Route, Routes } from 'react-router-dom';
+import { HomePage, NotFoundPage, ShopPage } from '../../routes';
+import { profile } from '../../routes/homePageData';
 
 export function AppRouter() {
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL}>
-      <div className="min-h-screen bg-[#f1f5f9] text-[#0f172a]">
-        <header className="border-b border-white/10 bg-[#0f172a] text-white shadow-lg shadow-slate-900/10">
-          <nav className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4 sm:px-6 lg:px-8">
-            <div className="flex items-center gap-3">
-              <NavLink to="/" className={navClass}>
-                Home
-              </NavLink>
-              <NavLink to="/demo" className={navClass}>
-                Shop demo
-              </NavLink>
-              <NavLink to="/about" className={navClass}>
+      <div id="top" className="min-h-screen bg-[#fbfaf7] text-stone-950">
+        <header className="sticky top-0 z-10 border-b border-stone-200 bg-[#fbfaf7]">
+          <nav
+            aria-label="Main navigation"
+            className="mx-auto flex max-w-6xl items-center justify-between gap-5 px-5 py-4 sm:px-8 lg:px-10"
+          >
+            <Link
+              to="/"
+              aria-label="Kyle Marco Cabiling, home"
+              className="text-sm font-semibold tracking-[-0.04em] text-stone-950 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950"
+            >
+              KM<span className="text-stone-400">.</span>
+            </Link>
+            <div className="flex items-center gap-4 sm:gap-7">
+              <a
+                href={`${import.meta.env.BASE_URL}#projects`}
+                className="text-sm text-stone-500 transition-colors hover:text-stone-950 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950"
+              >
+                Work
+              </a>
+              <a
+                href={`${import.meta.env.BASE_URL}#about`}
+                className="text-sm text-stone-500 transition-colors hover:text-stone-950 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950"
+              >
                 About
-              </NavLink>
+              </a>
+              <a
+                href={`${import.meta.env.BASE_URL}#experience`}
+                className="text-sm text-stone-500 transition-colors hover:text-stone-950 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950"
+              >
+                Experience
+              </a>
             </div>
+            <a
+              href={`mailto:${profile.email}`}
+              className="hidden border border-stone-300 px-3 py-2 text-xs font-medium text-stone-800 transition-colors hover:border-stone-500 sm:inline-flex"
+            >
+              Get in touch{' '}
+              <span aria-hidden="true" className="ml-2">
+                ↗
+              </span>
+            </a>
           </nav>
         </header>
 
@@ -32,7 +54,7 @@ export function AppRouter() {
           <Route path="/" element={<HomePage />} />
           <Route path="/demo" element={<ShopPage />} />
           <Route path="/shop" element={<Navigate to="/demo" replace />} />
-          <Route path="/about" element={<AboutPage />} />
+          <Route path="/about" element={<Navigate to="/" replace />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>

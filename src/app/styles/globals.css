@@ -4,8 +4,8 @@
   font-family: Inter, 'Segoe UI', Roboto, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color: #0f172a;
-  background: #f1f5f9;
+  color: #1c1917;
+  background: #fbfaf7;
   color-scheme: light;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -18,16 +18,15 @@
 }
 
 html {
-  background: #f1f5f9;
+  scroll-behavior: smooth;
+  background: #fbfaf7;
 }
 
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background:
-    radial-gradient(circle at top, rgba(37, 99, 235, 0.06), transparent 35%),
-    linear-gradient(180deg, #f1f5f9 0%, #f8fafc 100%);
+  background: #fbfaf7;
 }
 
 button,
@@ -62,16 +61,6 @@ li {
   margin-top: 0;
 }
 
-@keyframes page-enter {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
 @keyframes content-enter {
   from {
     opacity: 0;
@@ -94,17 +83,13 @@ li {
   }
 }
 
-main {
-  animation: page-enter 220ms ease-out both;
-}
-
 :where(a, button, [role='button'], select) {
   transition-duration: 180ms;
   transition-timing-function: ease-out;
 }
 
 :where(a, button, [role='button'], select):focus-visible {
-  outline: 2px solid #2563eb;
+  outline: 2px solid #44403c;
   outline-offset: 3px;
 }
 
@@ -128,15 +113,11 @@ main {
 }
 
 @media (hover: hover) {
-  :where(a, button, [role='button'], select):not(:disabled):hover {
-    filter: brightness(1.04);
-  }
-
   [data-interactive-card]:hover,
   [data-interactive-card]:focus-within {
     transform: translateY(-2px);
-    border-color: #bfdbfe;
-    box-shadow: 0 10px 24px rgb(15 23 42 / 8%);
+    border-color: #a8a29e;
+    box-shadow: 0 10px 24px rgb(28 25 23 / 6%);
   }
 
   [data-interactive-card]:active {
@@ -145,10 +126,13 @@ main {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  main,
   .motion-enter,
   .motion-backdrop-enter {
     animation: none;
+  }
+
+  html {
+    scroll-behavior: auto;
   }
 
   :where(a, button, [role='button'], select),

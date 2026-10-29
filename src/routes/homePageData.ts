@@ -11,6 +11,33 @@ export const profile = {
   email: 'kylemarcocabiling@gmail.com',
 };
 
+export const projects = [
+  {
+    title: 'Interactive storefront',
+    category: 'Commerce demo',
+    description:
+      'A responsive storefront with product browsing, availability filters, quantity selection, and a working cart flow.',
+    technologies: ['React', 'TypeScript', 'Redux Toolkit', 'TanStack Query', 'Tailwind CSS'],
+    screenshot: 'images/storefront-demo.png',
+    screenshotAlt: 'Screenshot of the interactive storefront demo',
+    demoHref: '/demo',
+    demoLabel: 'Live demo',
+    sourceHref: 'https://github.com/KyleMarco/portfolio',
+  },
+  {
+    title: 'Portfolio website',
+    category: 'Personal site',
+    description:
+      'A focused portfolio for sharing professional experience, selected work, and ways to get in touch.',
+    technologies: ['React', 'TypeScript', 'Vite', 'Tailwind CSS'],
+    screenshot: 'images/portfolio-home.png',
+    screenshotAlt: 'Screenshot of the portfolio website',
+    demoHref: '/',
+    demoLabel: 'View website',
+    sourceHref: 'https://github.com/KyleMarco/portfolio',
+  },
+] as const;
+
 export const experiences = [
   {
     company: 'KPMG (RG Manabat & Co.)',
