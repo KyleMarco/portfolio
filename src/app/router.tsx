@@ -1,5 +1,5 @@
 import type { NavLinkRenderProps } from 'react-router-dom'
-import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, NavLink, Route, Routes } from 'react-router-dom'
 import HomePage from '../pages/HomePage/HomePage'
 import AboutPage from '../pages/AboutPage/AboutPage'
 import NotFoundPage from '../pages/NotFoundPage/NotFoundPage'
@@ -23,8 +23,8 @@ export function AppRouter() {
               <NavLink to="/" className={navClass}>
                 Home
               </NavLink>
-              <NavLink to="/shop" className={navClass}>
-                Shop
+              <NavLink to="/demo" className={navClass}>
+                Shop demo
               </NavLink>
               <NavLink to="/about" className={navClass}>
                 About
@@ -35,7 +35,8 @@ export function AppRouter() {
 
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/shop" element={<ShopPage />} />
+          <Route path="/demo" element={<ShopPage />} />
+          <Route path="/shop" element={<Navigate to="/demo" replace />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

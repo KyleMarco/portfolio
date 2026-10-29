@@ -228,11 +228,15 @@ export default function ShopPage() {
         <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="mb-2 text-xs font-bold uppercase tracking-[0.25em] text-blue-300">
-              Product catalog
+              Demo only · not a real shop
             </p>
             <h1 className="font-serif text-2xl font-medium leading-tight sm:text-4xl">
-              Shop available products
+              Sample product catalog
             </h1>
+            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-300 sm:text-base">
+              This is a sample page using product and cart data from DummyJSON. No real
+              products are sold and no purchases are processed.
+            </p>
           </div>
 
           <div className="w-fit max-w-full break-words rounded-2xl border border-blue-300/25 bg-blue-300/10 px-4 py-3 text-sm text-blue-100">

@@ -1,25 +1,25 @@
-import { Link } from 'react-router-dom'
+import { LinkButton } from '../../shared/components/LinkButton'
 
 const highlights = [
   {
-    title: 'Storefront demo',
+    title: 'Professional experience',
     description:
-      'Browse a product catalog, adjust quantities, and add items to a cart with a clean shopping flow.',
+      'Explore my frontend development experience across product teams and different stages of my career.',
   },
   {
-    title: 'Global state patterns',
+    title: 'Frontend toolkit',
     description:
-      'Redux Toolkit manages cart and counter state, showing how app-level client logic stays predictable and testable.',
+      'See the languages, frameworks, and tools I use to build responsive and maintainable web interfaces.',
   },
   {
-    title: 'Async data flow',
+    title: 'Education and interests',
     description:
-      'TanStack Query fetches and caches posts so the app can render live demo data without ad hoc effects.',
+      'Learn more about my education, areas of study, and interests beyond frontend development.',
   },
   {
-    title: 'Route-based UI',
+    title: 'Interactive storefront',
     description:
-      'The project is organized as a small multi-page experience with home, shop, about, and detail views.',
+      'The shop page demonstrates product browsing and cart interactions alongside the portfolio.',
   },
 ]
 
@@ -33,12 +33,12 @@ export default function AboutPage() {
           About
         </p>
         <h1 className="font-serif text-3xl font-semibold text-slate-900 sm:text-4xl">
-          React Storefront Demo
+          Kyle Marco Cabiling
         </h1>
         <p className="mt-4 max-w-3xl text-base leading-7 text-slate-700">
-          This project is a lightweight frontend showcase built to demonstrate a practical mix of
-          modern app patterns: route-based pages, Redux-managed cart state, cached API requests, and
-          reusable component-driven UI.
+          I am a frontend developer focused on building thoughtful, maintainable web experiences
+          with React and TypeScript. This portfolio highlights my experience, skills, education,
+          and interests.
         </p>
 
         <div className="mt-8 grid gap-4 sm:grid-cols-2">
@@ -69,18 +69,12 @@ export default function AboutPage() {
         </div>
 
         <div className="mt-8 flex flex-wrap gap-4">
-          <Link
-            to="/"
-            className="rounded-full bg-blue-600 px-5 py-3 text-sm font-bold text-white transition hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-600"
-          >
+          <LinkButton to="/">
             Back home
-          </Link>
-          <Link
-            to="/shop"
-            className="rounded-full border border-slate-300 bg-white px-5 py-3 text-sm font-bold text-slate-800 transition hover:border-slate-400 hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-slate-500"
-          >
-            Visit shop
-          </Link>
+          </LinkButton>
+          <LinkButton to="/demo" variant="secondary">
+            View shop demo
+          </LinkButton>
         </div>
       </div>
     </main>

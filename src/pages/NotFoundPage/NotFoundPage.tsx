@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { LinkButton } from '../../shared/components/LinkButton'
 
 export default function NotFoundPage() {
   return (
@@ -14,12 +14,9 @@ export default function NotFoundPage() {
           The page you requested does not exist.
         </p>
         <div className="mt-8 flex justify-center">
-          <Link
-            to="/"
-            className="rounded-full bg-blue-600 px-5 py-3 text-sm font-bold text-white transition hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-600"
-          >
+          <LinkButton to="/">
             Go home
-          </Link>
+          </LinkButton>
         </div>
       </div>
     </main>
