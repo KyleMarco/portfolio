@@ -23,7 +23,22 @@ const highlights = [
   },
 ]
 
-const stack = ['React 19', 'TypeScript', 'Vite', 'Redux Toolkit', 'TanStack Query', 'React Router']
+const stack = [
+  'React 19',
+  'React DOM',
+  'React Hooks',
+  'React Portals',
+  'TypeScript',
+  'Vite',
+  'Tailwind CSS',
+  'React Router DOM',
+  'Redux Toolkit',
+  'React Redux',
+  'TanStack Query',
+  'Vitest',
+  'Testing Library',
+  'Oxlint',
+]
 
 export default function AboutPage() {
   return (
