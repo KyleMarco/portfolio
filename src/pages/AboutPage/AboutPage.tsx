@@ -47,14 +47,6 @@ export default function AboutPage() {
         <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-blue-700">
           About
         </p>
-        <h1 className="font-serif text-3xl font-semibold text-slate-900 sm:text-4xl">
-          Kyle Marco Cabiling
-        </h1>
-        <p className="mt-4 max-w-3xl text-base leading-7 text-slate-700">
-          I am a frontend developer focused on building thoughtful, maintainable web experiences
-          with React and TypeScript. This portfolio highlights my experience, skills, education,
-          and interests.
-        </p>
 
         <div className="mt-8 grid gap-4 sm:grid-cols-2">
           {highlights.map((item) => (
