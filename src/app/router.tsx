@@ -3,7 +3,6 @@ import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom'
 import HomePage from '../pages/HomePage/HomePage'
 import AboutPage from '../pages/AboutPage/AboutPage'
 import NotFoundPage from '../pages/NotFoundPage/NotFoundPage'
-import PostDetailPage from '../pages/PostDetailPage/PostDetailPage'
 import ShopPage from '../pages/ShopPage/ShopPage'
 
 const navClass = ({ isActive }: NavLinkRenderProps) =>
@@ -38,7 +37,6 @@ export function AppRouter() {
           <Route path="/" element={<HomePage />} />
           <Route path="/shop" element={<ShopPage />} />
           <Route path="/about" element={<AboutPage />} />
-          <Route path="/posts/:id" element={<PostDetailPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
