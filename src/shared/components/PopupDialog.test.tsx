@@ -1,13 +1,13 @@
-import { useCallback, useRef, useState } from 'react'
-import { fireEvent, render, screen } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
-import { PopupDialog } from './PopupDialog'
+import { useCallback, useRef, useState } from 'react';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
+import { PopupDialog } from './PopupDialog';
 
 function DialogExample() {
-  const [isOpen, setIsOpen] = useState(false)
-  const triggerRef = useRef<HTMLButtonElement>(null)
-  const closeRef = useRef<HTMLButtonElement>(null)
-  const closeDialog = useCallback(() => setIsOpen(false), [])
+  const [isOpen, setIsOpen] = useState(false);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const closeDialog = useCallback(() => setIsOpen(false), []);
 
   return (
     <>
@@ -33,35 +33,35 @@ function DialogExample() {
         </PopupDialog>
       )}
     </>
-  )
+  );
 }
 
 describe('PopupDialog', () => {
   it('traps focus, locks page scrolling, and restores focus on Escape', () => {
-    const previousOverflow = document.body.style.overflow
-    document.body.style.overflow = 'scroll'
-    render(<DialogExample />)
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'scroll';
+    render(<DialogExample />);
 
-    const trigger = screen.getByRole('button', { name: 'Open dialog' })
-    fireEvent.click(trigger)
+    const trigger = screen.getByRole('button', { name: 'Open dialog' });
+    fireEvent.click(trigger);
 
-    const dialog = screen.getByRole('dialog', { name: 'Dialog title' })
-    expect(dialog).toBeTruthy()
-    expect(dialog.classList.contains('motion-enter')).toBe(true)
-    expect(dialog.parentElement?.classList.contains('motion-backdrop-enter')).toBe(true)
-    const closeButton = screen.getByRole('button', { name: 'Close' })
-    const lastAction = screen.getByRole('button', { name: 'Last action' })
-    expect(document.body.style.overflow).toBe('hidden')
-    expect(document.activeElement).toBe(closeButton)
+    const dialog = screen.getByRole('dialog', { name: 'Dialog title' });
+    expect(dialog).toBeTruthy();
+    expect(dialog.classList.contains('motion-enter')).toBe(true);
+    expect(dialog.parentElement?.classList.contains('motion-backdrop-enter')).toBe(true);
+    const closeButton = screen.getByRole('button', { name: 'Close' });
+    const lastAction = screen.getByRole('button', { name: 'Last action' });
+    expect(document.body.style.overflow).toBe('hidden');
+    expect(document.activeElement).toBe(closeButton);
 
-    fireEvent.keyDown(window, { key: 'Tab', shiftKey: true })
-    expect(document.activeElement).toBe(lastAction)
+    fireEvent.keyDown(window, { key: 'Tab', shiftKey: true });
+    expect(document.activeElement).toBe(lastAction);
 
-    fireEvent.keyDown(window, { key: 'Escape' })
+    fireEvent.keyDown(window, { key: 'Escape' });
 
-    expect(screen.queryByRole('dialog')).toBeNull()
-    expect(document.activeElement).toBe(trigger)
-    expect(document.body.style.overflow).toBe('scroll')
-    document.body.style.overflow = previousOverflow
-  })
-})
+    expect(screen.queryByRole('dialog')).toBeNull();
+    expect(document.activeElement).toBe(trigger);
+    expect(document.body.style.overflow).toBe('scroll');
+    document.body.style.overflow = previousOverflow;
+  });
+});

@@ -5,43 +5,43 @@ import {
   useMemo,
   useState,
   type ReactNode,
-} from 'react'
+} from 'react';
 
-type ToastVariant = 'success' | 'error' | 'info'
+type ToastVariant = 'success' | 'error' | 'info';
 
 type ToastItem = {
-  id: number
-  message: string
-  variant: ToastVariant
-}
+  id: number;
+  message: string;
+  variant: ToastVariant;
+};
 
 type ToastContextValue = {
-  success: (message: string) => void
-  error: (message: string) => void
-  info: (message: string) => void
-  dismiss: (id: number) => void
-}
+  success: (message: string) => void;
+  error: (message: string) => void;
+  info: (message: string) => void;
+  dismiss: (id: number) => void;
+};
 
-const ToastContext = createContext<ToastContextValue | null>(null)
+const ToastContext = createContext<ToastContextValue | null>(null);
 
 export function ToastProvider({ children }: { children: ReactNode }) {
-  const [toasts, setToasts] = useState<ToastItem[]>([])
+  const [toasts, setToasts] = useState<ToastItem[]>([]);
 
   const dismiss = useCallback((id: number) => {
-    setToasts((current) => current.filter((toast) => toast.id !== id))
-  }, [])
+    setToasts((current) => current.filter((toast) => toast.id !== id));
+  }, []);
 
   const pushToast = useCallback(
     (message: string, variant: ToastVariant) => {
-      const id = Date.now() + Math.random()
-      setToasts((current) => [...current, { id, message, variant }])
+      const id = Date.now() + Math.random();
+      setToasts((current) => [...current, { id, message, variant }]);
 
       window.setTimeout(() => {
-        dismiss(id)
-      }, 2200)
+        dismiss(id);
+      }, 2200);
     },
     [dismiss],
-  )
+  );
 
   const value = useMemo<ToastContextValue>(
     () => ({
@@ -51,53 +51,52 @@ export function ToastProvider({ children }: { children: ReactNode }) {
       dismiss,
     }),
     [dismiss, pushToast],
-  )
+  );
 
   return (
     <ToastContext.Provider value={value}>
       {children}
       <ToastViewport toasts={toasts} />
     </ToastContext.Provider>
-  )
+  );
 }
 
 export function useToast() {
-  const context = useContext(ToastContext)
+  const context = useContext(ToastContext);
 
   if (!context) {
-    throw new Error('useToast must be used within a ToastProvider')
+    throw new Error('useToast must be used within a ToastProvider');
   }
 
-  return context
+  return context;
 }
 
 type ToastViewportProps = {
-  toasts: ToastItem[]
-}
+  toasts: ToastItem[];
+};
 
 function ToastViewport({ toasts }: ToastViewportProps) {
   if (toasts.length === 0) {
-    return null
+    return null;
   }
 
   const variants: Record<ToastVariant, string> = {
-    success:
-      'border-emerald-700/30 bg-white text-emerald-950 ring-emerald-700/20',
+    success: 'border-emerald-700/30 bg-white text-emerald-950 ring-emerald-700/20',
     error: 'border-rose-700/30 bg-white text-rose-900 ring-rose-700/20',
     info: 'border-slate-300 bg-white text-slate-900 ring-slate-900/10',
-  }
+  };
 
   const iconStyles: Record<ToastVariant, string> = {
     success: 'bg-emerald-600 text-white',
     error: 'bg-rose-700 text-white',
     info: 'bg-slate-900 text-white',
-  }
+  };
 
   const symbols: Record<ToastVariant, string> = {
     success: '✓',
     error: '!',
     info: 'i',
-  }
+  };
 
   return (
     <div className="pointer-events-none fixed right-5 top-5 z-50 flex flex-col gap-3">
@@ -117,5 +116,5 @@ function ToastViewport({ toasts }: ToastViewportProps) {
         </div>
       ))}
     </div>
-  )
+  );
 }

@@ -9,7 +9,7 @@ export const profile = {
   tagline: 'UI with intention',
   footerRole: 'Frontend Developer',
   email: 'kylemarcocabiling@gmail.com',
-}
+};
 
 export const experiences = [
   {
@@ -71,7 +71,7 @@ export const experiences = [
       'Helped build two ReactJS projects: one using class components, Redux, and Redux-Thunk, and a proof of concept using hooks, Redux, and Redux-Saga.',
     ],
   },
-]
+];
 
 export const skillGroups = [
   {
@@ -117,7 +117,7 @@ export const skillGroups = [
     ],
   },
   { label: 'AI', skills: ['GitHub Copilot'] },
-]
+];
 
 export const educationTracks = [
   {
@@ -133,7 +133,7 @@ export const educationTracks = [
     label: 'Mindset',
     content: 'Curiosity · Team learning · Systems thinking · Building with purpose',
   },
-]
+];
 
 export const education = [
   {
@@ -145,9 +145,9 @@ export const education = [
     institution: 'Kananga National High School',
     details: 'Completed April 2013 · Kananga, Leyte, Philippines',
   },
-]
+];
 
-export const strengths = ['Team player', 'Deliver results', 'Adaptability']
+export const strengths = ['Team player', 'Deliver results', 'Adaptability'];
 
 export const interests = [
   {
@@ -165,7 +165,7 @@ export const interests = [
     emoji: '🥗',
     note: 'A practical relationship with food: fuel, balance, and habit.',
   },
-]
+];
 
 export const contactCards = [
   {
@@ -183,4 +183,4 @@ export const contactCards = [
     value: 'linkedin.com/in/kylemarcocabiling',
     href: 'https://www.linkedin.com/in/kylemarcocabiling',
   },
-]
+];

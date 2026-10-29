@@ -23,6 +23,16 @@ This project includes:
 - React Router DOM
 - Tailwind CSS
 - Oxlint
+- Prettier
+
+## Coding standards
+
+- Keep TypeScript strict and use explicit types for component props, state, and API data. Avoid `any` and unsafe casts.
+- Use React function components and hooks; keep hooks within the Rules of Hooks.
+- Keep code in its owning layer: app setup in `src/app/`, feature behavior in `src/features/`, route composition in `src/pages/`, and reusable UI in `src/shared/components/`.
+- Prefer semantic, accessible HTML and preserve loading, empty, and error states. Add or update tests for meaningful behavior changes.
+- Use Prettier for consistent formatting: two-space indentation, single quotes, and semicolons. Run `npm run format` to format the project and `npm run format:check` to verify formatting.
+- Run `npm run lint` before submitting changes. Oxlint treats correctness issues as errors and suspicious patterns as warnings. Also run `npm run test` for behavior changes and `npm run build` when changing application code.
 
 ## Features
 

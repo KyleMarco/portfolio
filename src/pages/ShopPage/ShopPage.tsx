@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import type { AppDispatch, RootState } from '../../app/store'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import type { AppDispatch, RootState } from '../../app/store';
 import {
   addToCart,
   clearCart,
@@ -8,23 +8,23 @@ import {
   setCatalogItems,
   updateCartQuantity,
   catalogItems,
-} from '../../features/cart/cartSlice'
-import { useCartCatalog } from '../../features/cart/hooks/useCartCatalog'
-import { useCartMutations } from '../../features/cart/hooks/useCartMutations'
-import { Button } from '../../shared/components/Button'
-import { PopupDialog } from '../../shared/components/PopupDialog'
-import { useToast } from '../../shared/components/Toast'
+} from '../../features/cart/cartSlice';
+import { useCartCatalog } from '../../features/cart/hooks/useCartCatalog';
+import { useCartMutations } from '../../features/cart/hooks/useCartMutations';
+import { Button } from '../../shared/components/Button';
+import { PopupDialog } from '../../shared/components/PopupDialog';
+import { useToast } from '../../shared/components/Toast';
 
-type FilterValue = 'all' | 'available' | 'unavailable'
-const ITEMS_PER_PAGE = 10
+type FilterValue = 'all' | 'available' | 'unavailable';
+const ITEMS_PER_PAGE = 10;
 
 type ProductPaginationProps = {
-  page: number
-  totalPages: number
-  totalProducts: number
-  onPageChange: (page: number) => void
-  position: 'top' | 'bottom'
-}
+  page: number;
+  totalPages: number;
+  totalProducts: number;
+  onPageChange: (page: number) => void;
+  position: 'top' | 'bottom';
+};
 
 function ProductPagination({
   page,
@@ -34,7 +34,7 @@ function ProductPagination({
   position,
 }: ProductPaginationProps) {
   if (totalPages <= 1) {
-    return null
+    return null;
   }
 
   return (
@@ -101,126 +101,128 @@ function ProductPagination({
         </button>
       </div>
     </nav>
-  )
+  );
 }
 
 export default function ShopPage() {
-  const dispatch = useDispatch<AppDispatch>()
-  const cartItems = useSelector((state: RootState) => state.cart.items)
-  const { success } = useToast()
-  const [filter, setFilter] = useState<FilterValue>('all')
-  const [currentPage, setCurrentPage] = useState(1)
-  const [selectedQuantities, setSelectedQuantities] = useState<Record<string, number>>({})
-  const [isCartOpen, setIsCartOpen] = useState(false)
-  const cartTriggerRef = useRef<HTMLButtonElement>(null)
-  const cartCloseRef = useRef<HTMLButtonElement>(null)
+  const dispatch = useDispatch<AppDispatch>();
+  const cartItems = useSelector((state: RootState) => state.cart.items);
+  const { success } = useToast();
+  const [filter, setFilter] = useState<FilterValue>('all');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedQuantities, setSelectedQuantities] = useState<Record<string, number>>(
+    {},
+  );
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const cartTriggerRef = useRef<HTMLButtonElement>(null);
+  const cartCloseRef = useRef<HTMLButtonElement>(null);
 
-  const { addToCartMutation, clearCartMutation } = useCartMutations()
-  const { data: catalogData = [], isLoading, isError } = useCartCatalog()
+  const { addToCartMutation, clearCartMutation } = useCartMutations();
+  const { data: catalogData = [], isLoading, isError } = useCartCatalog();
 
   useEffect(() => {
-    setCatalogItems(catalogData)
-  }, [catalogData])
+    setCatalogItems(catalogData);
+  }, [catalogData]);
 
-  const products = catalogData.length > 0 ? catalogData : catalogItems
+  const products = catalogData.length > 0 ? catalogData : catalogItems;
 
   const visibleProducts = useMemo(() => {
     return products.filter((item) => {
       if (filter === 'available') {
-        return item.available
+        return item.available;
       }
 
       if (filter === 'unavailable') {
-        return !item.available
+        return !item.available;
       }
 
-      return true
-    })
-  }, [filter, products])
+      return true;
+    });
+  }, [filter, products]);
 
-  const totalPages = Math.max(1, Math.ceil(visibleProducts.length / ITEMS_PER_PAGE))
-  const page = Math.min(currentPage, totalPages)
+  const totalPages = Math.max(1, Math.ceil(visibleProducts.length / ITEMS_PER_PAGE));
+  const page = Math.min(currentPage, totalPages);
   const paginatedProducts = visibleProducts.slice(
     (page - 1) * ITEMS_PER_PAGE,
     page * ITEMS_PER_PAGE,
-  )
+  );
 
   const cartProducts = useMemo(
     () =>
       cartItems.flatMap((line) => {
-        const item = products.find((product) => product.id === line.itemId)
+        const item = products.find((product) => product.id === line.itemId);
 
         if (!item) {
-          return []
+          return [];
         }
 
-        return [{ ...item, cartQuantity: line.quantity }]
+        return [{ ...item, cartQuantity: line.quantity }];
       }),
     [cartItems, products],
-  )
+  );
 
-  const totalItems = cartProducts.reduce((sum, item) => sum + item.cartQuantity, 0)
+  const totalItems = cartProducts.reduce((sum, item) => sum + item.cartQuantity, 0);
   const totalPrice = cartProducts.reduce(
     (sum, item) => sum + item.price * item.cartQuantity,
     0,
-  )
+  );
   const discountedTotal = cartProducts.reduce(
     (sum, item) => sum + (item.discountedPrice ?? item.price) * item.cartQuantity,
     0,
-  )
+  );
 
   const closeCart = useCallback(() => {
-    setIsCartOpen(false)
-  }, [])
+    setIsCartOpen(false);
+  }, []);
 
   const handleQuantityChange = (itemId: string, value: string) => {
-    const quantity = Number(value)
+    const quantity = Number(value);
     setSelectedQuantities((current) => ({
       ...current,
       [itemId]: quantity,
-    }))
-  }
+    }));
+  };
 
   const handleAddToCart = async (itemId: string) => {
-    const product = products.find((item) => item.id === itemId)
+    const product = products.find((item) => item.id === itemId);
 
     if (!product || !product.available) {
-      return
+      return;
     }
 
     const currentQuantity =
-      cartItems.find((item) => item.itemId === itemId)?.quantity ?? 0
-    const remainingQuantity = Math.max(product.quantity - currentQuantity, 0)
-    const quantity = Math.min(selectedQuantities[itemId] ?? 1, remainingQuantity)
+      cartItems.find((item) => item.itemId === itemId)?.quantity ?? 0;
+    const remainingQuantity = Math.max(product.quantity - currentQuantity, 0);
+    const quantity = Math.min(selectedQuantities[itemId] ?? 1, remainingQuantity);
 
     if (quantity <= 0) {
-      return
+      return;
     }
 
     try {
       await addToCartMutation.mutateAsync({
         userId: 1,
         products: [{ id: product.productId, quantity }],
-      })
+      });
 
-      dispatch(addToCart({ itemId, quantity }))
-      success(`${product.name} added to cart`)
+      dispatch(addToCart({ itemId, quantity }));
+      success(`${product.name} added to cart`);
     } catch (error) {
-      console.error('Unable to add item to cart via API.', error)
-      dispatch(addToCart({ itemId, quantity }))
-      success(`${product.name} added to cart`)
+      console.error('Unable to add item to cart via API.', error);
+      dispatch(addToCart({ itemId, quantity }));
+      success(`${product.name} added to cart`);
     }
-  }
+  };
 
   const handleClearCart = async () => {
     try {
-      await clearCartMutation.mutateAsync(1)
+      await clearCartMutation.mutateAsync(1);
     } catch (error) {
-      console.warn('Unable to clear the server-side cart.', error)
+      console.warn('Unable to clear the server-side cart.', error);
     } finally {
-      dispatch(clearCart())
+      dispatch(clearCart());
     }
-  }
+  };
 
   return (
     <main className="mx-auto max-w-7xl px-3 py-6 sm:px-6 sm:py-10 lg:px-8">
@@ -268,8 +270,8 @@ export default function ShopPage() {
             type="button"
             aria-pressed={filter === option}
             onClick={() => {
-              setFilter(option)
-              setCurrentPage(1)
+              setFilter(option);
+              setCurrentPage(1);
             }}
             className={[
               'rounded-full border px-4 py-2 text-sm font-medium transition',
@@ -298,14 +300,14 @@ export default function ShopPage() {
           />
           {paginatedProducts.map((item) => {
             const cartQuantity =
-              cartItems.find((cartItem) => cartItem.itemId === item.id)?.quantity ?? 0
-            const remainingQuantity = Math.max(item.quantity - cartQuantity, 0)
+              cartItems.find((cartItem) => cartItem.itemId === item.id)?.quantity ?? 0;
+            const remainingQuantity = Math.max(item.quantity - cartQuantity, 0);
             const quantity = Math.min(
               selectedQuantities[item.id] ?? 1,
               Math.max(remainingQuantity, 1),
-            )
+            );
             const hasDiscount =
-              item.discountedPrice !== undefined && item.discountedPrice < item.price
+              item.discountedPrice !== undefined && item.discountedPrice < item.price;
 
             return (
               <article
@@ -367,7 +369,9 @@ export default function ShopPage() {
                       Qty
                       <select
                         value={quantity}
-                        onChange={(event) => handleQuantityChange(item.id, event.target.value)}
+                        onChange={(event) =>
+                          handleQuantityChange(item.id, event.target.value)
+                        }
                         className="rounded-lg border border-slate-300 bg-white px-2 py-1.5 text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
                         disabled={!item.available || remainingQuantity === 0}
                       >
@@ -397,7 +401,7 @@ export default function ShopPage() {
                   </div>
                 </div>
               </article>
-            )
+            );
           })}
           <ProductPagination
             page={page}
@@ -407,7 +411,6 @@ export default function ShopPage() {
             position="bottom"
           />
         </section>
-
       </div>
 
       <button
@@ -448,155 +451,165 @@ export default function ShopPage() {
           backdropClassName="bg-slate-950/50"
           panelClassName="flex h-full w-full max-w-xl flex-col bg-white shadow-2xl"
         >
-              <div className="flex items-center justify-between gap-3 border-b border-slate-200 p-4 sm:p-6">
-                <div>
-                  <h2
-                    id="cart-dialog-title"
-                    className="font-serif text-2xl font-semibold text-slate-900"
-                  >
-                    Cart
-                  </h2>
-                  <p className="mt-1 text-sm text-slate-600">
-                    {totalItems} {totalItems === 1 ? 'item' : 'items'}
-                  </p>
-                </div>
-                <div className="flex items-center gap-4">
-                  {cartProducts.length > 0 && (
-                    <button
-                      type="button"
-                      onClick={() => void handleClearCart()}
-                      className="text-sm font-medium text-slate-600 transition hover:text-slate-900"
-                    >
-                      Clear all
-                    </button>
-                  )}
-                  <button
-                    ref={cartCloseRef}
-                    type="button"
-                    onClick={closeCart}
-                    aria-label="Close cart"
-                    className="flex h-10 w-10 items-center justify-center rounded-full text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-blue-600"
-                  >
-                    <svg aria-hidden="true" viewBox="0 0 20 20" fill="none" className="h-5 w-5">
-                      <path
-                        d="m5 5 10 10M15 5 5 15"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeWidth="1.75"
-                      />
-                    </svg>
-                  </button>
-                </div>
-              </div>
-
-              <div className="min-h-0 flex-1 overflow-y-auto p-4 sm:p-6">
-          {cartProducts.length === 0 ? (
-            <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-6 text-center text-slate-600">
-              Your cart is empty.
+          <div className="flex items-center justify-between gap-3 border-b border-slate-200 p-4 sm:p-6">
+            <div>
+              <h2
+                id="cart-dialog-title"
+                className="font-serif text-2xl font-semibold text-slate-900"
+              >
+                Cart
+              </h2>
+              <p className="mt-1 text-sm text-slate-600">
+                {totalItems} {totalItems === 1 ? 'item' : 'items'}
+              </p>
             </div>
-          ) : (
-            <ul className="space-y-4">
-              {cartProducts.map((item) => (
-                <li
-                  key={item.id}
-                  data-interactive-card
-                  className="flex gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-3"
+            <div className="flex items-center gap-4">
+              {cartProducts.length > 0 && (
+                <button
+                  type="button"
+                  onClick={() => void handleClearCart()}
+                  className="text-sm font-medium text-slate-600 transition hover:text-slate-900"
                 >
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="h-16 w-16 rounded-xl object-cover"
+                  Clear all
+                </button>
+              )}
+              <button
+                ref={cartCloseRef}
+                type="button"
+                onClick={closeCart}
+                aria-label="Close cart"
+                className="flex h-10 w-10 items-center justify-center rounded-full text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-blue-600"
+              >
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  className="h-5 w-5"
+                >
+                  <path
+                    d="m5 5 10 10M15 5 5 15"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeWidth="1.75"
                   />
-
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="min-w-0">
-                        <p className="break-words font-medium text-slate-900">{item.name}</p>
-                        <p className="text-sm text-slate-600">${item.price} each</p>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => dispatch(removeFromCart(item.id))}
-                        className="text-xs font-medium text-rose-700 hover:text-rose-900"
-                      >
-                        Remove
-                      </button>
-                    </div>
-
-                    <div className="mt-3 flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:justify-between">
-                      <div className="flex items-center gap-2">
-                        <button
-                          type="button"
-                          onClick={() =>
-                            dispatch(
-                              updateCartQuantity({
-                                itemId: item.id,
-                                quantity: Math.max(item.cartQuantity - 1, 0),
-                              }),
-                            )
-                          }
-                          className="h-8 w-8 rounded-full border border-slate-300 bg-slate-100 text-lg text-slate-900 hover:border-slate-400 focus-visible:outline-2 focus-visible:outline-blue-600"
-                        >
-                          −
-                        </button>
-                        <span className="min-w-8 text-center text-sm font-semibold text-slate-900">
-                          {item.cartQuantity}
-                        </span>
-                        <button
-                          type="button"
-                          onClick={() =>
-                            dispatch(
-                              updateCartQuantity({
-                                itemId: item.id,
-                                quantity: item.cartQuantity + 1,
-                              }),
-                            )
-                          }
-                          disabled={item.cartQuantity >= item.quantity}
-                          className="h-8 w-8 rounded-full border border-slate-300 bg-slate-100 text-lg text-slate-900 hover:border-slate-400 focus-visible:outline-2 focus-visible:outline-blue-600 disabled:cursor-not-allowed disabled:opacity-50"
-                        >
-                          +
-                        </button>
-                      </div>
-
-                      <span className="flex w-full flex-wrap items-center justify-end gap-x-2 font-semibold text-blue-700 sm:w-auto">
-                        {item.discountedPrice !== undefined &&
-                          item.discountedPrice < item.price && (
-                            <del className="text-sm font-normal text-slate-500">
-                              ${(item.price * item.cartQuantity).toFixed(2)}
-                            </del>
-                          )}
-                        <span>
-                          ${((item.discountedPrice ?? item.price) * item.cartQuantity).toFixed(2)}
-                        </span>
-                      </span>
-                    </div>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          )}
-
-          <div className="mt-6 space-y-3 border-t border-slate-200 pt-5 text-sm text-slate-600">
-            <div className="flex items-center justify-between">
-              <span>Items</span>
-              <span>{totalItems}</span>
-            </div>
-            <div className="flex items-center justify-between text-lg font-semibold text-slate-900">
-              <span>Total</span>
-              <span className="flex items-center gap-2">
-                {discountedTotal < totalPrice && (
-                  <del className="text-sm font-normal text-slate-500">
-                    ${totalPrice.toFixed(2)}
-                  </del>
-                )}
-                <span>${discountedTotal.toFixed(2)}</span>
-              </span>
+                </svg>
+              </button>
             </div>
           </div>
+
+          <div className="min-h-0 flex-1 overflow-y-auto p-4 sm:p-6">
+            {cartProducts.length === 0 ? (
+              <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-6 text-center text-slate-600">
+                Your cart is empty.
               </div>
+            ) : (
+              <ul className="space-y-4">
+                {cartProducts.map((item) => (
+                  <li
+                    key={item.id}
+                    data-interactive-card
+                    className="flex gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-3"
+                  >
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="h-16 w-16 rounded-xl object-cover"
+                    />
+
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="min-w-0">
+                          <p className="break-words font-medium text-slate-900">
+                            {item.name}
+                          </p>
+                          <p className="text-sm text-slate-600">${item.price} each</p>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => dispatch(removeFromCart(item.id))}
+                          className="text-xs font-medium text-rose-700 hover:text-rose-900"
+                        >
+                          Remove
+                        </button>
+                      </div>
+
+                      <div className="mt-3 flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:justify-between">
+                        <div className="flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={() =>
+                              dispatch(
+                                updateCartQuantity({
+                                  itemId: item.id,
+                                  quantity: Math.max(item.cartQuantity - 1, 0),
+                                }),
+                              )
+                            }
+                            className="h-8 w-8 rounded-full border border-slate-300 bg-slate-100 text-lg text-slate-900 hover:border-slate-400 focus-visible:outline-2 focus-visible:outline-blue-600"
+                          >
+                            −
+                          </button>
+                          <span className="min-w-8 text-center text-sm font-semibold text-slate-900">
+                            {item.cartQuantity}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() =>
+                              dispatch(
+                                updateCartQuantity({
+                                  itemId: item.id,
+                                  quantity: item.cartQuantity + 1,
+                                }),
+                              )
+                            }
+                            disabled={item.cartQuantity >= item.quantity}
+                            className="h-8 w-8 rounded-full border border-slate-300 bg-slate-100 text-lg text-slate-900 hover:border-slate-400 focus-visible:outline-2 focus-visible:outline-blue-600 disabled:cursor-not-allowed disabled:opacity-50"
+                          >
+                            +
+                          </button>
+                        </div>
+
+                        <span className="flex w-full flex-wrap items-center justify-end gap-x-2 font-semibold text-blue-700 sm:w-auto">
+                          {item.discountedPrice !== undefined &&
+                            item.discountedPrice < item.price && (
+                              <del className="text-sm font-normal text-slate-500">
+                                ${(item.price * item.cartQuantity).toFixed(2)}
+                              </del>
+                            )}
+                          <span>
+                            $
+                            {(
+                              (item.discountedPrice ?? item.price) * item.cartQuantity
+                            ).toFixed(2)}
+                          </span>
+                        </span>
+                      </div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            <div className="mt-6 space-y-3 border-t border-slate-200 pt-5 text-sm text-slate-600">
+              <div className="flex items-center justify-between">
+                <span>Items</span>
+                <span>{totalItems}</span>
+              </div>
+              <div className="flex items-center justify-between text-lg font-semibold text-slate-900">
+                <span>Total</span>
+                <span className="flex items-center gap-2">
+                  {discountedTotal < totalPrice && (
+                    <del className="text-sm font-normal text-slate-500">
+                      ${totalPrice.toFixed(2)}
+                    </del>
+                  )}
+                  <span>${discountedTotal.toFixed(2)}</span>
+                </span>
+              </div>
+            </div>
+          </div>
         </PopupDialog>
       )}
     </main>
-  )
+  );
 }

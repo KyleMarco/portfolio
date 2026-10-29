@@ -1,8 +1,8 @@
-import type { ReactNode } from 'react'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { Provider } from 'react-redux'
-import { ToastProvider } from '../shared/components/Toast'
-import { store } from './store'
+import type { ReactNode } from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Provider } from 'react-redux';
+import { ToastProvider } from '../shared/components/Toast';
+import { store } from './store';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -11,7 +11,7 @@ const queryClient = new QueryClient({
       refetchOnWindowFocus: false,
     },
   },
-})
+});
 
 export function AppProviders({ children }: { children: ReactNode }) {
   return (
@@ -20,5 +20,5 @@ export function AppProviders({ children }: { children: ReactNode }) {
         <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
       </ToastProvider>
     </Provider>
-  )
+  );
 }

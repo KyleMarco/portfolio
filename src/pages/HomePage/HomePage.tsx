@@ -1,5 +1,5 @@
-import { useCallback, useRef, useState } from 'react'
-import { PopupDialog } from '../../shared/components/PopupDialog'
+import { useCallback, useRef, useState } from 'react';
+import { PopupDialog } from '../../shared/components/PopupDialog';
 import {
   contactCards,
   education,
@@ -9,15 +9,9 @@ import {
   profile,
   skillGroups,
   strengths,
-} from './mockData'
+} from './mockData';
 
-function SectionHeading({
-  eyebrow,
-  title,
-}: {
-  eyebrow: string
-  title: string
-}) {
+function SectionHeading({ eyebrow, title }: { eyebrow: string; title: string }) {
   return (
     <div className="mb-6 flex items-end justify-between gap-4 border-b border-slate-900/15 pb-4">
       <div>
@@ -29,31 +23,31 @@ function SectionHeading({
         </h2>
       </div>
     </div>
-  )
+  );
 }
 
 export default function HomePage() {
   const [selectedExperience, setSelectedExperience] = useState<
     (typeof experiences)[number] | null
-  >(null)
-  const [activeSkillGroup, setActiveSkillGroup] = useState(skillGroups[0].label)
+  >(null);
+  const [activeSkillGroup, setActiveSkillGroup] = useState(skillGroups[0].label);
   const [activeEducationTrack, setActiveEducationTrack] = useState(
     educationTracks[0].label,
-  )
-  const [activeInterest, setActiveInterest] = useState(interests[0].id)
-  const experienceTriggerRef = useRef<HTMLButtonElement>(null)
-  const experienceCloseRef = useRef<HTMLButtonElement>(null)
+  );
+  const [activeInterest, setActiveInterest] = useState(interests[0].id);
+  const experienceTriggerRef = useRef<HTMLButtonElement>(null);
+  const experienceCloseRef = useRef<HTMLButtonElement>(null);
   const closeExperience = useCallback(() => {
-    setSelectedExperience(null)
-  }, [])
+    setSelectedExperience(null);
+  }, []);
 
   const selectedSkillGroup =
-    skillGroups.find((group) => group.label === activeSkillGroup) ?? skillGroups[0]
+    skillGroups.find((group) => group.label === activeSkillGroup) ?? skillGroups[0];
   const selectedEducationTrack =
     educationTracks.find((track) => track.label === activeEducationTrack) ??
-    educationTracks[0]
+    educationTracks[0];
   const selectedInterest =
-    interests.find((interest) => interest.id === activeInterest) ?? interests[0]
+    interests.find((interest) => interest.id === activeInterest) ?? interests[0];
 
   return (
     <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
@@ -143,10 +137,7 @@ export default function HomePage() {
         <div className="grid gap-14 px-6 py-12 sm:px-10 sm:py-16 lg:grid-cols-[minmax(0,1fr)_280px] lg:gap-16 lg:px-16">
           <div className="space-y-12">
             <section id="experience" className="scroll-mt-8">
-              <SectionHeading
-                eyebrow="The work"
-                title="Experience"
-              />
+              <SectionHeading eyebrow="The work" title="Experience" />
               <div className="rounded-2xl border border-slate-200 bg-slate-50/70 p-4 sm:p-5">
                 <div className="space-y-6">
                   {experiences.map((experience) => (
@@ -168,8 +159,8 @@ export default function HomePage() {
                         aria-haspopup="dialog"
                         aria-label={`View ${experience.company} experience highlights`}
                         onClick={(event) => {
-                          experienceTriggerRef.current = event.currentTarget
-                          setSelectedExperience(experience)
+                          experienceTriggerRef.current = event.currentTarget;
+                          setSelectedExperience(experience);
                         }}
                         className="group w-full rounded-2xl p-4 text-left transition-all duration-200 hover:-translate-y-0.5 hover:bg-white hover:shadow-md hover:shadow-slate-900/5 active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-slate-900 motion-reduce:transition-none"
                       >
@@ -198,10 +189,7 @@ export default function HomePage() {
             </section>
 
             <section>
-              <SectionHeading
-                eyebrow="The foundation"
-                title="Education"
-              />
+              <SectionHeading eyebrow="The foundation" title="Education" />
               <div
                 data-interactive-card
                 className="space-y-5 rounded-2xl border border-slate-200 bg-slate-50/70 p-4 sm:p-5"
@@ -212,13 +200,9 @@ export default function HomePage() {
                       key={item.institution}
                       className={index > 0 ? 'border-t border-slate-200 pt-5' : undefined}
                     >
-                      <h3 className="font-bold text-slate-950">
-                        {item.institution}
-                      </h3>
+                      <h3 className="font-bold text-slate-950">{item.institution}</h3>
                       {item.program && (
-                        <p className="mt-1 text-sm text-slate-600">
-                          {item.program}
-                        </p>
+                        <p className="mt-1 text-sm text-slate-600">{item.program}</p>
                       )}
                       <p
                         className={`mt-1 text-xs leading-5 ${
@@ -264,10 +248,7 @@ export default function HomePage() {
 
           <aside className="space-y-12">
             <section>
-              <SectionHeading
-                eyebrow="What I work with"
-                title="Skills"
-              />
+              <SectionHeading eyebrow="What I work with" title="Skills" />
               <div
                 data-interactive-card
                 className="space-y-5 rounded-2xl border border-slate-200 bg-slate-50/70 p-4 sm:p-5"
@@ -321,10 +302,7 @@ export default function HomePage() {
             </section>
 
             <section>
-              <SectionHeading
-                eyebrow="Beyond work"
-                title="Interests"
-              />
+              <SectionHeading eyebrow="Beyond work" title="Interests" />
               <div
                 data-interactive-card
                 className="space-y-4 rounded-2xl border border-slate-200 bg-slate-50/70 p-4 sm:p-5"
@@ -386,142 +364,137 @@ export default function HomePage() {
           backdropClassName="bg-slate-950/60"
           panelClassName="flex max-h-[min(90vh,48rem)] w-full max-w-3xl flex-col overflow-hidden rounded-3xl bg-white shadow-2xl"
         >
-              <header className="relative isolate flex shrink-0 items-start justify-between gap-4 overflow-hidden border-b border-blue-100 bg-gradient-to-br from-blue-50 via-white to-slate-50 p-5 sm:p-7">
-                <div
-                  aria-hidden="true"
-                  className="absolute -right-10 -top-20 -z-10 h-56 w-56 rounded-full border border-blue-200/70 sm:-right-4 sm:-top-28 sm:h-72 sm:w-72"
+          <header className="relative isolate flex shrink-0 items-start justify-between gap-4 overflow-hidden border-b border-blue-100 bg-gradient-to-br from-blue-50 via-white to-slate-50 p-5 sm:p-7">
+            <div
+              aria-hidden="true"
+              className="absolute -right-10 -top-20 -z-10 h-56 w-56 rounded-full border border-blue-200/70 sm:-right-4 sm:-top-28 sm:h-72 sm:w-72"
+            />
+            <div className="min-w-0">
+              <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.22em] text-blue-700">
+                Professional experience
+              </p>
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-white/80 px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-sm">
+                  <span
+                    aria-hidden="true"
+                    className="h-1.5 w-1.5 rounded-full bg-blue-600"
+                  />
+                  {selectedExperience.dates}
+                </span>
+                {selectedExperience.location && (
+                  <span className="rounded-full border border-slate-200 bg-white/70 px-3 py-1.5 text-xs font-medium text-slate-600">
+                    {selectedExperience.location}
+                  </span>
+                )}
+              </div>
+              <h2
+                id="experience-dialog-title"
+                className="mt-4 break-words font-serif text-2xl font-semibold leading-tight tracking-tight text-slate-950 sm:text-3xl"
+              >
+                {selectedExperience.company}
+              </h2>
+              <p className="mt-2 inline-flex items-center gap-2 text-sm font-medium text-slate-600">
+                <span aria-hidden="true" className="h-px w-5 bg-blue-500" />
+                {selectedExperience.role}
+              </p>
+            </div>
+            <button
+              ref={experienceCloseRef}
+              type="button"
+              onClick={closeExperience}
+              aria-label="Close experience details"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white/80 text-slate-600 shadow-sm transition hover:border-blue-200 hover:bg-white hover:text-slate-900 active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 motion-reduce:transition-none"
+            >
+              <svg aria-hidden="true" viewBox="0 0 20 20" fill="none" className="h-5 w-5">
+                <path
+                  d="m5 5 10 10M15 5 5 15"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeWidth="1.75"
                 />
-                <div className="min-w-0">
-                  <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.22em] text-blue-700">
-                    Professional experience
-                  </p>
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-white/80 px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-sm">
-                      <span
-                        aria-hidden="true"
-                        className="h-1.5 w-1.5 rounded-full bg-blue-600"
-                      />
-                      {selectedExperience.dates}
-                    </span>
-                    {selectedExperience.location && (
-                      <span className="rounded-full border border-slate-200 bg-white/70 px-3 py-1.5 text-xs font-medium text-slate-600">
-                        {selectedExperience.location}
-                      </span>
-                    )}
-                  </div>
-                  <h2
-                    id="experience-dialog-title"
-                    className="mt-4 break-words font-serif text-2xl font-semibold leading-tight tracking-tight text-slate-950 sm:text-3xl"
-                  >
-                    {selectedExperience.company}
-                  </h2>
-                  <p className="mt-2 inline-flex items-center gap-2 text-sm font-medium text-slate-600">
-                    <span
-                      aria-hidden="true"
-                      className="h-px w-5 bg-blue-500"
-                    />
-                    {selectedExperience.role}
-                  </p>
-                </div>
-                <button
-                  ref={experienceCloseRef}
-                  type="button"
-                  onClick={closeExperience}
-                  aria-label="Close experience details"
-                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white/80 text-slate-600 shadow-sm transition hover:border-blue-200 hover:bg-white hover:text-slate-900 active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 motion-reduce:transition-none"
+              </svg>
+            </button>
+          </header>
+          <div className="flex flex-col gap-8 overflow-y-auto p-5 sm:p-7">
+            <section aria-labelledby="experience-technologies-heading">
+              <div className="mb-4 flex items-center gap-3">
+                <span
+                  aria-hidden="true"
+                  className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-100 text-blue-700"
                 >
-                  <svg aria-hidden="true" viewBox="0 0 20 20" fill="none" className="h-5 w-5">
+                  <svg viewBox="0 0 20 20" fill="none" className="h-5 w-5">
                     <path
-                      d="m5 5 10 10M15 5 5 15"
+                      d="m7.25 5-4 5 4 5m5.5-10 4 5-4 5m-1.5-12-2.5 14"
                       stroke="currentColor"
                       strokeLinecap="round"
-                      strokeWidth="1.75"
+                      strokeLinejoin="round"
+                      strokeWidth="1.5"
                     />
                   </svg>
-                </button>
-              </header>
-              <div className="flex flex-col gap-8 overflow-y-auto p-5 sm:p-7">
-                <section aria-labelledby="experience-technologies-heading">
-                  <div className="mb-4 flex items-center gap-3">
+                </span>
+                <div>
+                  <h3
+                    id="experience-technologies-heading"
+                    className="text-sm font-semibold text-slate-900"
+                  >
+                    Technologies
+                  </h3>
+                  <p className="mt-0.5 text-xs text-slate-500">
+                    Tools and technologies used
+                  </p>
+                </div>
+              </div>
+              <ul className="mt-6 flex flex-wrap gap-3">
+                {selectedExperience.technologies.split(',').map((technology) => (
+                  <li
+                    key={technology.trim()}
+                    className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-medium text-slate-700 transition-colors hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 motion-reduce:transition-none"
+                  >
+                    {technology.trim()}
+                  </li>
+                ))}
+              </ul>
+            </section>
+            <section
+              aria-labelledby="experience-highlights-heading"
+              className="border-t border-slate-200 pt-6"
+            >
+              <div className="mb-4 flex items-end justify-between gap-4">
+                <div>
+                  <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.2em] text-blue-700">
+                    Selected work
+                  </p>
+                  <h3
+                    id="experience-highlights-heading"
+                    className="font-serif text-xl font-semibold tracking-tight text-slate-950"
+                  >
+                    Highlights
+                  </h3>
+                </div>
+                <span className="pb-1 font-mono text-xs text-slate-400">
+                  {String(selectedExperience.highlights.length).padStart(2, '0')} items
+                </span>
+              </div>
+              <ul className="divide-y divide-slate-100">
+                {selectedExperience.highlights.map((highlight, index) => (
+                  <li
+                    key={highlight}
+                    className="flex gap-4 rounded-lg py-4 transition-colors hover:bg-slate-50 first:pt-0 last:pb-0 motion-reduce:transition-none"
+                  >
                     <span
                       aria-hidden="true"
-                      className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-100 text-blue-700"
+                      className="mt-0.5 shrink-0 font-mono text-xs font-semibold text-blue-600"
                     >
-                      <svg viewBox="0 0 20 20" fill="none" className="h-5 w-5">
-                        <path
-                          d="m7.25 5-4 5 4 5m5.5-10 4 5-4 5m-1.5-12-2.5 14"
-                          stroke="currentColor"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="1.5"
-                        />
-                      </svg>
+                      {String(index + 1).padStart(2, '0')}
                     </span>
-                    <div>
-                      <h3
-                        id="experience-technologies-heading"
-                        className="text-sm font-semibold text-slate-900"
-                      >
-                        Technologies
-                      </h3>
-                      <p className="mt-0.5 text-xs text-slate-500">
-                        Tools and technologies used
-                      </p>
-                    </div>
-                  </div>
-                  <ul className="mt-6 flex flex-wrap gap-3">
-                    {selectedExperience.technologies.split(',').map((technology) => (
-                      <li
-                        key={technology.trim()}
-                        className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-medium text-slate-700 transition-colors hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700 motion-reduce:transition-none"
-                      >
-                        {technology.trim()}
-                      </li>
-                    ))}
-                  </ul>
-                </section>
-                <section
-                  aria-labelledby="experience-highlights-heading"
-                  className="border-t border-slate-200 pt-6"
-                >
-                  <div className="mb-4 flex items-end justify-between gap-4">
-                    <div>
-                      <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.2em] text-blue-700">
-                        Selected work
-                      </p>
-                      <h3
-                        id="experience-highlights-heading"
-                        className="font-serif text-xl font-semibold tracking-tight text-slate-950"
-                      >
-                        Highlights
-                      </h3>
-                    </div>
-                    <span className="pb-1 font-mono text-xs text-slate-400">
-                      {String(selectedExperience.highlights.length).padStart(2, '0')} items
-                    </span>
-                  </div>
-                  <ul className="divide-y divide-slate-100">
-                    {selectedExperience.highlights.map((highlight, index) => (
-                      <li
-                        key={highlight}
-                        className="flex gap-4 rounded-lg py-4 transition-colors hover:bg-slate-50 first:pt-0 last:pb-0 motion-reduce:transition-none"
-                      >
-                        <span
-                          aria-hidden="true"
-                          className="mt-0.5 shrink-0 font-mono text-xs font-semibold text-blue-600"
-                        >
-                          {String(index + 1).padStart(2, '0')}
-                        </span>
-                        <span className="text-sm leading-6 text-slate-700">
-                          {highlight}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </section>
-              </div>
+                    <span className="text-sm leading-6 text-slate-700">{highlight}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          </div>
         </PopupDialog>
       )}
     </main>
-  )
+  );
 }

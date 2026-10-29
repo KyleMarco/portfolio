@@ -1,6 +1,6 @@
 ---
 name: frontend
-description: "Use when implementing, debugging, refactoring, or reviewing this Vite + React + TypeScript app, including pages, routes, state, API data flow, and shared UI."
+description: 'Use when implementing, debugging, refactoring, or reviewing this Vite + React + TypeScript app, including pages, routes, state, API data flow, and shared UI.'
 ---
 
 # Frontend workflow
@@ -9,13 +9,13 @@ Use this workflow for frontend changes in this repository. Follow the general re
 
 ## Architecture map
 
-| Concern | Location and pattern |
-|---|---|
-| Store, routes, providers | `src/app/store.ts`, `src/app/router.tsx`, `src/app/providers.tsx` |
-| Feature behavior and state | `src/features/<feature>/` |
-| Route-level composition | `src/pages/<Page>/` |
-| Reusable UI | `src/shared/components/` |
-| Shared API utilities | `src/api/` |
+| Concern                    | Location and pattern                                              |
+| -------------------------- | ----------------------------------------------------------------- |
+| Store, routes, providers   | `src/app/store.ts`, `src/app/router.tsx`, `src/app/providers.tsx` |
+| Feature behavior and state | `src/features/<feature>/`                                         |
+| Route-level composition    | `src/pages/<Page>/`                                               |
+| Reusable UI                | `src/shared/components/`                                          |
+| Shared API utilities       | `src/api/`                                                        |
 
 Use the established layer and follow the closest existing example. Do not introduce a new pattern based on assumptions; inspect the code first.
 

@@ -1,17 +1,15 @@
-import type { NavLinkRenderProps } from 'react-router-dom'
-import { BrowserRouter, Navigate, NavLink, Route, Routes } from 'react-router-dom'
-import HomePage from '../pages/HomePage/HomePage'
-import AboutPage from '../pages/AboutPage/AboutPage'
-import NotFoundPage from '../pages/NotFoundPage/NotFoundPage'
-import ShopPage from '../pages/ShopPage/ShopPage'
+import type { NavLinkRenderProps } from 'react-router-dom';
+import { BrowserRouter, Navigate, NavLink, Route, Routes } from 'react-router-dom';
+import HomePage from '../pages/HomePage/HomePage';
+import AboutPage from '../pages/AboutPage/AboutPage';
+import NotFoundPage from '../pages/NotFoundPage/NotFoundPage';
+import ShopPage from '../pages/ShopPage/ShopPage';
 
 const navClass = ({ isActive }: NavLinkRenderProps) =>
   [
     'rounded-full px-4 py-2 text-sm font-medium transition',
-    isActive
-      ? 'bg-blue-600 text-white'
-      : 'bg-white/10 text-slate-100 hover:bg-white/20',
-  ].join(' ')
+    isActive ? 'bg-blue-600 text-white' : 'bg-white/10 text-slate-100 hover:bg-white/20',
+  ].join(' ');
 
 export function AppRouter() {
   return (
@@ -42,7 +40,7 @@ export function AppRouter() {
         </Routes>
       </div>
     </BrowserRouter>
-  )
+  );
 }
 
-export default AppRouter
+export default AppRouter;

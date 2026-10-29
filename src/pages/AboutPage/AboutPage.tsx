@@ -1,4 +1,4 @@
-import { LinkButton } from '../../shared/components/LinkButton'
+import { LinkButton } from '../../shared/components/LinkButton';
 
 const highlights = [
   {
@@ -21,7 +21,7 @@ const highlights = [
     description:
       'The shop page demonstrates product browsing and cart interactions alongside the portfolio.',
   },
-]
+];
 
 const stack = [
   'React 19',
@@ -38,7 +38,7 @@ const stack = [
   'Vitest',
   'Testing Library',
   'Oxlint',
-]
+];
 
 export default function AboutPage() {
   return (
@@ -76,14 +76,12 @@ export default function AboutPage() {
         </div>
 
         <div className="mt-8 flex flex-wrap gap-4">
-          <LinkButton to="/">
-            Back home
-          </LinkButton>
+          <LinkButton to="/">Back home</LinkButton>
           <LinkButton to="/demo" variant="secondary">
             View shop demo
           </LinkButton>
         </div>
       </div>
     </main>
-  )
+  );
 }
