@@ -1,5 +1,5 @@
 ---
-name: project-frontend
+name: frontend
 description: "Use when working on this Vite + React + TypeScript app: adding features, fixing route/store/API issues, refactoring components, updating pages, or reviewing frontend code for repo-standard architecture and quality."
 ---
 
