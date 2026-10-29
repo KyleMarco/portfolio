@@ -35,6 +35,7 @@ const stack = [
   'Redux Toolkit',
   'React Redux',
   'TanStack Query',
+  'Axios',
   'Vitest',
   'Testing Library',
   'Oxlint',

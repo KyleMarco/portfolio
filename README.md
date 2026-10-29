@@ -22,6 +22,7 @@ This project includes:
 - TanStack Query
 - React Router DOM
 - Tailwind CSS
+- Axios
 - Oxlint
 - Prettier
 
