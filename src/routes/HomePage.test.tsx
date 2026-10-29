@@ -1,7 +1,7 @@
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
 import HomePage from './HomePage';
-import { educationTracks, experiences, interests, skillGroups } from './mockData';
+import { educationTracks, experiences, interests, skillGroups } from './homePageData';
 
 afterEach(cleanup);
 

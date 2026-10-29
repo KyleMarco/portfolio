@@ -1,4 +1,4 @@
-import { LinkButton } from '../../shared/components/LinkButton';
+import { LinkButton } from '../shared/ui/LinkButton';
 
 export default function NotFoundPage() {
   return (

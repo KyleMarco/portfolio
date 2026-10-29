@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Provider } from 'react-redux';
-import { ToastProvider } from '../shared/components/Toast';
-import { store } from './store';
+import { ToastProvider } from '../../shared/ui/Toast';
+import { store } from '../store';
 
 const queryClient = new QueryClient({
   defaultOptions: {

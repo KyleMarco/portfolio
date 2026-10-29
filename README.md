@@ -29,7 +29,8 @@ This project includes:
 
 - Keep TypeScript strict and use explicit types for component props, state, and API data. Avoid `any` and unsafe casts.
 - Use React function components and hooks; keep hooks within the Rules of Hooks.
-- Keep code in its owning layer: app setup in `src/app/`, feature behavior in `src/features/`, route composition in `src/pages/`, and reusable UI in `src/shared/components/`.
+- Keep code in its owning layer: app setup in `src/app/`, feature behavior in `src/features/`, route-level screens in `src/routes/`, and reusable UI in `src/shared/ui/`.
+- Organize feature-owned APIs, hooks, and types with their feature; use shared UI or API utilities only when needed. See [the frontend skill](.github/skills/frontend/SKILL.md) for the frontend architecture and workflow.
 - Prefer semantic, accessible HTML and preserve loading, empty, and error states. Add or update tests for meaningful behavior changes.
 - Use Prettier for consistent formatting: two-space indentation, single quotes, and semicolons. Run `npm run format` to format the project and `npm run format:check` to verify formatting.
 - Run `npm run lint` before submitting changes. Oxlint treats correctness issues as errors and suspicious patterns as warnings. Also run `npm run test` for behavior changes and `npm run build` when changing application code.
@@ -102,9 +103,15 @@ npm run preview
 ```text
 src/
   app/
-    providers.tsx
-    router.tsx
-    store.ts
+    App.tsx
+    providers/
+      AppProviders.tsx
+    router/
+      index.tsx
+    store/
+      index.ts
+    styles/
+      globals.css
   features/
     cart/
       cartSlice.ts
@@ -113,16 +120,17 @@ src/
       hooks/
         useCartCatalog.ts
         useCartMutations.ts
-  pages/
-    AboutPage/
-    HomePage/
-    NotFoundPage/
-    ShopPage/
+  routes/
+    AboutPage.tsx
+    HomePage.tsx
+    homePageData.ts
+    NotFoundPage.tsx
+    ShopPage.tsx
+    index.ts
   shared/
-    components/
+    ui/
       Button.tsx
       Toast.tsx
-  App.tsx
   main.tsx
 ```
 

@@ -1,9 +1,6 @@
 import type { NavLinkRenderProps } from 'react-router-dom';
 import { BrowserRouter, Navigate, NavLink, Route, Routes } from 'react-router-dom';
-import HomePage from '../pages/HomePage/HomePage';
-import AboutPage from '../pages/AboutPage/AboutPage';
-import NotFoundPage from '../pages/NotFoundPage/NotFoundPage';
-import ShopPage from '../pages/ShopPage/ShopPage';
+import { AboutPage, HomePage, NotFoundPage, ShopPage } from '../../routes';
 
 const navClass = ({ isActive }: NavLinkRenderProps) =>
   [

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import type { AppDispatch, RootState } from '../../app/store';
+import type { AppDispatch, RootState } from '../app/store';
 import {
   addToCart,
   clearCart,
@@ -8,12 +8,12 @@ import {
   setCatalogItems,
   updateCartQuantity,
   catalogItems,
-} from '../../features/cart/cartSlice';
-import { useCartCatalog } from '../../features/cart/hooks/useCartCatalog';
-import { useCartMutations } from '../../features/cart/hooks/useCartMutations';
-import { Button } from '../../shared/components/Button';
-import { PopupDialog } from '../../shared/components/PopupDialog';
-import { useToast } from '../../shared/components/Toast';
+} from '../features/cart/cartSlice';
+import { useCartCatalog } from '../features/cart/hooks/useCartCatalog';
+import { useCartMutations } from '../features/cart/hooks/useCartMutations';
+import { Button } from '../shared/ui/Button';
+import { PopupDialog } from '../shared/ui/PopupDialog';
+import { useToast } from '../shared/ui/Toast';
 
 type FilterValue = 'all' | 'available' | 'unavailable';
 const ITEMS_PER_PAGE = 10;

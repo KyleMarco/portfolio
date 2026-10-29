@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from 'react';
-import { PopupDialog } from '../../shared/components/PopupDialog';
+import { PopupDialog } from '../shared/ui/PopupDialog';
 import {
   contactCards,
   education,
@@ -9,7 +9,7 @@ import {
   profile,
   skillGroups,
   strengths,
-} from './mockData';
+} from './homePageData';
 
 function SectionHeading({ eyebrow, title }: { eyebrow: string; title: string }) {
   return (

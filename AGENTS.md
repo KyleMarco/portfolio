@@ -1,14 +1,8 @@
 # Repository guidance
 
-## Project structure
+## Frontend guidance
 
-- `src/app/` contains the store, routes, and global providers.
-- `src/features/` contains feature-specific state, API logic, hooks, and components.
-- `src/pages/` contains route-level page composition.
-- `src/shared/components/` contains reusable UI components.
-- `src/api/` contains shared API utilities.
-
-Keep changes in the layer that owns the behavior, and follow nearby implementation and test patterns. Use Redux Toolkit for client state and TanStack Query for remote, cached data. Keep data flow typed.
+Follow [`.github/skills/frontend/SKILL.md`](.github/skills/frontend/SKILL.md) for frontend architecture, implementation, and validation.
 
 ## General practices
 
@@ -17,8 +11,6 @@ Keep changes in the layer that owns the behavior, and follow nearby implementati
 - Preserve existing behavior, accessibility, and loading and error states.
 - Add or update tests for meaningful behavior changes.
 - Report the checks run and any relevant limitations.
-
-For frontend-specific architecture and workflow, follow [`.github/skills/frontend/SKILL.md`](.github/skills/frontend/SKILL.md).
 
 ## Project checks
 
