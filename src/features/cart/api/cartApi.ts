@@ -1,3 +1,4 @@
+import axios from 'axios';
 import type { CatalogItem } from '../cartSlice';
 
 export type DummyJsonCartProduct = {
@@ -25,13 +26,9 @@ type DummyJsonCartResponse = {
 export const cartApi = {
   getAllCarts: async (): Promise<CatalogItem[]> => {
     try {
-      const response = await fetch('https://dummyjson.com/carts');
-
-      if (!response.ok) {
-        throw new Error('Get all carts request failed');
-      }
-
-      const payload = (await response.json()) as DummyJsonCartResponse;
+      const { data: payload } = await axios.get<DummyJsonCartResponse>(
+        'https://dummyjson.com/carts',
+      );
       const carts = payload.carts ?? [];
 
       const catalog = carts.flatMap((cart) =>
@@ -91,29 +88,16 @@ export const cartApi = {
     }
   },
   addToCart: async ({ userId, products }: { userId: number; products: DummyJsonCartProduct[] }) => {
-    const response = await fetch('https://dummyjson.com/carts/add', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ userId, products }),
+    const { data } = await axios.post<unknown>('https://dummyjson.com/carts/add', {
+      userId,
+      products,
     });
 
-    if (!response.ok) {
-      throw new Error('Add-to-cart request failed');
-    }
-
-    return response.json();
+    return data;
   },
   deleteCart: async (cartId: number) => {
-    const response = await fetch(`https://dummyjson.com/carts/${cartId}`, {
-      method: 'DELETE',
-    });
+    const { data } = await axios.delete<unknown>(`https://dummyjson.com/carts/${cartId}`);
 
-    if (!response.ok) {
-      throw new Error('Delete-cart request failed');
-    }
-
-    return response.json();
+    return data;
   },
 };
