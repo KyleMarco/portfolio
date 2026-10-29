@@ -61,3 +61,105 @@ ul,
 li {
   margin-top: 0;
 }
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes content-enter {
+  from {
+    opacity: 0;
+    transform: translateY(0.35rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes dialog-backdrop-enter {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+main {
+  animation: page-enter 220ms ease-out both;
+}
+
+:where(a, button, [role='button'], select) {
+  transition-duration: 180ms;
+  transition-timing-function: ease-out;
+}
+
+:where(a, button, [role='button'], select):focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 3px;
+}
+
+:where(a, button, [role='button']):not(:disabled):active {
+  transform: scale(0.98);
+}
+
+.motion-enter {
+  animation: content-enter 220ms ease-out both;
+}
+
+.motion-backdrop-enter {
+  animation: dialog-backdrop-enter 180ms ease-out both;
+}
+
+[data-interactive-card] {
+  transition:
+    transform 180ms ease-out,
+    border-color 180ms ease-out,
+    box-shadow 180ms ease-out;
+}
+
+@media (hover: hover) {
+  :where(a, button, [role='button'], select):not(:disabled):hover {
+    filter: brightness(1.04);
+  }
+
+  [data-interactive-card]:hover,
+  [data-interactive-card]:focus-within {
+    transform: translateY(-2px);
+    border-color: #bfdbfe;
+    box-shadow: 0 10px 24px rgb(15 23 42 / 8%);
+  }
+
+  [data-interactive-card]:active {
+    transform: scale(0.99);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  main,
+  .motion-enter,
+  .motion-backdrop-enter {
+    animation: none;
+  }
+
+  :where(a, button, [role='button'], select),
+  [data-interactive-card] {
+    transition-duration: 0.01ms;
+  }
+
+  :where(a, button, [role='button']):not(:disabled):active,
+  [data-interactive-card]:hover,
+  [data-interactive-card]:focus-within,
+  [data-interactive-card]:active {
+    transform: none;
+  }
+}

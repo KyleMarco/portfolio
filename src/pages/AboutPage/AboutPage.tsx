@@ -45,6 +45,7 @@ export default function AboutPage() {
           {highlights.map((item) => (
             <article
               key={item.title}
+              data-interactive-card
               className="rounded-2xl border border-slate-200 bg-slate-50 p-5"
             >
               <h2 className="text-lg font-semibold text-slate-900">{item.title}</h2>

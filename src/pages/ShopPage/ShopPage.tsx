@@ -1,5 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
-import { createPortal } from 'react-dom'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import type { AppDispatch, RootState } from '../../app/store'
 import {
@@ -13,6 +12,7 @@ import {
 import { useCartCatalog } from '../../features/cart/hooks/useCartCatalog'
 import { useCartMutations } from '../../features/cart/hooks/useCartMutations'
 import { Button } from '../../shared/components/Button'
+import { PopupDialog } from '../../shared/components/PopupDialog'
 import { useToast } from '../../shared/components/Toast'
 
 type FilterValue = 'all' | 'available' | 'unavailable'
@@ -114,7 +114,6 @@ export default function ShopPage() {
   const [isCartOpen, setIsCartOpen] = useState(false)
   const cartTriggerRef = useRef<HTMLButtonElement>(null)
   const cartCloseRef = useRef<HTMLButtonElement>(null)
-  const cartDialogRef = useRef<HTMLElement>(null)
 
   const { addToCartMutation, clearCartMutation } = useCartMutations()
   const { data: catalogData = [], isLoading, isError } = useCartCatalog()
@@ -170,58 +169,9 @@ export default function ShopPage() {
     0,
   )
 
-  useEffect(() => {
-    if (!isCartOpen) {
-      return
-    }
-
-    const previousOverflow = document.body.style.overflow
-    const cartTrigger = cartTriggerRef.current
-    document.body.style.overflow = 'hidden'
-    cartCloseRef.current?.focus()
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setIsCartOpen(false)
-        return
-      }
-
-      if (event.key !== 'Tab') {
-        return
-      }
-
-      const focusableElements = cartDialogRef.current?.querySelectorAll<HTMLElement>(
-        'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
-      )
-      const firstElement = focusableElements?.[0]
-      const lastElement = focusableElements?.[focusableElements.length - 1]
-
-      if (!firstElement || !lastElement) {
-        event.preventDefault()
-      } else if (!cartDialogRef.current?.contains(document.activeElement)) {
-        event.preventDefault()
-        if (event.shiftKey) {
-          lastElement.focus()
-        } else {
-          firstElement.focus()
-        }
-      } else if (event.shiftKey && document.activeElement === firstElement) {
-        event.preventDefault()
-        lastElement.focus()
-      } else if (!event.shiftKey && document.activeElement === lastElement) {
-        event.preventDefault()
-        firstElement.focus()
-      }
-    }
-
-    window.addEventListener('keydown', handleKeyDown)
-
-    return () => {
-      document.body.style.overflow = previousOverflow
-      window.removeEventListener('keydown', handleKeyDown)
-      cartTrigger?.focus()
-    }
-  }, [isCartOpen])
+  const closeCart = useCallback(() => {
+    setIsCartOpen(false)
+  }, [])
 
   const handleQuantityChange = (itemId: string, value: string) => {
     const quantity = Number(value)
@@ -312,6 +262,7 @@ export default function ShopPage() {
           <button
             key={option}
             type="button"
+            aria-pressed={filter === option}
             onClick={() => {
               setFilter(option)
               setCurrentPage(1)
@@ -355,6 +306,7 @@ export default function ShopPage() {
             return (
               <article
                 key={item.id}
+                data-interactive-card
                 className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-lg shadow-slate-900/5"
               >
                 <div className="group relative overflow-hidden">
@@ -481,23 +433,17 @@ export default function ShopPage() {
         )}
       </button>
 
-      {isCartOpen &&
-        createPortal(
-          <div className="fixed inset-0 z-50 flex justify-end">
-            <button
-              type="button"
-              onClick={() => setIsCartOpen(false)}
-              aria-label="Close cart"
-              tabIndex={-1}
-              className="absolute inset-0 h-full w-full cursor-default bg-slate-950/50"
-            />
-            <aside
-              ref={cartDialogRef}
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="cart-dialog-title"
-              className="relative z-10 flex h-full w-full max-w-xl flex-col bg-white shadow-2xl"
-            >
+      {isCartOpen && (
+        <PopupDialog
+          labelledBy="cart-dialog-title"
+          closeLabel="Close cart"
+          onClose={closeCart}
+          initialFocusRef={cartCloseRef}
+          returnFocusRef={cartTriggerRef}
+          overlayClassName="flex justify-end"
+          backdropClassName="bg-slate-950/50"
+          panelClassName="flex h-full w-full max-w-xl flex-col bg-white shadow-2xl"
+        >
               <div className="flex items-center justify-between gap-3 border-b border-slate-200 p-4 sm:p-6">
                 <div>
                   <h2
@@ -523,7 +469,7 @@ export default function ShopPage() {
                   <button
                     ref={cartCloseRef}
                     type="button"
-                    onClick={() => setIsCartOpen(false)}
+                    onClick={closeCart}
                     aria-label="Close cart"
                     className="flex h-10 w-10 items-center justify-center rounded-full text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-blue-600"
                   >
@@ -549,6 +495,7 @@ export default function ShopPage() {
               {cartProducts.map((item) => (
                 <li
                   key={item.id}
+                  data-interactive-card
                   className="flex gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-3"
                 >
                   <img
@@ -644,10 +591,8 @@ export default function ShopPage() {
             </div>
           </div>
               </div>
-            </aside>
-          </div>,
-          document.body,
-        )}
+        </PopupDialog>
+      )}
     </main>
   )
 }
