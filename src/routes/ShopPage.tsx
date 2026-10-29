@@ -42,7 +42,7 @@ function ProductPagination({
       aria-label={`Product pages ${position}`}
       className="flex w-full min-w-0 flex-col items-center justify-between gap-3 sm:flex-row md:col-span-2"
     >
-      <p className="text-center text-sm text-slate-600 sm:text-left">
+      <p className="text-center text-sm text-stone-600 sm:text-left">
         Showing {(page - 1) * ITEMS_PER_PAGE + 1}–{Math.min(page * ITEMS_PER_PAGE, totalProducts)}{' '}
         of {totalProducts} products
       </p>
@@ -52,7 +52,7 @@ function ProductPagination({
           onClick={() => onPageChange(page - 1)}
           disabled={page === 1}
           aria-label="Previous page"
-          className="relative inline-flex h-9 w-9 items-center justify-center rounded-l-md border border-slate-300 bg-white text-slate-900 transition hover:bg-slate-100 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-blue-600 disabled:cursor-not-allowed disabled:opacity-40"
+          className="relative inline-flex h-9 w-9 items-center justify-center rounded-l-md border border-stone-300 bg-[#fbfaf7] text-stone-900 transition hover:bg-[#f2f0eb] focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-stone-950 disabled:cursor-not-allowed disabled:opacity-40"
         >
           <svg aria-hidden="true" viewBox="0 0 20 20" fill="none" className="h-4 w-4">
             <path
@@ -72,11 +72,11 @@ function ProductPagination({
             aria-current={page === pageNumber ? 'page' : undefined}
             aria-label={`Page ${pageNumber}`}
             className={[
-              'relative -ml-px h-9 min-w-9 items-center justify-center border px-3 text-sm font-medium transition focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-blue-600',
+              'relative -ml-px h-9 min-w-9 items-center justify-center border px-3 text-sm font-medium transition focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-stone-950',
               pageNumber === page ? 'inline-flex' : 'hidden sm:inline-flex',
               page === pageNumber
-                ? 'z-10 border-blue-600 bg-blue-600 text-white'
-                : 'border-slate-300 bg-white text-slate-900 hover:bg-slate-100',
+                ? 'z-10 border-stone-950 bg-stone-950 text-white'
+                : 'border-stone-300 bg-[#fbfaf7] text-stone-900 hover:bg-[#f2f0eb]',
             ].join(' ')}
           >
             {pageNumber}
@@ -87,7 +87,7 @@ function ProductPagination({
           onClick={() => onPageChange(page + 1)}
           disabled={page === totalPages}
           aria-label="Next page"
-          className="relative -ml-px inline-flex h-9 w-9 items-center justify-center rounded-r-md border border-slate-300 bg-white text-slate-900 transition hover:bg-slate-100 focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-blue-600 disabled:cursor-not-allowed disabled:opacity-40"
+          className="relative -ml-px inline-flex h-9 w-9 items-center justify-center rounded-r-md border border-stone-300 bg-[#fbfaf7] text-stone-900 transition hover:bg-[#f2f0eb] focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-stone-950 disabled:cursor-not-allowed disabled:opacity-40"
         >
           <svg aria-hidden="true" viewBox="0 0 20 20" fill="none" className="h-4 w-4">
             <path
@@ -220,22 +220,22 @@ export default function ShopPage() {
 
   return (
     <main className="mx-auto max-w-7xl px-3 py-6 sm:px-6 sm:py-10 lg:px-8">
-      <header className="mb-6 rounded-3xl border border-white/10 bg-[#0f172a] p-4 text-white shadow-2xl shadow-slate-900/10 sm:mb-8 sm:rounded-[2rem] sm:p-8">
+      <header className="mb-6 rounded-3xl border border-stone-200 bg-[#f2f0eb] p-4 text-stone-950 shadow-lg shadow-stone-900/5 sm:mb-8 sm:rounded-[2rem] sm:p-8">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <p className="mb-2 text-xs font-bold uppercase tracking-[0.25em] text-blue-300">
+            <p className="mb-2 text-xs font-bold uppercase tracking-[0.25em] text-stone-500">
               Demo only · not a real shop
             </p>
             <h1 className="font-serif text-2xl font-medium leading-tight sm:text-4xl">
               Sample product catalog
             </h1>
-            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-300 sm:text-base">
+            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-stone-600 sm:text-base">
               This is a sample page using product and cart data from DummyJSON. No real products are
               sold and no purchases are processed.
             </p>
           </div>
 
-          <div className="w-fit max-w-full break-words rounded-2xl border border-blue-300/25 bg-blue-300/10 px-4 py-3 text-sm text-blue-100">
+          <div className="w-fit max-w-full break-words rounded-2xl border border-stone-300 bg-[#fbfaf7] px-4 py-3 text-sm text-stone-800">
             {totalItems} items in cart •{' '}
             {discountedTotal < totalPrice && (
               <span className="mr-1 line-through">${totalPrice.toFixed(2)}</span>
@@ -246,7 +246,7 @@ export default function ShopPage() {
       </header>
 
       {isLoading && (
-        <div className="mb-6 rounded-2xl border border-slate-200 bg-white p-4 text-slate-700">
+        <div className="mb-6 rounded-2xl border border-stone-200 bg-[#fbfaf7] p-4 text-stone-700">
           Loading products...
         </div>
       )}
@@ -270,8 +270,8 @@ export default function ShopPage() {
             className={[
               'rounded-full border px-4 py-2 text-sm font-medium transition',
               filter === option
-                ? 'border-blue-600 bg-blue-600 text-white'
-                : 'border-slate-300 bg-white text-slate-900 hover:bg-slate-50',
+                ? 'border-stone-950 bg-stone-950 text-white'
+                : 'border-stone-300 bg-[#fbfaf7] text-stone-900 hover:bg-[#f2f0eb]',
             ].join(' ')}
           >
             {option === 'all'
@@ -307,7 +307,7 @@ export default function ShopPage() {
               <article
                 key={item.id}
                 data-interactive-card
-                className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-lg shadow-slate-900/5"
+                className="overflow-hidden rounded-3xl border border-stone-200 bg-[#fbfaf7] shadow-lg shadow-stone-900/5"
               >
                 <div className="group relative overflow-hidden">
                   <img
@@ -330,19 +330,19 @@ export default function ShopPage() {
                 <div className="space-y-4 p-4 sm:p-5">
                   <div className="flex flex-col items-start gap-2 sm:flex-row sm:justify-between sm:gap-3">
                     <div className="min-w-0">
-                      <p className="text-xs uppercase tracking-[0.2em] text-slate-500">
+                      <p className="text-xs uppercase tracking-[0.2em] text-stone-500">
                         {item.category}
                       </p>
-                      <h2 className="mt-2 break-words text-xl font-semibold text-slate-900 sm:text-2xl">
+                      <h2 className="mt-2 break-words text-xl font-semibold text-stone-950 sm:text-2xl">
                         {item.name}
                       </h2>
                     </div>
                     <div className="flex flex-wrap items-center gap-x-2 sm:flex-col sm:items-end">
                       <div className="flex items-center gap-2">
                         {hasDiscount && (
-                          <del className="text-sm text-slate-500">${item.price.toFixed(2)}</del>
+                          <del className="text-sm text-stone-500">${item.price.toFixed(2)}</del>
                         )}
-                        <span className="text-lg font-bold text-blue-700">
+                        <span className="text-lg font-bold text-stone-950">
                           ${(item.discountedPrice ?? item.price).toFixed(2)}
                         </span>
                       </div>
@@ -354,15 +354,15 @@ export default function ShopPage() {
                     </div>
                   </div>
 
-                  <p className="text-sm leading-6 text-slate-700">{item.description}</p>
+                  <p className="text-sm leading-6 text-stone-700">{item.description}</p>
 
                   <div className="flex flex-col items-stretch gap-3 pt-2 sm:flex-row sm:items-center">
-                    <label className="flex items-center gap-2 text-sm text-slate-700">
+                    <label className="flex items-center gap-2 text-sm text-stone-700">
                       Qty
                       <select
                         value={quantity}
                         onChange={(event) => handleQuantityChange(item.id, event.target.value)}
-                        className="rounded-lg border border-slate-300 bg-white px-2 py-1.5 text-slate-900 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
+                        className="rounded-lg border border-stone-300 bg-[#fbfaf7] px-2 py-1.5 text-stone-900 focus:border-stone-700 focus:outline-none focus:ring-2 focus:ring-stone-700/20"
                         disabled={!item.available || remainingQuantity === 0}
                       >
                         {Array.from(
@@ -410,7 +410,7 @@ export default function ShopPage() {
         aria-label={`Open cart, ${totalItems} ${totalItems === 1 ? 'item' : 'items'}`}
         aria-haspopup="dialog"
         aria-expanded={isCartOpen}
-        className="fixed bottom-5 right-5 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-blue-700 text-white shadow-xl shadow-blue-950/25 transition hover:bg-blue-800 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-700 sm:bottom-8 sm:right-8 sm:h-16 sm:w-16"
+        className="fixed bottom-5 right-5 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-stone-950 text-white shadow-xl shadow-stone-950/25 transition hover:bg-stone-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950 sm:bottom-8 sm:right-8 sm:h-16 sm:w-16"
       >
         <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" className="h-7 w-7">
           <path
@@ -424,7 +424,7 @@ export default function ShopPage() {
           <circle cx="18" cy="20" r="1" fill="currentColor" />
         </svg>
         {totalItems > 0 && (
-          <span className="absolute -right-1 -top-1 flex h-6 min-w-6 items-center justify-center rounded-full bg-rose-600 px-1 text-xs font-bold text-white ring-2 ring-white">
+          <span className="absolute -right-1 -top-1 flex h-6 min-w-6 items-center justify-center rounded-full bg-rose-600 px-1 text-xs font-bold text-white ring-2 ring-[#fbfaf7]">
             {totalItems}
           </span>
         )}
@@ -438,18 +438,18 @@ export default function ShopPage() {
           initialFocusRef={cartCloseRef}
           returnFocusRef={cartTriggerRef}
           overlayClassName="flex justify-end"
-          backdropClassName="bg-slate-950/50"
-          panelClassName="flex h-full w-full max-w-xl flex-col bg-white shadow-2xl"
+          backdropClassName="bg-stone-950/50"
+          panelClassName="flex h-full w-full max-w-xl flex-col bg-[#fbfaf7] shadow-2xl"
         >
-          <div className="flex items-center justify-between gap-3 border-b border-slate-200 p-4 sm:p-6">
+          <div className="flex items-center justify-between gap-3 border-b border-stone-200 p-4 sm:p-6">
             <div>
               <h2
                 id="cart-dialog-title"
-                className="font-serif text-2xl font-semibold text-slate-900"
+                className="font-serif text-2xl font-semibold text-stone-950"
               >
                 Cart
               </h2>
-              <p className="mt-1 text-sm text-slate-600">
+              <p className="mt-1 text-sm text-stone-600">
                 {totalItems} {totalItems === 1 ? 'item' : 'items'}
               </p>
             </div>
@@ -458,7 +458,7 @@ export default function ShopPage() {
                 <button
                   type="button"
                   onClick={() => void handleClearCart()}
-                  className="text-sm font-medium text-slate-600 transition hover:text-slate-900"
+                  className="text-sm font-medium text-stone-600 transition hover:text-stone-950"
                 >
                   Clear all
                 </button>
@@ -468,7 +468,7 @@ export default function ShopPage() {
                 type="button"
                 onClick={closeCart}
                 aria-label="Close cart"
-                className="flex h-10 w-10 items-center justify-center rounded-full text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-blue-600"
+                className="flex h-10 w-10 items-center justify-center rounded-full text-stone-600 transition hover:bg-[#f2f0eb] hover:text-stone-950 focus-visible:outline-2 focus-visible:outline-stone-950"
               >
                 <svg aria-hidden="true" viewBox="0 0 20 20" fill="none" className="h-5 w-5">
                   <path
@@ -484,7 +484,7 @@ export default function ShopPage() {
 
           <div className="min-h-0 flex-1 overflow-y-auto p-4 sm:p-6">
             {cartProducts.length === 0 ? (
-              <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-6 text-center text-slate-600">
+              <div className="rounded-2xl border border-dashed border-stone-300 bg-[#f2f0eb] p-6 text-center text-stone-600">
                 Your cart is empty.
               </div>
             ) : (
@@ -493,7 +493,7 @@ export default function ShopPage() {
                   <li
                     key={item.id}
                     data-interactive-card
-                    className="flex gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-3"
+                    className="flex gap-3 rounded-2xl border border-stone-200 bg-[#f2f0eb] p-3"
                   >
                     <img
                       src={item.image}
@@ -504,8 +504,8 @@ export default function ShopPage() {
                     <div className="min-w-0 flex-1">
                       <div className="flex items-start justify-between gap-3">
                         <div className="min-w-0">
-                          <p className="break-words font-medium text-slate-900">{item.name}</p>
-                          <p className="text-sm text-slate-600">${item.price} each</p>
+                          <p className="break-words font-medium text-stone-950">{item.name}</p>
+                          <p className="text-sm text-stone-600">${item.price} each</p>
                         </div>
                         <button
                           type="button"
@@ -528,11 +528,11 @@ export default function ShopPage() {
                                 }),
                               )
                             }
-                            className="h-8 w-8 rounded-full border border-slate-300 bg-slate-100 text-lg text-slate-900 hover:border-slate-400 focus-visible:outline-2 focus-visible:outline-blue-600"
+                            className="h-8 w-8 rounded-full border border-stone-300 bg-[#fbfaf7] text-lg text-stone-900 hover:border-stone-400 focus-visible:outline-2 focus-visible:outline-stone-950"
                           >
                             −
                           </button>
-                          <span className="min-w-8 text-center text-sm font-semibold text-slate-900">
+                          <span className="min-w-8 text-center text-sm font-semibold text-stone-900">
                             {item.cartQuantity}
                           </span>
                           <button
@@ -546,16 +546,16 @@ export default function ShopPage() {
                               )
                             }
                             disabled={item.cartQuantity >= item.quantity}
-                            className="h-8 w-8 rounded-full border border-slate-300 bg-slate-100 text-lg text-slate-900 hover:border-slate-400 focus-visible:outline-2 focus-visible:outline-blue-600 disabled:cursor-not-allowed disabled:opacity-50"
+                            className="h-8 w-8 rounded-full border border-stone-300 bg-[#fbfaf7] text-lg text-stone-900 hover:border-stone-400 focus-visible:outline-2 focus-visible:outline-stone-950 disabled:cursor-not-allowed disabled:opacity-50"
                           >
                             +
                           </button>
                         </div>
 
-                        <span className="flex w-full flex-wrap items-center justify-end gap-x-2 font-semibold text-blue-700 sm:w-auto">
+                        <span className="flex w-full flex-wrap items-center justify-end gap-x-2 font-semibold text-stone-950 sm:w-auto">
                           {item.discountedPrice !== undefined &&
                             item.discountedPrice < item.price && (
-                              <del className="text-sm font-normal text-slate-500">
+                              <del className="text-sm font-normal text-stone-500">
                                 ${(item.price * item.cartQuantity).toFixed(2)}
                               </del>
                             )}
@@ -570,16 +570,16 @@ export default function ShopPage() {
               </ul>
             )}
 
-            <div className="mt-6 space-y-3 border-t border-slate-200 pt-5 text-sm text-slate-600">
+            <div className="mt-6 space-y-3 border-t border-stone-200 pt-5 text-sm text-stone-600">
               <div className="flex items-center justify-between">
                 <span>Items</span>
                 <span>{totalItems}</span>
               </div>
-              <div className="flex items-center justify-between text-lg font-semibold text-slate-900">
+              <div className="flex items-center justify-between text-lg font-semibold text-stone-950">
                 <span>Total</span>
                 <span className="flex items-center gap-2">
                   {discountedTotal < totalPrice && (
-                    <del className="text-sm font-normal text-slate-500">
+                    <del className="text-sm font-normal text-stone-500">
                       ${totalPrice.toFixed(2)}
                     </del>
                   )}
