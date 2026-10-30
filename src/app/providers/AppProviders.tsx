@@ -1,7 +1,9 @@
 import type { ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Provider } from 'react-redux';
+import { I18nextProvider } from 'react-i18next';
 import { ToastProvider } from '../../shared/ui/Toast';
+import i18n from '../i18n';
 import { store } from '../store';
 
 const queryClient = new QueryClient({
@@ -15,10 +17,12 @@ const queryClient = new QueryClient({
 
 export function AppProviders({ children }: { children: ReactNode }) {
   return (
-    <Provider store={store}>
-      <ToastProvider>
-        <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-      </ToastProvider>
-    </Provider>
+    <I18nextProvider i18n={i18n}>
+      <Provider store={store}>
+        <ToastProvider>
+          <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+        </ToastProvider>
+      </Provider>
+    </I18nextProvider>
   );
 }

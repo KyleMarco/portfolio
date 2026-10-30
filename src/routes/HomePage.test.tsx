@@ -3,15 +3,19 @@ import { afterEach, describe, expect, it } from 'vitest';
 import HomePage from './HomePage';
 import { experiences, profile, projects } from './portfolioData';
 import { MemoryRouter } from 'react-router-dom';
+import { I18nextProvider } from 'react-i18next';
+import i18n from '../app/i18n';
 
 afterEach(cleanup);
 
 describe('HomePage', () => {
   it('shows the portfolio sections and verified project links', () => {
     render(
-      <MemoryRouter>
-        <HomePage />
-      </MemoryRouter>,
+      <I18nextProvider i18n={i18n}>
+        <MemoryRouter>
+          <HomePage />
+        </MemoryRouter>
+      </I18nextProvider>,
     );
 
     expect(

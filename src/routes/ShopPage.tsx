@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import type { AppDispatch, RootState } from '../app/store';
 import {
   addToCart,
@@ -33,25 +34,29 @@ function ProductPagination({
   onPageChange,
   position,
 }: ProductPaginationProps) {
+  const { t } = useTranslation();
   if (totalPages <= 1) {
     return null;
   }
 
   return (
     <nav
-      aria-label={`Product pages ${position}`}
+      aria-label={t('shop.pages', { position })}
       className="flex w-full min-w-0 flex-col items-center justify-between gap-3 sm:flex-row md:col-span-2"
     >
       <p className="text-center text-sm text-stone-600 sm:text-left">
-        Showing {(page - 1) * ITEMS_PER_PAGE + 1}–{Math.min(page * ITEMS_PER_PAGE, totalProducts)}{' '}
-        of {totalProducts} products
+        {t('shop.showing', {
+          from: (page - 1) * ITEMS_PER_PAGE + 1,
+          to: Math.min(page * ITEMS_PER_PAGE, totalProducts),
+          total: totalProducts,
+        })}
       </p>
       <div className="inline-flex max-w-full items-center rounded-md shadow-sm">
         <button
           type="button"
           onClick={() => onPageChange(page - 1)}
           disabled={page === 1}
-          aria-label="Previous page"
+          aria-label={t('shop.previousPage')}
           className="relative inline-flex h-9 w-9 items-center justify-center rounded-l-md border border-stone-300 bg-[#fbfaf7] text-stone-900 transition hover:bg-[#f2f0eb] focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-stone-950 disabled:cursor-not-allowed disabled:opacity-40"
         >
           <svg aria-hidden="true" viewBox="0 0 20 20" fill="none" className="h-4 w-4">
@@ -70,7 +75,7 @@ function ProductPagination({
             type="button"
             onClick={() => onPageChange(pageNumber)}
             aria-current={page === pageNumber ? 'page' : undefined}
-            aria-label={`Page ${pageNumber}`}
+            aria-label={t('shop.page', { page: pageNumber })}
             className={[
               'relative -ml-px h-9 min-w-9 items-center justify-center border px-3 text-sm font-medium transition focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-stone-950',
               pageNumber === page ? 'inline-flex' : 'hidden sm:inline-flex',
@@ -86,7 +91,7 @@ function ProductPagination({
           type="button"
           onClick={() => onPageChange(page + 1)}
           disabled={page === totalPages}
-          aria-label="Next page"
+          aria-label={t('shop.nextPage')}
           className="relative -ml-px inline-flex h-9 w-9 items-center justify-center rounded-r-md border border-stone-300 bg-[#fbfaf7] text-stone-900 transition hover:bg-[#f2f0eb] focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-stone-950 disabled:cursor-not-allowed disabled:opacity-40"
         >
           <svg aria-hidden="true" viewBox="0 0 20 20" fill="none" className="h-4 w-4">
@@ -105,6 +110,7 @@ function ProductPagination({
 }
 
 export default function ShopPage() {
+  const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
   const cartItems = useSelector((state: RootState) => state.cart.items);
   const { success } = useToast();
@@ -200,11 +206,11 @@ export default function ShopPage() {
       });
 
       dispatch(addToCart({ itemId, quantity }));
-      success(`${product.name} added to cart`);
+      success(t('shop.added', { name: product.name }));
     } catch (error) {
       console.error('Unable to add item to cart via API.', error);
       dispatch(addToCart({ itemId, quantity }));
-      success(`${product.name} added to cart`);
+      success(t('shop.added', { name: product.name }));
     }
   };
 
@@ -224,19 +230,18 @@ export default function ShopPage() {
         <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="mb-2 text-xs font-bold uppercase tracking-[0.25em] text-stone-500">
-              Demo only · not a real shop
+              {t('shop.demoNotice')}
             </p>
             <h1 className="font-serif text-2xl font-medium leading-tight sm:text-4xl">
-              Sample product catalog
+              {t('shop.title')}
             </h1>
             <p className="mt-3 max-w-2xl text-sm leading-relaxed text-stone-600 sm:text-base">
-              This is a sample page using product and cart data from DummyJSON. No real products are
-              sold and no purchases are processed.
+              {t('shop.description')}
             </p>
           </div>
 
           <div className="w-fit max-w-full break-words rounded-2xl border border-stone-300 bg-[#fbfaf7] px-4 py-3 text-sm text-stone-800">
-            {totalItems} items in cart •{' '}
+            {t('shop.cartCount', { count: totalItems })} •{' '}
             {discountedTotal < totalPrice && (
               <span className="mr-1 line-through">${totalPrice.toFixed(2)}</span>
             )}
@@ -247,13 +252,13 @@ export default function ShopPage() {
 
       {isLoading && (
         <div className="mb-6 rounded-2xl border border-stone-200 bg-[#fbfaf7] p-4 text-stone-700">
-          Loading products...
+          {t('shop.loading')}
         </div>
       )}
 
       {isError && (
         <div className="mb-6 rounded-2xl border border-rose-700/30 bg-rose-100 p-4 text-rose-900">
-          Unable to load the product catalog.
+          {t('shop.error')}
         </div>
       )}
 
@@ -275,10 +280,10 @@ export default function ShopPage() {
             ].join(' ')}
           >
             {option === 'all'
-              ? 'All products'
+              ? t('shop.all')
               : option === 'available'
-                ? 'Available'
-                : 'Unavailable'}
+                ? t('shop.available')
+                : t('shop.unavailable')}
           </button>
         ))}
       </div>
@@ -323,7 +328,7 @@ export default function ShopPage() {
                         : 'bg-amber-100 text-amber-900 ring-1 ring-amber-700/30',
                     ].join(' ')}
                   >
-                    {item.available ? 'Available' : 'Unavailable'}
+                    {item.available ? t('shop.available') : t('shop.unavailable')}
                   </span>
                 </div>
 
@@ -348,7 +353,9 @@ export default function ShopPage() {
                       </div>
                       {hasDiscount && item.discountPercentage !== undefined && (
                         <span className="text-xs font-semibold text-emerald-800">
-                          {item.discountPercentage.toFixed(2).replace(/\.?0+$/, '')}% off
+                          {t('shop.discount', {
+                            percent: item.discountPercentage.toFixed(2).replace(/\.?0+$/, ''),
+                          })}
                         </span>
                       )}
                     </div>
@@ -358,7 +365,7 @@ export default function ShopPage() {
 
                   <div className="flex flex-col items-stretch gap-3 pt-2 sm:flex-row sm:items-center">
                     <label className="flex items-center gap-2 text-sm text-stone-700">
-                      Qty
+                      {t('shop.qty')}
                       <select
                         value={quantity}
                         onChange={(event) => handleQuantityChange(item.id, event.target.value)}
@@ -383,10 +390,10 @@ export default function ShopPage() {
                       className="w-full sm:flex-1"
                     >
                       {!item.available
-                        ? 'Unavailable'
+                        ? t('shop.unavailable')
                         : remainingQuantity === 0
-                          ? 'Maximum reached'
-                          : 'Add to cart'}
+                          ? t('shop.maxReached')
+                          : t('shop.add')}
                     </Button>
                   </div>
                 </div>
@@ -407,7 +414,7 @@ export default function ShopPage() {
         ref={cartTriggerRef}
         type="button"
         onClick={() => setIsCartOpen(true)}
-        aria-label={`Open cart, ${totalItems} ${totalItems === 1 ? 'item' : 'items'}`}
+        aria-label={t('shop.openCart', { count: totalItems })}
         aria-haspopup="dialog"
         aria-expanded={isCartOpen}
         className="fixed bottom-5 right-5 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-stone-950 text-white shadow-xl shadow-stone-950/25 transition hover:bg-stone-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950 sm:bottom-8 sm:right-8 sm:h-16 sm:w-16"
@@ -433,7 +440,7 @@ export default function ShopPage() {
       {isCartOpen && (
         <PopupDialog
           labelledBy="cart-dialog-title"
-          closeLabel="Close cart"
+          closeLabel={t('shop.closeCart')}
           onClose={closeCart}
           initialFocusRef={cartCloseRef}
           returnFocusRef={cartTriggerRef}
@@ -447,10 +454,10 @@ export default function ShopPage() {
                 id="cart-dialog-title"
                 className="font-serif text-2xl font-semibold text-stone-950"
               >
-                Cart
+                {t('shop.cart')}
               </h2>
               <p className="mt-1 text-sm text-stone-600">
-                {totalItems} {totalItems === 1 ? 'item' : 'items'}
+                {t('shop.cartCount', { count: totalItems })}
               </p>
             </div>
             <div className="flex items-center gap-4">
@@ -460,14 +467,14 @@ export default function ShopPage() {
                   onClick={() => void handleClearCart()}
                   className="text-sm font-medium text-stone-600 transition hover:text-stone-950"
                 >
-                  Clear all
+                  {t('shop.clear')}
                 </button>
               )}
               <button
                 ref={cartCloseRef}
                 type="button"
                 onClick={closeCart}
-                aria-label="Close cart"
+                aria-label={t('shop.closeCart')}
                 className="flex h-10 w-10 items-center justify-center rounded-full text-stone-600 transition hover:bg-[#f2f0eb] hover:text-stone-950 focus-visible:outline-2 focus-visible:outline-stone-950"
               >
                 <svg aria-hidden="true" viewBox="0 0 20 20" fill="none" className="h-5 w-5">
@@ -485,7 +492,7 @@ export default function ShopPage() {
           <div className="min-h-0 flex-1 overflow-y-auto p-4 sm:p-6">
             {cartProducts.length === 0 ? (
               <div className="rounded-2xl border border-dashed border-stone-300 bg-[#f2f0eb] p-6 text-center text-stone-600">
-                Your cart is empty.
+                {t('shop.empty')}
               </div>
             ) : (
               <ul className="space-y-4">
@@ -505,14 +512,16 @@ export default function ShopPage() {
                       <div className="flex items-start justify-between gap-3">
                         <div className="min-w-0">
                           <p className="break-words font-medium text-stone-950">{item.name}</p>
-                          <p className="text-sm text-stone-600">${item.price} each</p>
+                          <p className="text-sm text-stone-600">
+                            {t('shop.each', { price: item.price })}
+                          </p>
                         </div>
                         <button
                           type="button"
                           onClick={() => dispatch(removeFromCart(item.id))}
                           className="text-xs font-medium text-rose-700 hover:text-rose-900"
                         >
-                          Remove
+                          {t('shop.remove')}
                         </button>
                       </div>
 
@@ -572,11 +581,11 @@ export default function ShopPage() {
 
             <div className="mt-6 space-y-3 border-t border-stone-200 pt-5 text-sm text-stone-600">
               <div className="flex items-center justify-between">
-                <span>Items</span>
+                <span>{t('shop.items')}</span>
                 <span>{totalItems}</span>
               </div>
               <div className="flex items-center justify-between text-lg font-semibold text-stone-950">
-                <span>Total</span>
+                <span>{t('shop.total')}</span>
                 <span className="flex items-center gap-2">
                   {discountedTotal < totalPrice && (
                     <del className="text-sm font-normal text-stone-500">

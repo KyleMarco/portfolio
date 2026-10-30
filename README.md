@@ -39,7 +39,7 @@ The home page presents selected work, professional experience, technical experti
 ### Portfolio
 
 - Selected project previews link to the live storefront demo and this repository.
-- Professional experience and technical expertise are sourced from `src/routes/homePageData.ts`.
+- Professional experience and technical expertise are sourced from `src/routes/portfolioData.ts`.
 - Contact links include email, phone, LinkedIn, and a résumé request by email.
 
 ### Storefront demo
@@ -123,7 +123,6 @@ src/
   routes/
     AboutPage.tsx
     HomePage.tsx
-    homePageData.ts
     NotFoundPage.tsx
     ShopPage.tsx
     index.ts

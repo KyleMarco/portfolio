@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { homePageContent } from './homePageData';
+import { useTranslation } from 'react-i18next';
 import {
   contactCards,
   education,
@@ -29,6 +29,7 @@ function SectionHeading({ eyebrow, title, id }: { eyebrow: string; title: string
 }
 
 export default function HomePage() {
+  const { t } = useTranslation();
   return (
     <main>
       <section
@@ -38,7 +39,7 @@ export default function HomePage() {
         <div>
           <p className="mb-8 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.12em] text-amber-900">
             <span aria-hidden="true" className="h-2 w-2 rotate-45 bg-amber-800" />
-            Frontend development <span aria-hidden="true">/</span> Since 2017
+            {t('home.heroEyebrow')} <span aria-hidden="true">/</span> {t('home.since2017')}
           </p>
           <h1
             id="hero-title"
@@ -52,7 +53,7 @@ export default function HomePage() {
           <div className="mt-8 max-w-2xl border-l-2 border-amber-800 pl-5 sm:pl-6">
             <p className="text-sm font-semibold text-stone-900">{profile.role}</p>
             <p className="mt-2 max-w-xl text-lg leading-8 text-stone-600 sm:text-xl">
-              {homePageContent.heroDescription}
+              {t('home.heroDescription')}
             </p>
           </div>
           <div className="mt-9 flex flex-wrap items-center gap-3">
@@ -60,7 +61,7 @@ export default function HomePage() {
               href={`mailto:${profile.email}`}
               className="inline-flex min-h-12 items-center justify-center gap-3 bg-stone-950 px-5 text-sm font-medium text-white transition-colors hover:bg-stone-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950 motion-reduce:transition-none"
             >
-              {homePageContent.heroContactLabel}
+              {t('home.contact')}
               <svg
                 aria-hidden="true"
                 focusable="false"
@@ -75,13 +76,13 @@ export default function HomePage() {
               href="#projects"
               className="inline-flex min-h-12 items-center justify-center border border-stone-300 px-5 text-sm font-medium text-stone-800 transition-colors hover:border-stone-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950 motion-reduce:transition-none"
             >
-              {homePageContent.projectsLinkLabel}
+              {t('home.selectedWork')}
             </a>
           </div>
         </div>
         <aside className="border-t border-stone-300 pt-5 lg:justify-self-end lg:border-l lg:border-t-0 lg:border-amber-800 lg:pl-8 lg:pt-0">
           <p className="text-xs font-semibold uppercase tracking-[0.12em] text-amber-900">
-            Currently at
+            {t('home.currentlyAt')}
           </p>
           <p className="mt-3 text-lg font-medium tracking-tight text-stone-950">
             {experiences[0].company}
@@ -105,7 +106,11 @@ export default function HomePage() {
         className="scroll-mt-24 border-y border-stone-200 bg-[#f2f0eb]"
       >
         <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24 lg:px-10">
-          <SectionHeading {...homePageContent.sectionHeadings.projects} id="projects-title" />
+          <SectionHeading
+            eyebrow={t('home.projectsEyebrow')}
+            title={t('home.projectsTitle')}
+            id="projects-title"
+          />
           <div className="grid gap-6 lg:grid-cols-2">
             {projects.map((project, index) => (
               <article
@@ -185,7 +190,7 @@ export default function HomePage() {
                       rel="noreferrer"
                       className="text-sm font-medium text-stone-600 underline decoration-stone-300 underline-offset-4 transition-colors hover:text-stone-950 hover:decoration-stone-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950"
                     >
-                      {homePageContent.projectLinkLabels.source}
+                      {t('home.source')}
                       <svg
                         aria-hidden="true"
                         focusable="false"
@@ -210,17 +215,21 @@ export default function HomePage() {
         className="scroll-mt-24 mx-auto grid max-w-6xl gap-12 px-5 py-16 sm:px-8 sm:py-24 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24 lg:px-10"
       >
         <div>
-          <SectionHeading {...homePageContent.sectionHeadings.about} id="about-title" />
-          <p className="text-base leading-8 text-stone-600">{homePageContent.aboutDescription}</p>
+          <SectionHeading
+            eyebrow={t('home.aboutEyebrow')}
+            title={t('home.aboutTitle')}
+            id="about-title"
+          />
+          <p className="text-base leading-8 text-stone-600">{t('home.aboutDescription')}</p>
           <div className="mt-10 border-t border-stone-200 pt-5">
             <p className="text-xs font-medium uppercase tracking-[0.16em] text-stone-500">
-              {homePageContent.educationLabel}
+              {t('home.education')}
             </p>
             {education.slice(0, 1).map((item) => (
               <div key={item.institution} className="mt-3">
                 <p className="font-medium text-stone-900">{item.institution}</p>
                 <p className="mt-1 text-sm text-stone-600">
-                  {item.program} {homePageContent.educationSeparator} {item.details}
+                  {item.program} · {item.details}
                 </p>
               </div>
             ))}
@@ -228,7 +237,7 @@ export default function HomePage() {
         </div>
         <div>
           <p className="mb-5 text-xs font-medium uppercase tracking-[0.16em] text-stone-500">
-            {homePageContent.expertiseLabel}
+            {t('home.expertise')}
           </p>
           <div className="divide-y divide-stone-200 border-y border-stone-200">
             {skillGroups.map((group) => (
@@ -259,7 +268,11 @@ export default function HomePage() {
         className="scroll-mt-24 border-y border-stone-200 bg-[#f2f0eb]"
       >
         <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24 lg:px-10">
-          <SectionHeading {...homePageContent.sectionHeadings.experience} id="experience-title" />
+          <SectionHeading
+            eyebrow={t('home.experienceEyebrow')}
+            title={t('home.experienceTitle')}
+            id="experience-title"
+          />
           <div className="divide-y divide-stone-300">
             {experiences.map((experience) => (
               <article
@@ -308,20 +321,20 @@ export default function HomePage() {
         <div className="grid gap-8 border-b border-stone-300 pb-10 sm:grid-cols-[1fr_auto] sm:items-end">
           <div>
             <p className="mb-3 text-xs font-medium uppercase tracking-[0.18em] text-stone-500">
-              {homePageContent.contactLabel}
+              {t('home.contactLabel')}
             </p>
             <h2
               id="contact-title"
               className="max-w-2xl font-serif text-5xl font-medium tracking-[-0.035em] text-stone-950 sm:text-7xl"
             >
-              {homePageContent.contactHeading}
+              {t('home.contactHeading')}
             </h2>
           </div>
           <a
             href={`mailto:${profile.email}`}
             className="inline-flex min-h-12 items-center justify-center gap-3 bg-stone-950 px-5 text-sm font-medium text-white transition-colors hover:bg-stone-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950 motion-reduce:transition-none"
           >
-            {homePageContent.emailMeLabel}
+            {t('home.emailMe')}
             <svg
               aria-hidden="true"
               focusable="false"
@@ -352,12 +365,12 @@ export default function HomePage() {
           ))}
         </div>
         <p className="text-sm text-stone-500">
-          {homePageContent.resumeNotice}{' '}
+          {t('home.resumeNotice')}{' '}
           <a
-            href={`mailto:${profile.email}?subject=${encodeURIComponent(homePageContent.resumeSubject)}`}
+            href={`mailto:${profile.email}?subject=${encodeURIComponent(t('home.resumeSubject'))}`}
             className="font-medium text-stone-800 underline decoration-stone-300 underline-offset-4 hover:decoration-stone-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950"
           >
-            {homePageContent.resumeLinkLabel}
+            {t('home.resumeLink')}
           </a>
         </p>
       </section>
@@ -365,14 +378,13 @@ export default function HomePage() {
       <footer className="border-t border-stone-200">
         <div className="mx-auto flex max-w-6xl flex-col gap-2 px-5 py-6 text-xs text-stone-500 sm:flex-row sm:items-center sm:justify-between sm:px-8 lg:px-10">
           <span>
-            {profile.firstName} {profile.lastName} {homePageContent.footerSeparator}{' '}
-            {profile.footerRole}
+            {profile.firstName} {profile.lastName} · {profile.footerRole}
           </span>
           <a
             href="#top"
             className="w-fit font-medium text-stone-700 underline decoration-stone-300 underline-offset-4 hover:decoration-stone-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950"
           >
-            {homePageContent.backToTopLabel}
+            {t('home.backToTop')}
             <svg
               aria-hidden="true"
               focusable="false"

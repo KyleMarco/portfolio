@@ -17,8 +17,10 @@
     "@tailwindcss/vite": "^4.3.3",
     "@tanstack/react-query": "^5.104.5",
     "axios": "^1.21.0",
+    "i18next": "^26.5.11",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
+    "react-i18next": "^17.1.9",
     "react-redux": "^9.3.0",
     "react-router-dom": "^7.18.4",
     "tailwindcss": "^4.3.3"
