@@ -1,4 +1,4 @@
-import { LinkButton } from '../shared/ui/LinkButton';
+import { LinkButton } from '@kylemarco/shared-ui/router';
 import { useTranslation } from 'react-i18next';
 
 export default function NotFoundPage() {
