@@ -3,7 +3,7 @@ export const profile = {
   lastName: 'Cabiling',
   role: 'Senior Frontend Developer',
   summary:
-    'I build thoughtful, maintainable web experiences with React and TypeScript, bringing together reusable UI, reliable data flows, and a close eye for detail.',
+    'I work across React component design, API integration, and state management, with experience maintaining applications from prototypes through production.',
   monogramPrimary: 'KM',
   monogramAccent: 'C',
   tagline: 'UI with intention',
@@ -16,7 +16,7 @@ export const projects = [
     title: 'Interactive storefront',
     category: 'Commerce demo',
     description:
-      'A responsive storefront with product browsing, availability filters, quantity selection, and a working cart flow.',
+      'A React storefront demo with product browsing, availability filters, quantity selection, and a working cart flow, using Redux Toolkit and TanStack Query.',
     technologies: ['React', 'TypeScript', 'Redux Toolkit', 'TanStack Query', 'Tailwind CSS'],
     screenshot: 'images/storefront-demo.png',
     screenshotAlt: 'Screenshot of the interactive storefront demo',
@@ -28,7 +28,7 @@ export const projects = [
     title: 'Portfolio website',
     category: 'Personal site',
     description:
-      'A focused portfolio for sharing professional experience, selected work, and ways to get in touch.',
+      'A React and TypeScript portfolio with live project demos, a detailed work history, and direct contact links.',
     technologies: ['React', 'TypeScript', 'Vite', 'Tailwind CSS'],
     screenshot: 'images/portfolio-home.png',
     screenshotAlt: 'Screenshot of the portfolio website',

@@ -34,6 +34,6 @@ describe('HomePage', () => {
     expect(screen.getByRole('link', { name: 'Request a copy' }).getAttribute('href')).toBe(
       `mailto:${profile.email}?subject=Request%20for%20resume`,
     );
-    expect(screen.getByText(experiences[0].company)).toBeTruthy();
+    expect(screen.getByRole('heading', { name: experiences[0].company })).toBeTruthy();
   });
 });

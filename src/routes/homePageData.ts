@@ -1,6 +1,7 @@
 export const homePageContent = {
   heroTechnologies: 'React.js · TypeScript · UI Engineering',
-  heroDescription: 'Building thoughtful, maintainable web experiences with React and TypeScript.',
+  heroDescription:
+    'I build React and TypeScript interfaces, from REST API features to reusable components and responsive layouts.',
   heroContactLabel: 'Get in touch',
   projectsLinkLabel: 'View selected work',
   aboutWorkLabel: 'A little about my work',
@@ -10,7 +11,7 @@ export const homePageContent = {
     experience: { eyebrow: 'Where I’ve worked', title: 'Experience' },
   },
   aboutDescription:
-    'I care about the details that make interfaces feel clear and dependable: reusable components, considered interaction, accessible patterns, and data flows that are easy to maintain.',
+    'My work has ranged from translating Figma designs into responsive React components to integrating REST APIs for user management and tender requests.',
   educationLabel: 'Education',
   expertiseLabel: 'Technical expertise',
   contactLabel: 'Contact',
