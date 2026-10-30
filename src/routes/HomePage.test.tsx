@@ -29,9 +29,9 @@ describe('HomePage', () => {
     for (const project of projects) {
       expect(screen.getByRole('heading', { name: project.title })).toBeTruthy();
       expect(screen.getByRole('img', { name: project.screenshotAlt })).toBeTruthy();
-      expect(screen.getByRole('link', { name: project.demoLabel }).getAttribute('href')).toBe(
-        project.demoHref,
-      );
+      const demoLink = screen.getByRole('link', { name: project.demoLabel });
+      expect(demoLink.getAttribute('href')).toBe(project.demoHref);
+      expect(demoLink.hasAttribute('target')).toBe(false);
     }
 
     expect(screen.getAllByRole('link', { name: 'GitHub' })).toHaveLength(projects.length);

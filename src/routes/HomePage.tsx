@@ -181,7 +181,7 @@ export default function HomePage() {
                         fill="none"
                         className="ml-1 inline-block h-4 w-4"
                       >
-                        <path d="M6 14 14 6M6 6h8v8" stroke="currentColor" strokeWidth="1.5" />
+                        <path d="M4 10h11m0 0-4-4m4 4-4 4" stroke="currentColor" strokeWidth="1.5" />
                       </svg>
                     </Link>
                     <a
