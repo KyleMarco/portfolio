@@ -58,7 +58,7 @@ tests/
   fixtures/                     # Reusable test data, when needed
 ```
 
-This repository uses `src/app/` for application setup, `src/routes/` for route-level screens, and `src/shared/ui/` for reusable components. Keep component and feature tests alongside their implementation. Keep feature-owned APIs, hooks, and types near their feature; share them only when needed across areas. Use Redux Toolkit for client-side state, Axios for HTTP requests, and TanStack Query for remote data. Configure shared application providers in `src/app/providers/`.
+This repository uses `src/app/` for application setup, `src/routes/` for route-level screens, and `src/shared/ui/` for reusable components. Keep component and feature tests alongside their implementation. Keep feature-owned APIs, hooks, and types near their feature; share them only when needed across areas. The project includes Redux Toolkit, Axios, and TanStack Query; use them when they fit the existing data flow and the task, not as mandatory additions to every feature. Configure shared application providers in `src/app/providers/`.
 
 ## Procedure
 
