@@ -44,10 +44,15 @@ export default function HomePage() {
             <br />
             {profile.lastName}
           </h1>
-          <p className="mt-7 max-w-2xl text-lg leading-8 text-stone-600 sm:text-xl">
-            Senior Frontend Developer building thoughtful, maintainable web experiences with React
-            and TypeScript.
-          </p>
+          <div className="mt-7 max-w-2xl">
+            <p className="inline-flex items-center gap-2 border border-stone-300 bg-[#f2f0eb] px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-stone-800">
+              <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-amber-700" />
+              Senior Frontend Developer
+            </p>
+            <p className="mt-4 max-w-xl text-lg leading-8 text-stone-600 sm:text-xl">
+              Building thoughtful, maintainable web experiences with React and TypeScript.
+            </p>
+          </div>
           <div className="mt-9 flex flex-wrap items-center gap-3">
             <a
               href={`mailto:${profile.email}`}
@@ -226,7 +231,9 @@ export default function HomePage() {
                   <h3 className="mt-2 text-lg font-medium tracking-tight text-stone-950">
                     {experience.company}
                   </h3>
-                  <p className="mt-1 text-sm text-stone-600">{experience.role}</p>
+                  <p className="mt-1 text-base font-medium leading-6 text-stone-700">
+                    {experience.role}
+                  </p>
                   {experience.location && (
                     <p className="mt-1 text-sm text-stone-500">{experience.location}</p>
                   )}
