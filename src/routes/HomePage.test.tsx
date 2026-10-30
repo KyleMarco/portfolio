@@ -1,7 +1,7 @@
 import { cleanup, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
 import HomePage from './HomePage';
-import { experiences, profile, projects } from './homePageData';
+import { experiences, profile, projects } from './portfolioData';
 import { MemoryRouter } from 'react-router-dom';
 
 afterEach(cleanup);

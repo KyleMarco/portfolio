@@ -1,6 +1,6 @@
 import { BrowserRouter, Link, Navigate, Route, Routes } from 'react-router-dom';
 import { HomePage, NotFoundPage, ShopPage } from '../../routes';
-import { profile } from '../../routes/homePageData';
+import { profile } from '../../routes/portfolioData';
 
 export function AppRouter() {
   return (

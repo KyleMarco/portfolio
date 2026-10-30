@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { homePageContent } from './homePageData';
 import {
   contactCards,
   education,
@@ -6,7 +7,7 @@ import {
   profile,
   projects,
   skillGroups,
-} from './homePageData';
+} from './portfolioData';
 
 function SectionHeading({ eyebrow, title, id }: { eyebrow: string; title: string; id?: string }) {
   return (
@@ -33,7 +34,7 @@ export default function HomePage() {
         <div>
           <p className="mb-7 flex items-center gap-3 text-xs font-medium uppercase tracking-[0.18em] text-stone-500">
             <span aria-hidden="true" className="h-px w-8 bg-stone-400" />
-            React.js · TypeScript · UI Engineering
+            {homePageContent.heroTechnologies}
           </p>
           <h1
             id="hero-title"
@@ -47,10 +48,10 @@ export default function HomePage() {
           <div className="mt-7 max-w-2xl">
             <p className="inline-flex items-center gap-2 border border-stone-300 bg-[#f2f0eb] px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-stone-800">
               <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-amber-700" />
-              Senior Frontend Developer
+              {profile.role}
             </p>
             <p className="mt-4 max-w-xl text-lg leading-8 text-stone-600 sm:text-xl">
-              Building thoughtful, maintainable web experiences with React and TypeScript.
+              {homePageContent.heroDescription}
             </p>
           </div>
           <div className="mt-9 flex flex-wrap items-center gap-3">
@@ -58,19 +59,22 @@ export default function HomePage() {
               href={`mailto:${profile.email}`}
               className="inline-flex min-h-12 items-center justify-center gap-3 bg-stone-950 px-5 text-sm font-medium text-white transition-colors hover:bg-stone-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950 motion-reduce:transition-none"
             >
-              Get in touch <span aria-hidden="true">↗</span>
+              {homePageContent.heroContactLabel}
+              <svg aria-hidden="true" focusable="false" viewBox="0 0 20 20" fill="none" className="h-4 w-4">
+                <path d="M6 14 14 6M6 6h8v8" stroke="currentColor" strokeWidth="1.5" />
+              </svg>
             </a>
             <a
               href="#projects"
               className="inline-flex min-h-12 items-center justify-center border border-stone-300 px-5 text-sm font-medium text-stone-800 transition-colors hover:border-stone-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950 motion-reduce:transition-none"
             >
-              View selected work
+              {homePageContent.projectsLinkLabel}
             </a>
           </div>
         </div>
         <aside className="border-t border-stone-300 pt-5 lg:justify-self-end lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
           <p className="text-xs font-medium uppercase tracking-[0.16em] text-stone-500">
-            A little about my work
+            {homePageContent.aboutWorkLabel}
           </p>
           <p className="mt-4 max-w-sm text-sm leading-7 text-stone-600">{profile.summary}</p>
           <a
@@ -88,7 +92,7 @@ export default function HomePage() {
         className="scroll-mt-24 border-y border-stone-200 bg-[#f2f0eb]"
       >
         <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24 lg:px-10">
-          <SectionHeading eyebrow="Selected work" title="Projects" id="projects-title" />
+          <SectionHeading {...homePageContent.sectionHeadings.projects} id="projects-title" />
           <div className="grid gap-6 lg:grid-cols-2">
             {projects.map((project, index) => (
               <article
@@ -108,7 +112,7 @@ export default function HomePage() {
                   <div className="flex items-start justify-between gap-4">
                     <div>
                       <p className="text-xs font-medium uppercase tracking-[0.16em] text-stone-500">
-                        0{index + 1} / {project.category}
+                        0{index + 1}{homePageContent.projectNumberSeparator}{project.category}
                       </p>
                       <h3 className="mt-3 text-xl font-medium tracking-tight text-stone-950 sm:text-2xl">
                         {project.title}
@@ -118,7 +122,9 @@ export default function HomePage() {
                       aria-hidden="true"
                       className="mt-1 text-lg text-stone-400 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1 motion-reduce:transition-none"
                     >
-                      ↗
+                      <svg aria-hidden="true" focusable="false" viewBox="0 0 20 20" fill="none" className="h-5 w-5">
+                        <path d="M6 14 14 6M6 6h8v8" stroke="currentColor" strokeWidth="1.5" />
+                      </svg>
                     </span>
                   </div>
                   <p className="mt-3 text-sm leading-7 text-stone-600">{project.description}</p>
@@ -140,7 +146,10 @@ export default function HomePage() {
                       to={project.demoHref}
                       className="text-sm font-medium text-stone-900 underline decoration-stone-300 underline-offset-4 transition-colors hover:decoration-stone-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950"
                     >
-                      {project.demoLabel} <span aria-hidden="true">↗</span>
+                      {project.demoLabel}
+                      <svg aria-hidden="true" focusable="false" viewBox="0 0 20 20" fill="none" className="ml-1 inline-block h-4 w-4">
+                        <path d="M6 14 14 6M6 6h8v8" stroke="currentColor" strokeWidth="1.5" />
+                      </svg>
                     </Link>
                     <a
                       href={project.sourceHref}
@@ -148,7 +157,10 @@ export default function HomePage() {
                       rel="noreferrer"
                       className="text-sm font-medium text-stone-600 underline decoration-stone-300 underline-offset-4 transition-colors hover:text-stone-950 hover:decoration-stone-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950"
                     >
-                      GitHub <span aria-hidden="true">↗</span>
+                      {homePageContent.projectLinkLabels.source}
+                      <svg aria-hidden="true" focusable="false" viewBox="0 0 20 20" fill="none" className="ml-1 inline-block h-4 w-4">
+                        <path d="M6 14 14 6M6 6h8v8" stroke="currentColor" strokeWidth="1.5" />
+                      </svg>
                     </a>
                   </div>
                 </div>
@@ -164,21 +176,19 @@ export default function HomePage() {
         className="scroll-mt-24 mx-auto grid max-w-6xl gap-12 px-5 py-16 sm:px-8 sm:py-24 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24 lg:px-10"
       >
         <div>
-          <SectionHeading eyebrow="A bit about me" title="Approach" id="about-title" />
+          <SectionHeading {...homePageContent.sectionHeadings.about} id="about-title" />
           <p className="text-base leading-8 text-stone-600">
-            I care about the details that make interfaces feel clear and dependable: reusable
-            components, considered interaction, accessible patterns, and data flows that are easy to
-            maintain.
+            {homePageContent.aboutDescription}
           </p>
           <div className="mt-10 border-t border-stone-200 pt-5">
             <p className="text-xs font-medium uppercase tracking-[0.16em] text-stone-500">
-              Education
+              {homePageContent.educationLabel}
             </p>
             {education.slice(0, 1).map((item) => (
               <div key={item.institution} className="mt-3">
                 <p className="font-medium text-stone-900">{item.institution}</p>
                 <p className="mt-1 text-sm text-stone-600">
-                  {item.program} · {item.details}
+                  {item.program} {homePageContent.educationSeparator} {item.details}
                 </p>
               </div>
             ))}
@@ -186,7 +196,7 @@ export default function HomePage() {
         </div>
         <div>
           <p className="mb-5 text-xs font-medium uppercase tracking-[0.16em] text-stone-500">
-            Technical expertise
+            {homePageContent.expertiseLabel}
           </p>
           <div className="divide-y divide-stone-200 border-y border-stone-200">
             {skillGroups.map((group) => (
@@ -200,7 +210,7 @@ export default function HomePage() {
                     <li key={skill} className="text-sm leading-6 text-stone-600">
                       {skill}
                       <span aria-hidden="true" className="ml-2 text-stone-300">
-                        ·
+                        {homePageContent.skillSeparator}
                       </span>
                     </li>
                   ))}
@@ -217,7 +227,7 @@ export default function HomePage() {
         className="scroll-mt-24 border-y border-stone-200 bg-[#f2f0eb]"
       >
         <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24 lg:px-10">
-          <SectionHeading eyebrow="Where I’ve worked" title="Experience" id="experience-title" />
+          <SectionHeading {...homePageContent.sectionHeadings.experience} id="experience-title" />
           <div className="divide-y divide-stone-300">
             {experiences.map((experience) => (
               <article
@@ -242,8 +252,7 @@ export default function HomePage() {
                   <ul className="space-y-2">
                     {experience.highlights.slice(0, 3).map((highlight) => (
                       <li key={highlight} className="flex gap-3 text-sm leading-7 text-stone-600">
-                        <span aria-hidden="true" className="mt-[0.1rem] text-stone-400">
-                          —
+                        <span aria-hidden="true" className="mt-3 h-1 w-1 shrink-0 rounded-full bg-stone-400">
                         </span>
                         <span>{highlight}</span>
                       </li>
@@ -265,20 +274,23 @@ export default function HomePage() {
         <div className="grid gap-8 border-b border-stone-300 pb-10 sm:grid-cols-[1fr_auto] sm:items-end">
           <div>
             <p className="mb-3 text-xs font-medium uppercase tracking-[0.18em] text-stone-500">
-              Contact
+              {homePageContent.contactLabel}
             </p>
             <h2
               id="contact-title"
               className="max-w-2xl text-4xl font-medium tracking-[-0.04em] text-stone-950 sm:text-6xl"
             >
-              Let’s make something thoughtful.
+              {homePageContent.contactHeading}
             </h2>
           </div>
           <a
             href={`mailto:${profile.email}`}
             className="inline-flex min-h-12 items-center justify-center gap-3 bg-stone-950 px-5 text-sm font-medium text-white transition-colors hover:bg-stone-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950 motion-reduce:transition-none"
           >
-            Email me <span aria-hidden="true">↗</span>
+            {homePageContent.emailMeLabel}
+            <svg aria-hidden="true" focusable="false" viewBox="0 0 20 20" fill="none" className="h-4 w-4">
+              <path d="M6 14 14 6M6 6h8v8" stroke="currentColor" strokeWidth="1.5" />
+            </svg>
           </a>
         </div>
         <div className="grid gap-4 py-6 sm:grid-cols-3">
@@ -300,12 +312,12 @@ export default function HomePage() {
           ))}
         </div>
         <p className="text-sm text-stone-500">
-          Résumé available on request.{' '}
+          {homePageContent.resumeNotice}{' '}
           <a
-            href={`mailto:${profile.email}?subject=Request%20for%20resume`}
+            href={`mailto:${profile.email}?subject=${encodeURIComponent(homePageContent.resumeSubject)}`}
             className="font-medium text-stone-800 underline decoration-stone-300 underline-offset-4 hover:decoration-stone-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950"
           >
-            Request a copy
+            {homePageContent.resumeLinkLabel}
           </a>
         </p>
       </section>
@@ -313,13 +325,16 @@ export default function HomePage() {
       <footer className="border-t border-stone-200">
         <div className="mx-auto flex max-w-6xl flex-col gap-2 px-5 py-6 text-xs text-stone-500 sm:flex-row sm:items-center sm:justify-between sm:px-8 lg:px-10">
           <span>
-            {profile.firstName} {profile.lastName} · {profile.footerRole}
+            {profile.firstName} {profile.lastName} {homePageContent.footerSeparator} {profile.footerRole}
           </span>
           <a
             href="#top"
             className="w-fit font-medium text-stone-700 underline decoration-stone-300 underline-offset-4 hover:decoration-stone-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950"
           >
-            Back to top ↑
+            {homePageContent.backToTopLabel}
+            <svg aria-hidden="true" focusable="false" viewBox="0 0 20 20" fill="none" className="ml-1 inline-block h-4 w-4">
+              <path d="M10 15V5m0 0L6 9m4-4 4 4" stroke="currentColor" strokeWidth="1.5" />
+            </svg>
           </a>
         </div>
       </footer>
