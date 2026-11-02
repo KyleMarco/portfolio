@@ -27,9 +27,9 @@ describe('HomePage', () => {
     expect(screen.getByRole('heading', { name: 'Contact' })).toBeTruthy();
 
     expect(screen.queryByRole('link', { name: 'View selected work' })).toBeNull();
-    expect(screen.getByRole('link', { name: 'Request a copy' }).getAttribute('href')).toBe(
-      `mailto:${profile.email}?subject=Request%20for%20resume`,
-    );
+    const resumeLink = screen.getByRole('link', { name: 'View résumé PDF' });
+    expect(resumeLink.getAttribute('href')).toMatch(/\.pdf(?:$|\?)/);
+    expect(resumeLink.getAttribute('target')).toBe('_blank');
     expect(screen.getByRole('heading', { name: experiences[0].company })).toBeTruthy();
   });
 });
