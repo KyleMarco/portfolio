@@ -1,13 +1,11 @@
-import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   contactCards,
   education,
   experiences,
   profile,
-  projects,
   skillGroups,
-} from './portfolioData';
+} from '../portfolioData';
 
 function SectionHeading({ eyebrow, title, id }: { eyebrow: string; title: string; id?: string }) {
   return (
@@ -72,12 +70,6 @@ export default function HomePage() {
                 <path d="M6 14 14 6M6 6h8v8" stroke="currentColor" strokeWidth="1.5" />
               </svg>
             </a>
-            <a
-              href="#projects"
-              className="inline-flex min-h-12 items-center justify-center border border-stone-300 px-5 text-sm font-medium text-stone-800 transition-colors hover:border-stone-500 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950 motion-reduce:transition-none"
-            >
-              {t('home.selectedWork')}
-            </a>
           </div>
         </div>
         <aside className="border-t border-stone-300 pt-5 lg:justify-self-end lg:border-l lg:border-t-0 lg:border-amber-800 lg:pl-8 lg:pt-0">
@@ -98,115 +90,6 @@ export default function HomePage() {
             {profile.email}
           </a>
         </aside>
-      </section>
-
-      <section
-        id="projects"
-        aria-labelledby="projects-title"
-        className="scroll-mt-24 border-y border-stone-200 bg-[#f2f0eb]"
-      >
-        <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24 lg:px-10">
-          <SectionHeading
-            eyebrow={t('home.projectsEyebrow')}
-            title={t('home.projectsTitle')}
-            id="projects-title"
-          />
-          <div className="grid gap-6 lg:grid-cols-2">
-            {projects.map((project, index) => (
-              <article
-                key={project.title}
-                className="group overflow-hidden border-t-2 border-stone-300 bg-transparent transition-colors hover:border-amber-800 motion-reduce:transition-none"
-              >
-                <img
-                  src={`${import.meta.env.BASE_URL}${project.screenshot}`}
-                  alt={project.screenshotAlt}
-                  width={1280}
-                  height={800}
-                  loading="lazy"
-                  decoding="async"
-                  className="aspect-[1.65] w-full bg-stone-200 object-cover object-top transition-transform duration-500 group-hover:scale-[1.015] motion-reduce:transition-none"
-                />
-                <div className="p-5 sm:p-7">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <p className="text-xs font-semibold uppercase tracking-[0.12em] text-amber-900">
-                        <span className="mr-2 font-serif text-lg italic">0{index + 1}</span>
-                        {project.category}
-                      </p>
-                      <h3 className="mt-3 font-serif text-2xl font-medium tracking-tight text-stone-950 sm:text-3xl">
-                        {project.title}
-                      </h3>
-                    </div>
-                    <span
-                      aria-hidden="true"
-                      className="mt-1 text-lg text-amber-800 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1 motion-reduce:transition-none"
-                    >
-                      <svg
-                        aria-hidden="true"
-                        focusable="false"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                        className="h-5 w-5"
-                      >
-                        <path d="M6 14 14 6M6 6h8v8" stroke="currentColor" strokeWidth="1.5" />
-                      </svg>
-                    </span>
-                  </div>
-                  <p className="mt-3 text-sm leading-7 text-stone-600">{project.description}</p>
-                  <ul
-                    aria-label={`${project.title} technologies`}
-                    className="mt-5 flex flex-wrap gap-x-3 gap-y-1"
-                  >
-                    {project.technologies.map((technology, technologyIndex) => (
-                      <li key={technology} className="text-xs text-stone-500">
-                        {technologyIndex > 0 && (
-                          <span aria-hidden="true" className="mr-3 text-amber-800">
-                            /
-                          </span>
-                        )}
-                        {technology}
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="mt-6 flex flex-wrap gap-x-6 gap-y-3 border-t border-stone-200 pt-4">
-                    <Link
-                      to={project.demoHref}
-                      className="text-sm font-semibold text-amber-900 underline decoration-amber-800/40 underline-offset-4 transition-colors hover:decoration-amber-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950"
-                    >
-                      {project.demoLabel}
-                      <svg
-                        aria-hidden="true"
-                        focusable="false"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                        className="ml-1 inline-block h-4 w-4"
-                      >
-                        <path d="M4 10h11m0 0-4-4m4 4-4 4" stroke="currentColor" strokeWidth="1.5" />
-                      </svg>
-                    </Link>
-                    <a
-                      href={project.sourceHref}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="text-sm font-medium text-stone-600 underline decoration-stone-300 underline-offset-4 transition-colors hover:text-stone-950 hover:decoration-stone-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950"
-                    >
-                      {t('home.source')}
-                      <svg
-                        aria-hidden="true"
-                        focusable="false"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                        className="ml-1 inline-block h-4 w-4"
-                      >
-                        <path d="M6 14 14 6M6 6h8v8" stroke="currentColor" strokeWidth="1.5" />
-                      </svg>
-                    </a>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
       </section>
 
       <section
@@ -318,35 +201,13 @@ export default function HomePage() {
         aria-labelledby="contact-title"
         className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24 lg:px-10"
       >
-        <div className="grid gap-8 border-b border-stone-300 pb-10 sm:grid-cols-[1fr_auto] sm:items-end">
-          <div>
-            <p className="mb-3 text-xs font-medium uppercase tracking-[0.18em] text-stone-500">
-              {t('home.contactLabel')}
-            </p>
-            <h2
-              id="contact-title"
-              className="max-w-2xl font-serif text-5xl font-medium tracking-[-0.035em] text-stone-950 sm:text-7xl"
-            >
-              {t('home.contactHeading')}
-            </h2>
-          </div>
-          <a
-            href={`mailto:${profile.email}`}
-            className="inline-flex min-h-12 items-center justify-center gap-3 bg-stone-950 px-5 text-sm font-medium text-white transition-colors hover:bg-stone-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950 motion-reduce:transition-none"
-          >
-            {t('home.emailMe')}
-            <svg
-              aria-hidden="true"
-              focusable="false"
-              viewBox="0 0 20 20"
-              fill="none"
-              className="h-4 w-4"
-            >
-              <path d="M6 14 14 6M6 6h8v8" stroke="currentColor" strokeWidth="1.5" />
-            </svg>
-          </a>
-        </div>
-        <div className="grid gap-x-8 py-6 sm:grid-cols-3">
+        <h2
+          id="contact-title"
+          className="mb-4 font-serif text-4xl font-medium tracking-tight text-stone-950 sm:text-5xl"
+        >
+          {t('home.contactTitle')}
+        </h2>
+        <div className="grid gap-x-8 border-t border-stone-300 py-3 sm:grid-cols-3">
           {contactCards.map((card) => (
             <a
               key={card.label}

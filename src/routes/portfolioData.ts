@@ -3,7 +3,7 @@ export const profile = {
   lastName: 'Cabiling',
   role: 'Senior Frontend Developer',
   summary:
-    'I work across React component design, API integration, and state management, with experience maintaining applications from prototypes through production.',
+    'I build React interfaces, integrate APIs, and maintain applications, including legacy systems.',
   monogramPrimary: 'KM',
   monogramAccent: 'C',
   tagline: 'UI with intention',
@@ -47,9 +47,9 @@ export const experiences = [
     technologies:
       'ReactJS, TypeScript, TanStack Query, Redux, Redux Toolkit, Tailwind CSS, Material UI, Jest, React Testing Library, Git, GitHub Copilot',
     highlights: [
-      'Develop scalable, reusable, and maintainable frontend components with ReactJS, TypeScript, and modern frontend practices.',
-      'Build interactive, responsive interfaces with functional components and React Hooks, translating business requirements into maintainable solutions.',
-      "Migrate a Lovable-generated prototype into the team's standardized repository, aligning it with project architecture, coding conventions, and development standards.",
+      'Build reusable frontend components with ReactJS and TypeScript.',
+      'Implement responsive interfaces and API-backed features with React Hooks, TanStack Query, and Redux Toolkit.',
+      "Move a Lovable prototype into the team's repository and adapt it to the existing architecture and conventions.",
       'Create reusable AI prompts and custom skills for converting AI-generated prototypes into production-aligned code.',
       'Manage data fetching, caching, and asynchronous API interactions with TanStack Query.',
       'Manage client-side application state with Redux and Redux Toolkit.',

@@ -1,6 +1,6 @@
 import { BrowserRouter, Link, Navigate, Route, Routes } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { HomePage, NotFoundPage, ShopPage } from '../../routes';
+import { HomePage, NotFoundPage } from '../../routes';
 import { profile } from '../../routes/portfolioData';
 
 export function AppRouter() {
@@ -69,8 +69,6 @@ export function AppRouter() {
 
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/demo" element={<ShopPage />} />
-          <Route path="/shop" element={<Navigate to="/demo" replace />} />
           <Route path="/about" element={<Navigate to="/" replace />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

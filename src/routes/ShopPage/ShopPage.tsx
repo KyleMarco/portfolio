@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import type { AppDispatch, RootState } from '../app/store';
+import type { AppDispatch, RootState } from '../../app/store';
 import {
   addToCart,
   clearCart,
@@ -9,9 +9,9 @@ import {
   setCatalogItems,
   updateCartQuantity,
   catalogItems,
-} from '../features/cart/cartSlice';
-import { useCartCatalog } from '../features/cart/hooks/useCartCatalog';
-import { useCartMutations } from '../features/cart/hooks/useCartMutations';
+} from '../../features/cart/cartSlice';
+import { useCartCatalog } from '../../features/cart/hooks/useCartCatalog';
+import { useCartMutations } from '../../features/cart/hooks/useCartMutations';
 import { Button, PopupDialog, useToast } from '@kylemarco/shared-ui';
 
 type FilterValue = 'all' | 'available' | 'unavailable';
