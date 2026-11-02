@@ -21,19 +21,19 @@ function AppRouter() {
           >
             <div className="flex items-center gap-2 sm:gap-7">
               <a
-                href={`${import.meta.env.BASE_URL}#about`}
+                href="#about"
                 className="text-xs text-stone-500 transition-colors hover:text-stone-950 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950 sm:text-sm dark:text-stone-400 dark:hover:text-stone-50 dark:focus-visible:outline-stone-100"
               >
                 {t('navigation.about')}
               </a>
               <a
-                href={`${import.meta.env.BASE_URL}#experience`}
+                href="#experience"
                 className="text-xs text-stone-500 transition-colors hover:text-stone-950 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950 sm:text-sm dark:text-stone-400 dark:hover:text-stone-50 dark:focus-visible:outline-stone-100"
               >
                 {t('navigation.experience')}
               </a>
               <a
-                href={`${import.meta.env.BASE_URL}#contact`}
+                href="#contact"
                 className="text-xs text-stone-500 transition-colors hover:text-stone-950 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950 sm:text-sm dark:text-stone-400 dark:hover:text-stone-50 dark:focus-visible:outline-stone-100"
               >
                 {t('navigation.contact')}

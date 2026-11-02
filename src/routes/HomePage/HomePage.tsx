@@ -1,3 +1,4 @@
+import { useLayoutEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { contactCards, education, experiences, profile, skillGroups } from '../portfolioData';
 
@@ -22,14 +23,57 @@ function SectionHeading({ eyebrow, title, id }: { eyebrow: string; title: string
 
 export default function HomePage() {
   const { t, i18n } = useTranslation();
+  const mainRef = useRef<HTMLElement>(null);
   const locale = i18n.resolvedLanguage?.startsWith('fil') ? 'fil-PH' : 'en-PH';
   const dateFormatter = new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric' });
   const formatMonthYear = (date: { year: number; month: number }) =>
     dateFormatter.format(new Date(date.year, date.month - 1, 1));
 
+  useLayoutEffect(() => {
+    const main = mainRef.current;
+    if (
+      !main ||
+      !('IntersectionObserver' in window) ||
+      window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+    ) {
+      return;
+    }
+
+    const sections = Array.from(main.querySelectorAll<HTMLElement>('[data-scroll-reveal]'));
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+
+          const section = entry.target as HTMLElement;
+          section.dataset.scrollRevealState = 'visible';
+          observer.unobserve(section);
+        });
+      },
+      { threshold: 0.08, rootMargin: '0px 0px -8% 0px' },
+    );
+
+    sections.forEach((section) => {
+      if (section.getBoundingClientRect().top <= window.innerHeight) return;
+
+      section.dataset.scrollRevealState = 'hidden';
+      observer.observe(section);
+    });
+
+    return () => {
+      observer.disconnect();
+      sections.forEach((section) => delete section.dataset.scrollRevealState);
+    };
+  }, []);
+
   return (
-    <main>
+    <main ref={mainRef} className="relative isolate">
+      <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+        <div className="ambient-drift absolute -left-48 -top-52 h-[32rem] w-[32rem] rounded-full bg-amber-300/25 blur-3xl dark:bg-amber-600/10" />
+        <div className="ambient-drift ambient-drift-delayed absolute -right-52 top-[35%] h-[38rem] w-[38rem] rounded-full bg-rose-200/20 blur-3xl dark:bg-blue-600/10" />
+      </div>
       <section
+        data-scroll-reveal
         aria-labelledby="hero-title"
         className="mx-auto grid max-w-6xl gap-12 px-5 pb-20 pt-16 sm:px-8 sm:pb-28 sm:pt-24 lg:grid-cols-[1.35fr_0.65fr] lg:items-end lg:gap-20 lg:px-10 lg:pt-32"
       >
@@ -78,6 +122,7 @@ export default function HomePage() {
       </section>
 
       <section
+        data-scroll-reveal
         id="about"
         aria-labelledby="about-title"
         className="scroll-mt-24 mx-auto grid max-w-6xl gap-12 px-5 py-16 sm:px-8 sm:py-24 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24 lg:px-10"
@@ -148,6 +193,7 @@ export default function HomePage() {
       </section>
 
       <section
+        data-scroll-reveal
         id="experience"
         aria-labelledby="experience-title"
         className="scroll-mt-24 border-y border-stone-200 bg-[#f2f0eb] dark:border-stone-800 dark:bg-stone-900"
@@ -228,6 +274,7 @@ export default function HomePage() {
       </section>
 
       <section
+        data-scroll-reveal
         id="contact"
         aria-labelledby="contact-title"
         className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24 lg:px-10"
