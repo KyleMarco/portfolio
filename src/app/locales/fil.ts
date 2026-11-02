@@ -167,6 +167,7 @@ export const fil: LocaleShape<typeof en> = {
         email: 'Email',
         phone: 'Telepono',
         linkedin: 'LinkedIn',
+        github: 'GitHub',
       },
     },
     shop: {

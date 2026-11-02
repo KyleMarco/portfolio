@@ -238,7 +238,7 @@ export default function HomePage() {
         >
           {t('home.contactTitle')}
         </h2>
-        <div className="grid gap-x-8 border-t border-stone-300 py-3 sm:grid-cols-3 dark:border-stone-700">
+        <div className="grid gap-x-8 border-t border-stone-300 py-3 sm:grid-cols-2 lg:grid-cols-4 dark:border-stone-700">
           {contactCards.map((card) => (
             <a
               key={card.id}

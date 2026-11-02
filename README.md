@@ -1,146 +1,83 @@
-# Kyle Marco Cabiling — Portfolio
+# Kyle Marco Cabiling Portfolio
 
-A minimal portfolio website for a Senior Frontend Developer, with an interactive storefront demo.
+A responsive portfolio site for a senior frontend developer. The repository also includes a storefront demo page and its cart data flow.
 
-## Overview
+## What is in the app
 
-The home page presents selected work, professional experience, technical expertise, and contact details. It also includes:
+- The home page presents selected projects, professional experience, technical skills, education, and contact links. Portfolio content is defined in [`portfolioData.ts`](./src/routes/portfolioData.ts); English and Filipino copy is in [`src/app/locales/`](./src/app/locales/).
+- The site supports light and dark themes, follows the system theme until the visitor chooses one, and saves a manual theme choice in local storage.
+- The storefront page in [`ShopPage.tsx`](./src/routes/ShopPage/ShopPage.tsx) includes a product catalog, availability filters, pagination, quantity selection, and a cart dialog. It fetches catalog data from DummyJSON and uses the local Redux store for cart state. API mutation failures fall back to local cart behavior. Cart contents are in memory and reset on page reload.
 
-- A responsive React and TypeScript portfolio
-- An interactive storefront at `/demo` demonstrating catalog and cart behavior
-- An About URL redirect and a not-found route
+### Routes
 
-## Tech stack
+The [router](./src/app/router/index.tsx) currently registers `/` for the portfolio and a catch-all not-found page. [`ShopPage`](./src/routes/ShopPage/ShopPage.tsx) and [`AboutPage`](./src/routes/AboutPage/AboutPage.tsx) are exported components, but neither is registered as a route. Visiting `/demo` therefore displays the not-found page.
 
-- React 19
-- TypeScript
-- Vite
-- Redux Toolkit
-- React Redux
-- TanStack Query
-- React Router DOM
-- Tailwind CSS
-- Axios
-- Oxlint
-- Prettier
+## Stack
 
-## Coding standards
+- React 19 and TypeScript
+- Vite 8 and Tailwind CSS 4
+- React Router DOM 7
+- Redux Toolkit and React Redux for cart state
+- TanStack Query and Axios for catalog and cart API requests
+- i18next and react-i18next for English and Filipino translations
+- `@kylemarco/shared-ui` for shared buttons, dialogs, and toast notifications
+- Vitest, Testing Library, Oxlint, and Prettier
 
-- Keep TypeScript strict and use explicit types for component props, state, and API data. Avoid `any` and unsafe casts.
-- Use React function components and hooks; keep hooks within the Rules of Hooks.
-- Keep code in its owning layer: app setup in `src/app/`, feature behavior in `src/features/`, route-level screens in `src/routes/`, and reusable UI in `src/shared/ui/`.
-- Organize feature-owned APIs, hooks, and types with their feature; use shared UI or API utilities only when needed. See [the frontend skill](.github/skills/frontend/SKILL.md) for the frontend architecture and workflow.
-- Prefer semantic, accessible HTML and preserve loading, empty, and error states. Add or update tests for meaningful behavior changes.
-- Use Prettier for consistent formatting: two-space indentation, single quotes, and semicolons. Run `npm run format` to format the project and `npm run format:check` to verify formatting.
-- Run `npm run lint` before submitting changes. Oxlint treats correctness issues as errors and suspicious patterns as warnings. Also run `npm run test` for behavior changes and `npm run build` when changing application code.
+## Local development
 
-## Features
-
-### Portfolio
-
-- Selected project previews link to the live storefront demo and this repository.
-- Professional experience and technical expertise are sourced from `src/routes/portfolioData.ts`.
-- Contact links include email, phone, LinkedIn, and a résumé request by email.
-
-### Storefront demo
-
-- Product catalog rendered from DummyJSON cart data
-- Availability filters: All, Available, and Unavailable
-- Quantity selection before adding products to the cart
-- Cart summary with total items and total price
-- Clear cart action with graceful API fallback handling
-- Redux Toolkit cart state, TanStack Query catalog fetching, and toast feedback
-
-### Routing
-
-- Portfolio home page with project, about, experience, and contact sections
-- `/demo` storefront page for catalog browsing and cart operations
-- `/about` redirects to the portfolio home page
-- Not found route for unmatched paths
-
-## Getting started
-
-### Install dependencies
+Use Node.js 22, matching the GitHub Actions workflow. The `@kylemarco/shared-ui` dependency is hosted on GitHub Packages. Before installing, set `NODE_AUTH_TOKEN` in your shell to a GitHub token with permission to read packages. The repository's [`.npmrc`](./.npmrc) reads this environment variable; do not add a token to the repository.
 
 ```bash
-npm install
-```
-
-### Run the app locally
-
-```bash
+npm ci
 npm run dev
 ```
 
-The app runs with Vite in development mode and is available in the browser at the default local Vite port.
+Vite prints the local development URL when the server starts.
 
-### Build for production
+## Project scripts
 
-```bash
-npm run build
-```
+| Command                | Purpose                                           |
+| ---------------------- | ------------------------------------------------- |
+| `npm run dev`          | Start the Vite development server                 |
+| `npm run build`        | Create the production build in `dist/`            |
+| `npm run preview`      | Serve the production build locally                |
+| `npm run lint`         | Run Oxlint                                        |
+| `npm run test`         | Run the Vitest suite once                         |
+| `npm run format`       | Format files with Prettier                        |
+| `npm run format:check` | Check Prettier formatting without writing changes |
 
-### Lint the project
+Follow [AGENTS.md](./AGENTS.md) and the [frontend skill](./.github/skills/frontend/SKILL.md) for repository conventions and frontend workflow guidance.
 
-```bash
-npm run lint
-```
-
-### Run unit tests
-
-```bash
-npm test
-```
-
-### Preview the production build
-
-```bash
-npm run preview
-```
-
-## Project structure
+## Project layout
 
 ```text
 src/
   app/
-    App.tsx
-    providers/
-      AppProviders.tsx
-    router/
-      index.tsx
-    store/
-      index.ts
-    styles/
-      globals.css
+    providers/       # Redux, TanStack Query, i18n, theme, and toast providers
+    router/          # BrowserRouter and registered routes
+    store/           # Redux store and application types
+    styles/          # Global Tailwind CSS styles
   features/
-    cart/
-      cartSlice.ts
-      api/
-        cartApi.ts
-      hooks/
-        useCartCatalog.ts
-        useCartMutations.ts
+    cart/            # Cart slice, API calls, and TanStack Query hooks
   routes/
-    AboutPage.tsx
-    HomePage.tsx
-    NotFoundPage.tsx
-    ShopPage.tsx
-    index.ts
-  shared/
-    ui/
-      Button.tsx
-      Toast.tsx
-  main.tsx
+    AboutPage/       # About page component (not currently routed)
+    HomePage/        # Portfolio home page and its test
+    NotFoundPage/    # Fallback route
+    ShopPage/        # Storefront component (not currently routed)
+    portfolioData.ts # Portfolio content data
+  main.tsx           # Application entry point
+public/              # Static assets, including the resume PDF
+.github/workflows/   # GitHub Actions validation and Pages deployment
 ```
 
-## Data sources
+Shared UI components are imported from `@kylemarco/shared-ui` rather than maintained under `src/shared/` in this repository.
 
-- Product catalog: DummyJSON carts endpoint
+## Data and state
 
-The storefront demonstrates common frontend patterns and is not intended as a production e-commerce implementation.
+The storefront catalog is read from `https://dummyjson.com/carts`. Add and clear operations also call DummyJSON endpoints, but the visible cart is managed by Redux Toolkit in the browser. If a mutation request fails, the UI still applies the add or clear locally. The catalog query is managed by TanStack Query. This is a frontend demonstration and does not provide persistent shopping-cart or checkout services.
 
-## Notes
+There are no runtime environment variables for the portfolio. `NODE_AUTH_TOKEN` is required during dependency installation so npm can download the private shared UI package.
 
-- The cart API requests are wrapped in a fallback strategy so the UI still works even when the remote API is unavailable.
-- The app uses a Redux store for cart state and a central React Query client configured in the app providers.
-- Styling follows the project’s dark utility-class based approach and keeps the design intentionally minimal and modern.
+## Deployment
+
+The Vite base path is `/portfolio/`, matching GitHub Pages project-site hosting. The [workflow](./.github/workflows/deploy.yml) runs lint, tests, and the production build on pull requests and updates to `main`. Pushes to `main` and manual workflow runs also deploy the build to GitHub Pages. The workflow uses the `NODE_AUTH_TOKEN` repository secret to install the private package and adds a `404.html` copy of the app entry point to support client-side routing on Pages.

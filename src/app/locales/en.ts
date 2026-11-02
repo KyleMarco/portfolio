@@ -154,6 +154,7 @@ export const en = {
         email: 'Email',
         phone: 'Phone',
         linkedin: 'LinkedIn',
+        github: 'GitHub',
       },
     },
     shop: {

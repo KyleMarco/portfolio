@@ -170,4 +170,9 @@ export const contactCards = [
     value: 'linkedin.com/in/kylemarcocabiling',
     href: 'https://www.linkedin.com/in/kylemarcocabiling',
   },
+  {
+    id: 'github',
+    value: 'github.com/KyleMarco',
+    href: 'https://github.com/KyleMarco',
+  },
 ];
