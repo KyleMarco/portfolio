@@ -50,7 +50,7 @@ export const resources = {
         since2017: 'Since 2017',
         currentlyAt: 'Currently at',
         heroDescription:
-          'I build React interfaces from Figma designs and connect them to REST APIs.',
+          'I build responsive React interfaces from Figma designs, integrate REST APIs, and maintain modern and legacy applications.',
         contact: 'Email me',
         selectedWork: 'View selected work',
         projectsEyebrow: 'Selected work',
@@ -151,7 +151,7 @@ export const resources = {
         since2017: 'Mula 2017',
         currentlyAt: 'Kasalukuyang nasa',
         heroDescription:
-          'Gumagawa ako ng React interface mula sa mga disenyo sa Figma at kinokonekta ang mga ito sa REST API.',
+          'Gumagawa ako ng responsive na React interface mula sa mga disenyo sa Figma, nag-iintegrate ng REST API, at nagpapanatili ng moderno at legacy na application.',
         contact: 'Mag-email sa akin',
         selectedWork: 'Tingnan ang mga piling gawa',
         projectsEyebrow: 'Mga piling gawa',

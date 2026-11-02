@@ -3,7 +3,7 @@ export const profile = {
   lastName: 'Cabiling',
   role: 'Senior Frontend Developer',
   summary:
-    'I build React interfaces, integrate APIs, and maintain applications, including legacy systems.',
+    'I’m a senior frontend developer with experience since 2017, building responsive React interfaces from Figma designs, integrating REST APIs, and maintaining modern and legacy applications.',
   monogramPrimary: 'KM',
   monogramAccent: 'C',
   tagline: 'UI with intention',

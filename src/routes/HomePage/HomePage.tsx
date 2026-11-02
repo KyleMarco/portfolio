@@ -1,4 +1,4 @@
-import resumePdfUrl from '../../../public/Marco_Senior_Frontend_Developer_Resume.pdf?url';
+import resumePdfUrl from '/Marco_Senior_Frontend_Developer_Resume.pdf?url';
 import { useTranslation } from 'react-i18next';
 import {
   contactCards,
