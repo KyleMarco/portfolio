@@ -1,3 +1,4 @@
+import resumePdfUrl from '../../../Marco_Senior_Frontend_Developer_Resume.pdf?url';
 import { useTranslation } from 'react-i18next';
 import {
   contactCards,
@@ -157,7 +158,7 @@ export default function HomePage() {
             id="experience-title"
           />
           <div className="divide-y divide-stone-300">
-            {experiences.map((experience) => (
+            {experiences.map((experience, index) => (
               <article
                 key={experience.company}
                 className="grid gap-3 py-7 first:pt-0 last:pb-0 sm:grid-cols-[minmax(12rem,0.7fr)_1.3fr] sm:gap-10"
@@ -178,7 +179,7 @@ export default function HomePage() {
                 </div>
                 <div>
                   <ul className="space-y-3 border-l border-stone-300 pl-5">
-                    {experience.highlights.slice(0, 3).map((highlight) => (
+                    {experience.highlights.map((highlight) => (
                       <li key={highlight} className="relative text-sm leading-7 text-stone-600">
                         <span
                           aria-hidden="true"
@@ -188,7 +189,30 @@ export default function HomePage() {
                       </li>
                     ))}
                   </ul>
-                  <p className="mt-4 text-xs leading-6 text-stone-500">{experience.technologies}</p>
+                  <div className="mt-5 border-t border-stone-200 pt-4">
+                    <h4
+                      id={`experience-technologies-${index}`}
+                      className="text-xs font-semibold uppercase tracking-[0.12em] text-stone-500"
+                    >
+                      {t('home.technologies')}
+                    </h4>
+                    <ul
+                      aria-labelledby={`experience-technologies-${index}`}
+                      className="mt-3 flex flex-wrap gap-2"
+                    >
+                      {experience.technologies
+                        .split(',')
+                        .map((technology) => technology.trim())
+                        .map((technology) => (
+                          <li
+                            key={technology}
+                            className="border border-stone-300 bg-[#faf9f6] px-2.5 py-1 text-xs font-medium leading-5 text-stone-700"
+                          >
+                            {technology}
+                          </li>
+                        ))}
+                    </ul>
+                  </div>
                 </div>
               </article>
             ))}
@@ -226,9 +250,10 @@ export default function HomePage() {
           ))}
         </div>
         <p className="text-sm text-stone-500">
-          {t('home.resumeNotice')}{' '}
           <a
-            href={`mailto:${profile.email}?subject=${encodeURIComponent(t('home.resumeSubject'))}`}
+            href={resumePdfUrl}
+            target="_blank"
+            rel="noreferrer"
             className="font-medium text-stone-800 underline decoration-stone-300 underline-offset-4 hover:decoration-stone-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950"
           >
             {t('home.resumeLink')}

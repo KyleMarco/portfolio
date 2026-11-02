@@ -44,8 +44,9 @@ export const experiences = [
     role: 'Senior Frontend Developer',
     dates: 'April 2026 – Present',
     accent: 'bg-blue-600',
+    location: 'Hybrid - Makati City, Philippines',
     technologies:
-      'ReactJS, TypeScript, TanStack Query, Redux, Redux Toolkit, Tailwind CSS, Material UI, Jest, React Testing Library, Git, GitHub Copilot',
+      'ReactJS, TypeScript, TanStack Query, Redux, Redux Toolkit, Tailwind CSS, Material UI, Storybook, Jest, React Testing Library, Git, GitHub Copilot',
     highlights: [
       'Build reusable frontend components with ReactJS and TypeScript.',
       'Implement responsive interfaces and API-backed features with React Hooks, TanStack Query, and Redux Toolkit.',
@@ -64,8 +65,9 @@ export const experiences = [
     role: 'Frontend Developer',
     dates: 'July 2021 – March 2026',
     accent: 'bg-blue-600',
+    location: 'Remote',
     technologies:
-      'ReactJS, TypeScript, Redux, Redux Toolkit, Tailwind CSS, Sass, Jest, React Testing Library, Git, GitHub Copilot',
+      'ReactJS, TypeScript, Redux, Redux Toolkit, Tailwind CSS, Sass, Storybook, Jest, React Testing Library, Git, GitHub Copilot',
     highlights: [
       'Developed reusable ReactJS components with React Hooks, Redux Toolkit, TypeScript, Tailwind CSS, and Sass.',
       'Translated Figma designs into responsive, reusable UI components.',
@@ -86,7 +88,7 @@ export const experiences = [
     dates: 'September 2017 – April 2021',
     location: 'Cebu City, Philippines',
     accent: 'bg-blue-600',
-    technologies: 'ReactJS, Redux, Redux-Thunk, Redux-Saga, Material UI, React Hooks, Jest, VB.NET',
+    technologies: 'ReactJS, Redux, Redux-Thunk, Redux-Saga, Material UI, React Hooks, Storybook, Jest, VB.NET',
     highlights: [
       'Developed reusable ReactJS pages and UI components with class components, functional components, and React Hooks.',
       'Converted Adobe XD designs into functional ReactJS UI components.',
@@ -105,13 +107,19 @@ export const skillGroups = [
     skills: [
       'ReactJS',
       'NextJS',
+      'Vite',
       'React Hooks',
       'Redux',
       'Redux Toolkit',
+      'Redux-Thunk',
+      'Redux-Saga',
+      'TanStack Query',
       'JavaScript',
       'TypeScript',
       'Axios',
       'Tailwind CSS',
+      'Material UI',
+      'Sass',
       'Storybook',
       'HTML',
       'CSS',
@@ -140,9 +148,10 @@ export const skillGroups = [
       'Adobe XD',
       'Figma',
       'VS Code',
+      'NPM',
     ],
   },
-  { label: 'AI', skills: ['GitHub Copilot'] },
+  { label: 'AI', skills: ['GitHub Copilot', 'Codex'] },
 ];
 
 export const education = [
