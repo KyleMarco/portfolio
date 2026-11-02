@@ -9,17 +9,17 @@ on:
 
 permissions:
   contents: read
+  packages: read
 
 concurrency:
   group: pages-${{ github.ref }}
   cancel-in-progress: true
 
-env:
-  NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
-
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
