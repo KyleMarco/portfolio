@@ -16,7 +16,9 @@ export function AppRouter() {
           >
             <Link
               to="/"
-              aria-label="Kyle Marco Cabiling, home"
+              aria-label={t('navigation.homeLabel', {
+                name: `${profile.firstName} ${profile.lastName}`,
+              })}
               className="text-sm font-semibold tracking-[-0.04em] text-stone-950 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950"
             >
               KM<span className="text-stone-400">.</span>

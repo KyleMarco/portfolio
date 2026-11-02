@@ -1,12 +1,5 @@
-import resumePdfUrl from '/Marco_Senior_Frontend_Developer_Resume.pdf?url';
 import { useTranslation } from 'react-i18next';
-import {
-  contactCards,
-  education,
-  experiences,
-  profile,
-  skillGroups,
-} from '../portfolioData';
+import { contactCards, education, experiences, profile, skillGroups } from '../portfolioData';
 
 function SectionHeading({ eyebrow, title, id }: { eyebrow: string; title: string; id?: string }) {
   return (
@@ -28,7 +21,12 @@ function SectionHeading({ eyebrow, title, id }: { eyebrow: string; title: string
 }
 
 export default function HomePage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const locale = i18n.resolvedLanguage?.startsWith('fil') ? 'fil-PH' : 'en-PH';
+  const dateFormatter = new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric' });
+  const formatMonthYear = (date: { year: number; month: number }) =>
+    dateFormatter.format(new Date(date.year, date.month - 1, 1));
+
   return (
     <main>
       <section
@@ -50,7 +48,7 @@ export default function HomePage() {
             {profile.lastName}
           </h1>
           <div className="mt-8 max-w-2xl border-l-2 border-amber-800 pl-5 sm:pl-6">
-            <p className="text-sm font-semibold text-stone-900">{profile.role}</p>
+            <p className="text-sm font-semibold text-stone-900">{t('portfolio.profile.role')}</p>
             <p className="mt-2 max-w-xl text-lg leading-8 text-stone-600 sm:text-xl">
               {t('home.heroDescription')}
             </p>
@@ -81,9 +79,13 @@ export default function HomePage() {
             {experiences[0].company}
           </p>
           <p className="mt-1 text-sm text-stone-500">
-            {experiences[0].role} <span aria-hidden="true">·</span> {experiences[0].dates}
+            {t(`portfolio.experience.${experiences[0].id}.role`)} <span aria-hidden="true">·</span>{' '}
+            {formatMonthYear(experiences[0].startDate)} <span aria-hidden="true">–</span>{' '}
+            {t('portfolio.present')}
           </p>
-          <p className="mt-4 max-w-sm text-sm leading-7 text-stone-600">{profile.summary}</p>
+          <p className="mt-4 max-w-sm text-sm leading-7 text-stone-600">
+            {t('portfolio.profile.summary')}
+          </p>
           <a
             href={`mailto:${profile.email}`}
             className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-stone-900 underline decoration-stone-300 underline-offset-4 transition-colors hover:decoration-stone-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950"
@@ -113,7 +115,9 @@ export default function HomePage() {
               <div key={item.institution} className="mt-3">
                 <p className="font-medium text-stone-900">{item.institution}</p>
                 <p className="mt-1 text-sm text-stone-600">
-                  {item.program} · {item.details}
+                  {t('portfolio.education.university.program')} <span aria-hidden="true">·</span>{' '}
+                  {formatMonthYear(item.completedAt)} <span aria-hidden="true">·</span>{' '}
+                  {item.location}
                 </p>
               </div>
             ))}
@@ -126,10 +130,12 @@ export default function HomePage() {
           <div className="divide-y divide-stone-200 border-y border-stone-200">
             {skillGroups.map((group) => (
               <div
-                key={group.label}
+                key={group.id}
                 className="grid gap-3 py-5 sm:grid-cols-[minmax(10rem,0.7fr)_1.3fr] sm:gap-6"
               >
-                <h3 className="text-sm font-medium text-stone-800">{group.label}</h3>
+                <h3 className="text-sm font-medium text-stone-800">
+                  {t(`portfolio.skills.${group.id}`)}
+                </h3>
                 <ul className="flex flex-wrap gap-x-4 gap-y-2">
                   {group.skills.map((skill) => (
                     <li key={skill} className="text-sm leading-6 text-stone-600">
@@ -160,32 +166,35 @@ export default function HomePage() {
           <div className="divide-y divide-stone-300">
             {experiences.map((experience, index) => (
               <article
-                key={experience.company}
+                key={experience.id}
                 className="grid gap-3 py-7 first:pt-0 last:pb-0 sm:grid-cols-[minmax(12rem,0.7fr)_1.3fr] sm:gap-10"
               >
                 <div>
                   <p className="text-xs font-medium uppercase tracking-[0.12em] text-stone-500">
-                    {experience.dates}
+                    {formatMonthYear(experience.startDate)} <span aria-hidden="true">–</span>{' '}
+                    {experience.endDate
+                      ? formatMonthYear(experience.endDate)
+                      : t('portfolio.present')}
                   </p>
                   <h3 className="mt-2 text-lg font-medium tracking-tight text-stone-950">
                     {experience.company}
                   </h3>
                   <p className="mt-1 text-base font-medium leading-6 text-stone-700">
-                    {experience.role}
+                    {t(`portfolio.experience.${experience.id}.role`)}
                   </p>
-                  {experience.location && (
-                    <p className="mt-1 text-sm text-stone-500">{experience.location}</p>
-                  )}
+                  <p className="mt-1 text-sm text-stone-500">
+                    {t(`portfolio.experience.${experience.id}.location`)}
+                  </p>
                 </div>
                 <div>
                   <ul className="space-y-3 border-l border-stone-300 pl-5">
-                    {experience.highlights.map((highlight) => (
-                      <li key={highlight} className="relative text-sm leading-7 text-stone-600">
+                    {experience.highlights.map((highlightKey) => (
+                      <li key={highlightKey} className="relative text-sm leading-7 text-stone-600">
                         <span
                           aria-hidden="true"
                           className="absolute -left-[1.34rem] top-[0.8rem] h-1.5 w-1.5 rounded-full bg-amber-800"
                         ></span>
-                        {highlight}
+                        {t(`portfolio.experience.${experience.id}.highlights.${highlightKey}`)}
                       </li>
                     ))}
                   </ul>
@@ -234,14 +243,14 @@ export default function HomePage() {
         <div className="grid gap-x-8 border-t border-stone-300 py-3 sm:grid-cols-3">
           {contactCards.map((card) => (
             <a
-              key={card.label}
+              key={card.id}
               href={card.href}
               target={card.href.startsWith('http') ? '_blank' : undefined}
               rel={card.href.startsWith('http') ? 'noreferrer' : undefined}
               className="group border-b border-stone-300 py-4 transition-colors hover:border-amber-800 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950 motion-reduce:transition-none"
             >
               <span className="block text-xs font-medium uppercase tracking-[0.14em] text-stone-500">
-                {card.label}
+                {t(`portfolio.contact.${card.id}`)}
               </span>
               <span className="mt-2 block break-all text-base font-medium text-stone-800 group-hover:text-amber-900">
                 {card.value}
@@ -251,7 +260,7 @@ export default function HomePage() {
         </div>
         <p className="text-sm text-stone-500">
           <a
-            href={resumePdfUrl}
+            href={`${import.meta.env.BASE_URL}/Marco_Senior_Frontend_Developer_Resume.pdf`}
             target="_blank"
             rel="noreferrer"
             className="font-medium text-stone-800 underline decoration-stone-300 underline-offset-4 hover:decoration-stone-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950"
@@ -264,7 +273,8 @@ export default function HomePage() {
       <footer className="border-t border-stone-200">
         <div className="mx-auto flex max-w-6xl flex-col gap-2 px-5 py-6 text-xs text-stone-500 sm:flex-row sm:items-center sm:justify-between sm:px-8 lg:px-10">
           <span>
-            {profile.firstName} {profile.lastName} · {profile.footerRole}
+            {profile.firstName} {profile.lastName} <span aria-hidden="true">·</span>{' '}
+            {t('portfolio.profile.footerRole')}
           </span>
           <a
             href="#top"

@@ -1,109 +1,93 @@
 export const profile = {
   firstName: 'Kyle Marco',
   lastName: 'Cabiling',
-  role: 'Senior Frontend Developer',
-  summary:
-    'I’m a senior frontend developer with experience since 2017, building responsive React interfaces from Figma designs, integrating REST APIs, and maintaining modern and legacy applications.',
-  monogramPrimary: 'KM',
-  monogramAccent: 'C',
-  tagline: 'UI with intention',
-  footerRole: 'Frontend Developer',
   email: 'kylemarcocabiling@gmail.com',
 };
 
 export const projects = [
   {
-    title: 'Interactive storefront',
-    category: 'Commerce demo',
-    description:
-      'A React storefront demo with product browsing, availability filters, quantity selection, and a working cart flow, using Redux Toolkit and TanStack Query.',
+    id: 'storefront',
     technologies: ['React', 'TypeScript', 'Redux Toolkit', 'TanStack Query', 'Tailwind CSS'],
     screenshot: 'images/storefront-demo.png',
-    screenshotAlt: 'Screenshot of the interactive storefront demo',
     demoHref: '/demo',
-    demoLabel: 'Live demo',
     sourceHref: 'https://github.com/KyleMarco/portfolio',
   },
   {
-    title: 'Portfolio website',
-    category: 'Personal site',
-    description:
-      'A React and TypeScript portfolio with live project demos, a detailed work history, and direct contact links.',
+    id: 'portfolio',
     technologies: ['React', 'TypeScript', 'Vite', 'Tailwind CSS'],
     screenshot: 'images/portfolio-home.png',
-    screenshotAlt: 'Screenshot of the portfolio website',
     demoHref: '/',
-    demoLabel: 'View website',
     sourceHref: 'https://github.com/KyleMarco/portfolio',
   },
 ] as const;
 
 export const experiences = [
   {
+    id: 'kpmg',
     company: 'KPMG (RG Manabat & Co.)',
-    role: 'Senior Frontend Developer',
-    dates: 'April 2026 – Present',
+    startDate: { year: 2026, month: 4 },
+    endDate: null,
     accent: 'bg-blue-600',
-    location: 'Hybrid - Makati City, Philippines',
     technologies:
       'ReactJS, TypeScript, TanStack Query, Redux, Redux Toolkit, Tailwind CSS, Material UI, Storybook, Jest, React Testing Library, Git, GitHub Copilot',
     highlights: [
-      'Build reusable frontend components with ReactJS and TypeScript.',
-      'Implement responsive interfaces and API-backed features with React Hooks, TanStack Query, and Redux Toolkit.',
-      "Move a Lovable prototype into the team's repository and adapt it to the existing architecture and conventions.",
-      'Create reusable AI prompts and custom skills for converting AI-generated prototypes into production-aligned code.',
-      'Manage data fetching, caching, and asynchronous API interactions with TanStack Query.',
-      'Manage client-side application state with Redux and Redux Toolkit.',
-      'Develop responsive interfaces with Tailwind CSS and Material UI.',
-      'Write and maintain component and UI tests with Jest and React Testing Library.',
-      'Use GitHub Copilot and AI-assisted workflows for code generation, refactoring, debugging, and test creation.',
-      'Collaborate across teams to deliver maintainable frontend solutions aligned with project requirements.',
+      'reusableComponents',
+      'apiBackedFeatures',
+      'prototypeMigration',
+      'aiWorkflows',
+      'dataFetching',
+      'clientState',
+      'responsiveInterfaces',
+      'uiTests',
+      'aiAssistedDevelopment',
+      'teamCollaboration',
     ],
   },
   {
+    id: 'felix',
     company: 'FELIX (ZZ Connect, Inc.)',
-    role: 'Frontend Developer',
-    dates: 'July 2021 – March 2026',
+    startDate: { year: 2021, month: 7 },
+    endDate: { year: 2026, month: 3 },
     accent: 'bg-blue-600',
-    location: 'Remote',
     technologies:
       'ReactJS, TypeScript, Redux, Redux Toolkit, Tailwind CSS, Sass, Storybook, Jest, React Testing Library, Git, GitHub Copilot',
     highlights: [
-      'Developed reusable ReactJS components with React Hooks, Redux Toolkit, TypeScript, Tailwind CSS, and Sass.',
-      'Translated Figma designs into responsive, reusable UI components.',
-      'Collaborated with backend engineers, UI/UX designers, and product managers to deliver features.',
-      'Diagnosed and optimized performance using React Developer Tools, Redux DevTools, and browser debugging tools.',
-      'Developed and maintained automated component and UI tests with Jest and React Testing Library.',
-      'Conducted code reviews and deployed features to production.',
-      'Identified and resolved NPM package security vulnerabilities.',
-      'Migrated data using Laravel and maintained legacy applications by troubleshooting CodeIgniter issues.',
-      'Built user and panel management features by integrating REST APIs for CRUD operations.',
-      'Developed the Post Tender Request feature by integrating REST APIs for retrieving and submitting tender requests.',
-      'Migrated the code repository to Semantic Versioning.',
+      'reusableComponents',
+      'figmaImplementation',
+      'crossFunctionalDelivery',
+      'performanceOptimization',
+      'automatedTests',
+      'codeReviews',
+      'securityVulnerabilities',
+      'legacyMaintenance',
+      'userManagement',
+      'tenderRequests',
+      'semanticVersioning',
     ],
   },
   {
+    id: 'fujitsu',
     company: 'FUJITSU (WeServ Systems International, Inc.)',
-    role: 'Application Systems Engineer',
-    dates: 'September 2017 – April 2021',
-    location: 'Cebu City, Philippines',
+    startDate: { year: 2017, month: 9 },
+    endDate: { year: 2021, month: 4 },
     accent: 'bg-blue-600',
-    technologies: 'ReactJS, Redux, Redux-Thunk, Redux-Saga, Material UI, React Hooks, Storybook, Jest, VB.NET',
+    technologies:
+      'ReactJS, Redux, Redux-Thunk, Redux-Saga, Material UI, React Hooks, Storybook, Jest, VB.NET',
     highlights: [
-      'Developed reusable ReactJS pages and UI components with class components, functional components, and React Hooks.',
-      'Converted Adobe XD designs into functional ReactJS UI components.',
-      'Optimized application performance and troubleshot UI issues with React Developer Tools, Redux DevTools, and browser debugging tools.',
-      'Led a ReactJS project team, contributing to development, code reviews, testing, and knowledge transfer.',
-      'Participated in creating and executing program test cases.',
-      'Reverse engineered legacy VB.NET applications and translated implementation details into technical specifications.',
-      'Helped build two ReactJS projects: one using class components, Redux, and Redux-Thunk, and a proof of concept using hooks, Redux, and Redux-Saga.',
+      'reusablePagesAndComponents',
+      'designImplementation',
+      'performanceTroubleshooting',
+      'teamLeadership',
+      'testCases',
+      'legacyAnalysis',
+      'reactProjects',
     ],
   },
-];
+] as const;
 
 export const skillGroups = [
   {
-    label: 'Frontend development',
+    id: 'frontend',
     skills: [
       'ReactJS',
       'NextJS',
@@ -133,7 +117,7 @@ export const skillGroups = [
     ],
   },
   {
-    label: 'Tools & collaboration',
+    id: 'tools',
     skills: [
       'Jira',
       'Redmine',
@@ -151,34 +135,38 @@ export const skillGroups = [
       'NPM',
     ],
   },
-  { label: 'AI', skills: ['GitHub Copilot', 'Codex'] },
-];
+  { id: 'ai', skills: ['GitHub Copilot', 'Codex'] },
+] as const;
 
 export const education = [
   {
+    id: 'university',
     institution: 'Visayas State University',
-    program: 'B.S., Computer Science',
-    details: 'July 2017 · Baybay City, Leyte, Philippines',
+    completedAt: { year: 2017, month: 7 },
+    location: 'Baybay City, Leyte, Philippines',
   },
   {
+    id: 'highSchool',
     institution: 'Kananga National High School',
-    details: 'Completed April 2013 · Kananga, Leyte, Philippines',
+    completedAt: { year: 2013, month: 4 },
+    location: 'Kananga, Leyte, Philippines',
+    completionLabel: 'completed',
   },
-];
+] as const;
 
 export const contactCards = [
   {
-    label: 'Email',
+    id: 'email',
     value: profile.email,
     href: `mailto:${profile.email}`,
   },
   {
-    label: 'Phone',
+    id: 'phone',
     value: '+63 920 601 3973',
     href: 'tel:+639206013973',
   },
   {
-    label: 'LinkedIn',
+    id: 'linkedin',
     value: 'linkedin.com/in/kylemarcocabiling',
     href: 'https://www.linkedin.com/in/kylemarcocabiling',
   },
