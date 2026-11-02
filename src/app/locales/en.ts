@@ -23,22 +23,21 @@ export const en = {
         experience: {
           title: 'Professional experience',
           description:
-            'Explore my frontend development experience across product teams and different stages of my career.',
+            'Browse my frontend career, from early React projects to product team work.',
         },
         toolkit: {
           title: 'Frontend toolkit',
           description:
-            'See the languages, frameworks, and tools I use to build responsive and maintainable web interfaces.',
+            'Explore the stack behind my interfaces, from React and TypeScript to testing tools.',
         },
         education: {
           title: 'Education and interests',
           description:
-            'Learn more about my education, areas of study, and interests beyond frontend development.',
+            'See my education and interests beyond frontend development.',
         },
         storefront: {
           title: 'Interactive storefront',
-          description:
-            'The shop page demonstrates product browsing and cart interactions alongside the portfolio.',
+          description: 'Browse sample products, filter availability, and manage a cart.',
         },
       },
     },
@@ -47,70 +46,46 @@ export const en = {
       since2017: 'Since 2017',
       currentlyAt: 'Currently at',
       heroDescription:
-        'I build responsive React interfaces from Figma designs, integrate REST APIs, and maintain modern and legacy applications.',
+        'I turn Figma designs into responsive React interfaces and connect them to REST APIs.',
       contact: 'Email me',
-      selectedWork: 'View selected work',
-      projectsEyebrow: 'Selected work',
-      projectsTitle: 'Projects',
       aboutEyebrow: 'Profile',
       aboutTitle: 'About me',
       experienceEyebrow: 'Where I’ve worked',
       experienceTitle: 'Experience',
-      source: 'GitHub',
       aboutDescription:
-        'I have built responsive React components from Figma designs and integrated APIs for user management and tender requests.',
+        'My frontend work includes user management and tender request workflows.',
       education: 'Education',
       expertise: 'Technical expertise',
       technologies: 'Technologies',
       contactTitle: 'Contact',
       resumeLink: 'View résumé PDF',
-      resumeSubject: 'Request for resume',
       backToTop: 'Back to top',
     },
     portfolio: {
       profile: {
         role: 'Senior Frontend Developer',
         summary:
-          'I’m a senior frontend developer with experience since 2017, building responsive React interfaces from Figma designs, integrating REST APIs, and maintaining modern and legacy applications.',
-        tagline: 'UI with intention',
+          'I’ve built polished frontend experiences across modern and legacy applications.',
         footerRole: 'Frontend Developer',
       },
       present: 'Present',
-      projects: {
-        storefront: {
-          title: 'Interactive storefront',
-          category: 'Commerce demo',
-          description:
-            'A React storefront demo with product browsing, availability filters, quantity selection, and a working cart flow, using Redux Toolkit and TanStack Query.',
-          screenshotAlt: 'Screenshot of the interactive storefront demo',
-          demoLabel: 'Live demo',
-        },
-        portfolio: {
-          title: 'Portfolio website',
-          category: 'Personal site',
-          description:
-            'A React and TypeScript portfolio with live project demos, a detailed work history, and direct contact links.',
-          screenshotAlt: 'Screenshot of the portfolio website',
-          demoLabel: 'View website',
-        },
-      },
       experience: {
         kpmg: {
           role: 'Senior Frontend Developer',
           location: 'Hybrid · Makati City, Philippines',
           highlights: {
-            reusableComponents: 'Build reusable frontend components with ReactJS and TypeScript.',
+            reusableComponents: 'Build reusable React components with TypeScript.',
             apiBackedFeatures:
-              'Implement responsive interfaces and API-backed features with React Hooks, TanStack Query, and Redux Toolkit.',
+              'Connect product features to REST APIs with React Hooks and Redux Toolkit.',
             prototypeMigration:
-              "Move a Lovable prototype into the team's repository and adapt it to the existing architecture and conventions.",
+              "Adapt Lovable prototypes to the team's architecture and conventions.",
             aiWorkflows:
-              'Create reusable AI prompts and custom skills for converting AI-generated prototypes into production-aligned code.',
+              'Create reusable prompts and skills that bring AI-generated prototypes closer to production.',
             dataFetching:
-              'Manage data fetching, caching, and asynchronous API interactions with TanStack Query.',
-            clientState: 'Manage client-side application state with Redux and Redux Toolkit.',
+              'Handle server-state caching and asynchronous requests with TanStack Query.',
+            clientState: 'Manage client-side state with Redux Toolkit.',
             responsiveInterfaces:
-              'Develop responsive interfaces with Tailwind CSS and Material UI.',
+              'Create responsive layouts with Tailwind CSS and Material UI.',
             uiTests:
               'Write and maintain component and UI tests with Jest and React Testing Library.',
             aiAssistedDevelopment:
@@ -172,7 +147,6 @@ export const en = {
       },
       education: {
         university: { program: 'B.S., Computer Science' },
-        completed: 'Completed',
       },
       contact: {
         email: 'Email',

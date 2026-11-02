@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { HomePage, NotFoundPage } from '../../routes';
 import { profile } from '../../routes/portfolioData';
 
-export function AppRouter() {
+function AppRouter() {
   const { t, i18n } = useTranslation();
 
   return (
@@ -25,12 +25,6 @@ export function AppRouter() {
             </Link>
             <div className="flex items-center gap-4 sm:gap-7">
               <a
-                href={`${import.meta.env.BASE_URL}#projects`}
-                className="text-sm text-stone-500 transition-colors hover:text-stone-950 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950"
-              >
-                {t('navigation.work')}
-              </a>
-              <a
                 href={`${import.meta.env.BASE_URL}#about`}
                 className="text-sm text-stone-500 transition-colors hover:text-stone-950 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950"
               >
@@ -41,6 +35,12 @@ export function AppRouter() {
                 className="text-sm text-stone-500 transition-colors hover:text-stone-950 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950"
               >
                 {t('navigation.experience')}
+              </a>
+              <a
+                href={`${import.meta.env.BASE_URL}#contact`}
+                className="text-sm text-stone-500 transition-colors hover:text-stone-950 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950"
+              >
+                {t('navigation.contact')}
               </a>
             </div>
             <div className="flex items-center gap-3">
@@ -56,22 +56,12 @@ export function AppRouter() {
                 <option value="en">English</option>
                 <option value="fil">Filipino</option>
               </select>
-              <a
-                href={`mailto:${profile.email}`}
-                className="hidden border border-stone-300 px-3 py-2 text-xs font-medium text-stone-800 transition-colors hover:border-stone-500 sm:inline-flex"
-              >
-                {t('navigation.contact')}{' '}
-                <span aria-hidden="true" className="ml-2">
-                  ↗
-                </span>
-              </a>
             </div>
           </nav>
         </header>
 
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={<Navigate to="/" replace />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>

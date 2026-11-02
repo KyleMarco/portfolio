@@ -33,22 +33,22 @@ export const fil: LocaleShape<typeof en> = {
         experience: {
           title: 'Propesyonal na karanasan',
           description:
-            'Tingnan ang aking karanasan sa frontend development sa iba’t ibang pangkat at yugto ng aking karera.',
+            'Tingnan ang takbo ng aking karera sa frontend, mula sa mga unang proyekto sa React hanggang sa trabaho sa mga product team.',
         },
         toolkit: {
           title: 'Mga gamit sa frontend',
           description:
-            'Alamin ang mga wika, framework, at tool na ginagamit ko sa paggawa ng responsive at madaling panatilihing web interface.',
+            'Tuklasin ang mga teknolohiyang ginagamit ko sa paggawa ng mga interface, mula sa React at TypeScript hanggang sa mga testing tool.',
         },
         education: {
           title: 'Edukasyon at mga interes',
           description:
-            'Alamin ang tungkol sa aking edukasyon, pinag-aralan, at mga interes sa labas ng frontend development.',
+            'Tingnan ang aking edukasyon at mga interes sa labas ng frontend development.',
         },
         storefront: {
           title: 'Interactive na tindahan',
           description:
-            'Ipinapakita ng shop page ang pag-browse ng produkto at paggamit ng cart kasama ng portfolio.',
+            'Mag-browse ng mga sample na produkto, i-filter ayon sa availability, at pamahalaan ang cart.',
         },
       },
     },
@@ -57,72 +57,48 @@ export const fil: LocaleShape<typeof en> = {
       since2017: 'Mula 2017',
       currentlyAt: 'Kasalukuyang nasa',
       heroDescription:
-        'Gumagawa ako ng responsive na React interface mula sa mga disenyo sa Figma, nag-iintegrate ng REST API, at nagpapanatili ng moderno at legacy na application.',
+        'Ginagawa kong responsive na React interface ang mga disenyo sa Figma at ikinokonekta ang mga ito sa REST API.',
       contact: 'Mag-email sa akin',
-      selectedWork: 'Tingnan ang mga piling gawa',
-      projectsEyebrow: 'Mga piling gawa',
-      projectsTitle: 'Mga proyekto',
       aboutEyebrow: 'Profile',
       aboutTitle: 'Tungkol sa akin',
       experienceEyebrow: 'Mga naging trabaho',
       experienceTitle: 'Karanasan',
-      source: 'GitHub',
       aboutDescription:
-        'Gumawa ako ng responsive na React component mula sa mga disenyo sa Figma at nag-integrate ng API para sa pamamahala ng user at mga tender request.',
+        'Kasama sa aking trabaho sa frontend ang mga workflow para sa pamamahala ng user at mga tender request.',
       education: 'Edukasyon',
       expertise: 'Kasanayang teknikal',
       technologies: 'Mga teknolohiya',
       contactTitle: 'Makipag-ugnayan',
       resumeLink: 'Tingnan ang PDF ng résumé',
-      resumeSubject: 'Paghiling ng résumé',
       backToTop: 'Bumalik sa itaas',
     },
     portfolio: {
       profile: {
         role: 'Senior na Frontend Developer',
         summary:
-          'Isa akong senior na frontend developer na may karanasan mula 2017. Gumagawa ako ng responsive na React interface mula sa mga disenyo sa Figma, nag-iintegrate ng REST API, at nagpapanatili ng moderno at legacy na application.',
-        tagline: 'UI na may layunin',
+          'Nakagawa ako ng mga de-kalidad na frontend experience sa mga moderno at legacy na application.',
         footerRole: 'Frontend Developer',
       },
       present: 'Kasalukuyan',
-      projects: {
-        storefront: {
-          title: 'Interactive na tindahan',
-          category: 'Demo ng tindahan',
-          description:
-            'Demo ng React storefront para sa pag-browse ng produkto, pag-filter ayon sa availability, pagpili ng dami, at paggamit ng cart gamit ang Redux Toolkit at TanStack Query.',
-          screenshotAlt: 'Screenshot ng interactive na demo ng tindahan',
-          demoLabel: 'Live na demo',
-        },
-        portfolio: {
-          title: 'Portfolio website',
-          category: 'Personal na website',
-          description:
-            'Portfolio gamit ang React at TypeScript na may mga live na demo ng proyekto, detalyadong kasaysayan ng trabaho, at direktang link para makipag-ugnayan.',
-          screenshotAlt: 'Screenshot ng portfolio website',
-          demoLabel: 'Tingnan ang website',
-        },
-      },
       experience: {
         kpmg: {
           role: 'Senior na Frontend Developer',
           location: 'Hybrid · Makati City, Pilipinas',
           highlights: {
             reusableComponents:
-              'Gumagawa ng mga reusable na frontend component gamit ang ReactJS at TypeScript.',
+              'Bumubuo ng mga reusable na React component gamit ang TypeScript.',
             apiBackedFeatures:
-              'Gumagawa ng responsive na interface at mga feature na gumagamit ng API sa tulong ng React Hooks, TanStack Query, at Redux Toolkit.',
+              'Ikinokonekta ang mga feature ng produkto sa REST API gamit ang React Hooks at Redux Toolkit.',
             prototypeMigration:
-              'Inilipat ang prototype mula sa Lovable papunta sa repository ng team at iniangkop ito sa kasalukuyang architecture at mga convention.',
+              'Iniiaangkop ang mga prototype mula sa Lovable sa architecture at mga convention ng team.',
             aiWorkflows:
-              'Gumagawa ng mga reusable na AI prompt at custom skill para maiangkop ang mga prototype na nilikha ng AI sa production code.',
+              'Gumagawa ng mga reusable na prompt at skill para mas mailapit sa production ang mga prototype na ginawa ng AI.',
             dataFetching:
-              'Pinamamahalaan ang pagkuha at pag-cache ng data, pati ang asynchronous na pakikipag-ugnayan sa API gamit ang TanStack Query.',
+              'Pinangangasiwaan ang pag-cache ng server state at mga asynchronous na request gamit ang TanStack Query.',
             clientState:
-              'Pinamamahalaan ang client-side state ng application gamit ang Redux at Redux Toolkit.',
+              'Pinamamahalaan ang client-side state gamit ang Redux Toolkit.',
             responsiveInterfaces:
-              'Gumagawa ng responsive na interface gamit ang Tailwind CSS at Material UI.',
+              'Gumagawa ng mga responsive na layout gamit ang Tailwind CSS at Material UI.',
             uiTests:
               'Gumagawa at nagpapanatili ng component at UI test gamit ang Jest at React Testing Library.',
             aiAssistedDevelopment:
@@ -184,7 +160,6 @@ export const fil: LocaleShape<typeof en> = {
       },
       education: {
         university: { program: 'B.S. sa Computer Science' },
-        completed: 'Natapos',
       },
       contact: {
         email: 'Email',
