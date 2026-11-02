@@ -107,6 +107,16 @@ li {
   }
 }
 
+@keyframes profile-image-flip {
+  0% {
+    transform: perspective(900px) rotateY(360deg);
+  }
+}
+
+.profile-image-flip {
+  animation: profile-image-flip 2s ease-in-out infinite;
+}
+
 .ambient-drift {
   animation: ambient-drift 18s ease-in-out infinite alternate;
 }
@@ -169,7 +179,8 @@ li {
 @media (prefers-reduced-motion: reduce) {
   .motion-enter,
   .motion-backdrop-enter,
-  .ambient-drift {
+  .ambient-drift,
+  .profile-image-flip {
     animation: none;
   }
 
