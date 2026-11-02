@@ -8,6 +8,8 @@ export const en = {
       experience: 'Experience',
       contact: 'Contact',
       language: 'Language',
+      switchToDark: 'Switch to dark mode',
+      switchToLight: 'Switch to light mode',
     },
     notFound: {
       title: 'Page not found',
@@ -53,7 +55,7 @@ export const en = {
       experienceEyebrow: 'Where I’ve worked',
       experienceTitle: 'Experience',
       aboutDescription:
-        'My frontend work includes user management and tender request workflows.',
+        'I create thoughtful, user-friendly digital experiences for the web.',
       education: 'Education',
       expertise: 'Technical expertise',
       technologies: 'Technologies',

@@ -1,12 +1,12 @@
 @import 'tailwindcss';
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
   font-family: Inter, 'Segoe UI', Roboto, sans-serif;
   line-height: 1.5;
   font-weight: 400;
   color: #1c1917;
-  background: #fbfaf7;
-  color-scheme: light;
+  color-scheme: light dark;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -19,14 +19,12 @@
 
 html {
   scroll-behavior: smooth;
-  background: #fbfaf7;
 }
 
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background: #fbfaf7;
 }
 
 button,

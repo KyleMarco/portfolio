@@ -18,6 +18,8 @@ export const fil: LocaleShape<typeof en> = {
       experience: 'Karanasan',
       contact: 'Makipag-ugnayan',
       language: 'Wika',
+      switchToDark: 'Lumipat sa madilim na mode',
+      switchToLight: 'Lumipat sa maliwanag na mode',
     },
     notFound: {
       title: 'Hindi makita ang pahina',
@@ -64,7 +66,7 @@ export const fil: LocaleShape<typeof en> = {
       experienceEyebrow: 'Mga naging trabaho',
       experienceTitle: 'Karanasan',
       aboutDescription:
-        'Kasama sa aking trabaho sa frontend ang mga workflow para sa pamamahala ng user at mga tender request.',
+        'Lumilikha ako ng mga digital na karanasan sa web na maingat na binuo at madaling gamitin.',
       education: 'Edukasyon',
       expertise: 'Kasanayang teknikal',
       technologies: 'Mga teknolohiya',

@@ -5,6 +5,7 @@ import { I18nextProvider } from 'react-i18next';
 import { ToastProvider } from '@kylemarco/shared-ui';
 import i18n from '../i18n';
 import { store } from '../store';
+import { ThemeProvider } from './ThemeProvider';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -18,11 +19,13 @@ const queryClient = new QueryClient({
 export function AppProviders({ children }: { children: ReactNode }) {
   return (
     <I18nextProvider i18n={i18n}>
-      <Provider store={store}>
-        <ToastProvider>
-          <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-        </ToastProvider>
-      </Provider>
+      <ThemeProvider>
+        <Provider store={store}>
+          <ToastProvider>
+            <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+          </ToastProvider>
+        </Provider>
+      </ThemeProvider>
     </I18nextProvider>
   );
 }
