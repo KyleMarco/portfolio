@@ -48,11 +48,8 @@ export default function HomePage() {
             {profile.lastName}
           </h1>
           <div className="mt-8 max-w-2xl border-l-2 border-amber-800 pl-5 sm:pl-6 dark:border-amber-500">
-            <p className="text-sm font-semibold text-stone-900 dark:text-stone-100">
+            <p className="text-2xl font-semibold text-stone-500 dark:text-stone-100">
               {t('portfolio.profile.role')}
-            </p>
-            <p className="mt-2 max-w-xl text-lg leading-8 text-stone-600 sm:text-xl dark:text-stone-300">
-              {t('home.heroDescription')}
             </p>
           </div>
           <div className="mt-9 flex flex-wrap items-center gap-3">
@@ -73,28 +70,11 @@ export default function HomePage() {
             </a>
           </div>
         </div>
-        <aside className="border-t border-stone-300 pt-5 lg:justify-self-end lg:border-l lg:border-t-0 lg:border-amber-800 lg:pl-8 lg:pt-0 dark:border-stone-700 lg:dark:border-amber-500">
-          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-amber-900 dark:text-amber-300">
-            {t('home.currentlyAt')}
-          </p>
-          <p className="mt-3 text-lg font-medium tracking-tight text-stone-950 dark:text-stone-50">
-            {experiences[0].company}
-          </p>
-          <p className="mt-1 text-sm text-stone-500 dark:text-stone-400">
-            {t(`portfolio.experience.${experiences[0].id}.role`)} <span aria-hidden="true">·</span>{' '}
-            {formatMonthYear(experiences[0].startDate)} <span aria-hidden="true">–</span>{' '}
-            {t('portfolio.present')}
-          </p>
-          <p className="mt-4 max-w-sm text-sm leading-7 text-stone-600 dark:text-stone-300">
-            {t('portfolio.profile.summary')}
-          </p>
-          <a
-            href={`mailto:${profile.email}`}
-            className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-stone-900 underline decoration-stone-300 underline-offset-4 transition-colors hover:decoration-stone-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950 dark:text-stone-100 dark:decoration-stone-700 dark:hover:decoration-stone-300 dark:focus-visible:outline-stone-100"
-          >
-            {profile.email}
-          </a>
-        </aside>
+        <img
+          src={`${import.meta.env.BASE_URL}images/profile.jpg`}
+          alt={`Portrait of ${profile.firstName} ${profile.lastName}`}
+          className="hidden 2xl:block my-auto h-48 w-48 rounded-full border border-stone-200 object-cover object-center sm:h-56 sm:w-56 lg:mx-0 lg:h-64 lg:w-64 lg:justify-self-end dark:border-stone-700"
+        />
       </section>
 
       <section
@@ -110,6 +90,14 @@ export default function HomePage() {
           />
           <p className="text-base leading-8 text-stone-600 dark:text-stone-300">
             {t('home.aboutDescription')}
+          </p>
+          <br />
+          <p className="text-base leading-8 text-stone-600 dark:text-stone-300">
+            {t('home.currentlyAt')} <b>{experiences[0].company}</b> as a <b>{t(`portfolio.experience.${experiences[0].id}.role`)}</b>.
+          </p>
+          <br />
+          <p className="text-base leading-8 text-stone-600 dark:text-stone-300">
+            Previously, I was a {t(`portfolio.experience.${experiences[1].id}.role`)} at <a href="https://www.felix.net/" target="_blank" rel="noreferrer" className="w-fit font-medium text-blue-300 underline decoration-blue-300 underline-offset-4 hover:decoration-stone-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950 dark:text-stone-300 dark:decoration-stone-700 dark:hover:decoration-stone-300 dark:focus-visible:outline-stone-100">{experiences[1].company}</a>, and an {t(`portfolio.experience.${experiences[2].id}.role`)} at <a href="https://weserv.com/home" target="_blank" rel="noreferrer" className="w-fit font-medium text-blue-300 underline decoration-blue-300 underline-offset-4 hover:decoration-stone-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950 dark:text-stone-300 dark:decoration-stone-700 dark:hover:decoration-stone-300 dark:focus-visible:outline-stone-100">{experiences[2].company}</a>
           </p>
           <div className="mt-10 border-t border-stone-200 pt-5 dark:border-stone-800">
             <p className="text-xs font-medium uppercase tracking-[0.16em] text-stone-500 dark:text-stone-400">

@@ -65,7 +65,7 @@ export const en = {
     },
     portfolio: {
       profile: {
-        role: 'Senior Frontend Developer',
+        role: 'Software Developer',
         summary:
           'I’ve built polished frontend experiences across modern and legacy applications.',
         footerRole: 'Frontend Developer',

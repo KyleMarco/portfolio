@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
-  base: '/portfolio',
+  base: '/portfolio/',
   plugins: [react(), tailwindcss()],
   test: {
     environment: 'jsdom',

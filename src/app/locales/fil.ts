@@ -76,7 +76,7 @@ export const fil: LocaleShape<typeof en> = {
     },
     portfolio: {
       profile: {
-        role: 'Senior na Frontend Developer',
+        role: 'Software Developer',
         summary:
           'Nakagawa ako ng mga de-kalidad na frontend experience sa mga moderno at legacy na application.',
         footerRole: 'Frontend Developer',

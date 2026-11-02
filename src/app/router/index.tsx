@@ -19,15 +19,6 @@ function AppRouter() {
             aria-label={t('navigation.label')}
             className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-5 py-4 sm:gap-5 sm:px-8 lg:px-10"
           >
-            <Link
-              to="/"
-              aria-label={t('navigation.homeLabel', {
-                name: `${profile.firstName} ${profile.lastName}`,
-              })}
-              className="text-sm font-semibold tracking-[-0.04em] text-stone-950 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950 dark:text-stone-50 dark:focus-visible:outline-stone-100"
-            >
-              KM<span className="text-stone-400 dark:text-stone-500">.</span>
-            </Link>
             <div className="flex items-center gap-2 sm:gap-7">
               <a
                 href={`${import.meta.env.BASE_URL}#about`}
