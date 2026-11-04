@@ -1,6 +1,6 @@
 # Kyle Marco Cabiling — frontend monorepo
 
-An npm-workspaces monorepo orchestrated by Turborepo, containing a portfolio and a standalone storefront demo. Both apps use React, TypeScript, Vite, Tailwind CSS, React Router, and English/Filipino translations. They share global styles and TypeScript settings, with separate entry points, application providers, dependencies, and builds.
+An npm-workspaces monorepo orchestrated by Turborepo, containing a portfolio, a standalone storefront demo, and a Storybook catalog for the shared UI package. The portfolio and storefront use React, TypeScript, Vite, Tailwind CSS, React Router, and English/Filipino translations. They share global styles, TypeScript settings, and the local shared UI package, with separate entry points, application providers, dependencies, and builds.
 
 ## Workspace layout
 
@@ -26,8 +26,11 @@ apps/
     package.json
     tsconfig.json
     vite.config.js
+  storybook/                  # @portfolio/storybook
+    .storybook/               # Storybook configuration
+    package.json
 packages/
-  styles/                     # @portfolio/styles: shared global CSS
+  ui/                         # @portfolio/ui: component source, tests, styles, and stories
   tsconfig/                   # @portfolio/tsconfig: shared compiler settings
 .github/workflows/            # Validation and GitHub Pages deployment
 package.json                  # Workspace scripts and repository tooling
@@ -35,13 +38,11 @@ package-lock.json             # One lockfile for every workspace
 turbo.json                    # Task dependencies, cache outputs, and persistent tasks
 ```
 
-Keep app-specific features, APIs, state, tests, and translations inside their owning app. Apps must not import another app's source. Extract a workspace package when both apps actually need the same code. Shared buttons, dialogs, and toast notifications continue to come from the published `@kylemarco/shared-ui` package; its source is not part of this repository.
+Keep app-specific features, APIs, state, tests, and translations inside their owning app. Apps must not import another app's source. Shared buttons, dialogs, toast notifications, and virtualized views come from the private `@portfolio/ui` workspace at `packages/ui`. The Storybook app at `apps/storybook` catalogs stories stored alongside those components.
 
 ## Install
 
 Use Node.js 22.22.2+ on the Node 22 release line, or a compatible newer LTS release. CI uses Node 22.
-
-The shared UI dependency is hosted on GitHub Packages. Set `NODE_AUTH_TOKEN` in your shell to a GitHub token with permission to read it. If you do not already have a local `.npmrc`, copy [`.npmrc.example`](./.npmrc.example) to `.npmrc`. The example reads the token from the environment. Keep credentials out of tracked files.
 
 Run installation commands from the repository root:
 
@@ -49,11 +50,11 @@ Run installation commands from the repository root:
 npm ci
 ```
 
-npm links the private workspace packages automatically. Maintain only the root lockfile and use `npm install <dependency> --workspace=<workspace-name>` to add a dependency to its owning app.
+npm links local workspace packages automatically. Maintain only the root lockfile and use `npm install <dependency> --workspace=<workspace-name>` to add a dependency to its owning app.
 
 ## Development
 
-Run both development servers together:
+Run all three development servers together:
 
 ```sh
 npm run dev
@@ -64,14 +65,16 @@ To run only one app, start its server:
 ```sh
 npm run dev:portfolio
 npm run dev:storefront
+npm run dev:storybook
 ```
 
 | App        | Workspace               | Development URL                         |
 | ---------- | ----------------------- | --------------------------------------- |
 | Portfolio  | `@portfolio/site`       | `http://localhost:5173/portfolio/`      |
 | Storefront | `@portfolio/storefront` | `http://localhost:5174/portfolio/demo/` |
+| Storybook  | `@portfolio/storybook`  | `http://localhost:6006/`                |
 
-The root `dev` command starts both workspaces through Turbo. Ports are fixed so cross-app links work consistently; Vite reports an error when a port is occupied. Development links open the other app's server, so both servers need to be running before following those links. Turbo keeps development and preview tasks running without caching them.
+The root `dev` command starts all three workspaces through Turbo. Ports are fixed so cross-app links work consistently; Vite and Storybook report an error when a port is occupied. Development links open the other app's server, so both app servers need to be running before following those links. Turbo keeps development and preview tasks running without caching them.
 
 The portfolio registers its home and not-found routes. The about component remains available but is not registered, preserving the previous route setup. The storefront registers its catalog at its own base URL and provides its own not-found screen. Cross-app navigation uses normal links because these are separate applications.
 
@@ -80,17 +83,18 @@ The portfolio registers its home and not-found routes. The about component remai
 | Command                      | Purpose                                                           |
 | ---------------------------- | ----------------------------------------------------------------- |
 | `npm run lint`               | Run Oxlint across the repository                                  |
-| `npm run typecheck`          | Run both app type checks through Turbo                            |
-| `npm run test`               | Run both Vitest suites through Turbo                              |
-| `npm run build`              | Build both apps into their own `apps/*/dist/` directories         |
-| `npm run build:portfolio`    | Build only the portfolio app                                      |
-| `npm run build:storefront`   | Build only the storefront app                                     |
+| `npm run typecheck`          | Type-check all apps, stories, and shared UI through Turbo         |
+| `npm run test`               | Run app and shared UI Vitest suites through Turbo                 |
+| `npm run build`              | Build the UI package and all apps through Turbo                   |
+| `npm run build:portfolio`    | Build the portfolio and its workspace dependencies                |
+| `npm run build:storefront`   | Build the storefront and its workspace dependencies               |
+| `npm run build:storybook`    | Build Storybook and its workspace dependencies                    |
 | `npm run preview`            | Preview the portfolio build at `http://localhost:4173/portfolio/` |
 | `npm run preview:storefront` | Preview the storefront build on port 4174                         |
 | `npm run format`             | Format repository files                                           |
 | `npm run format:check`       | Check formatting without modifying files                          |
 
-Turbo caches each app's `dist/` build output locally. Build before previewing. To verify navigation between apps, run `npm run preview` and `npm run preview:storefront` in separate terminals; each preview serves its app's build.
+Turbo caches each app and the shared UI package's `dist/` build output locally. Build before previewing. To verify navigation between apps, run `npm run preview` and `npm run preview:storefront` in separate terminals; each preview serves its app's build.
 
 To run a command for one app:
 
@@ -99,7 +103,7 @@ npm run test --workspace=@portfolio/storefront
 npm run build --workspace=@portfolio/site
 ```
 
-Each app compiles Tailwind using its own source directory plus the published shared UI package. The styles workspace exports CSS without a separate build step. TypeScript settings are inherited through the configuration workspace.
+The portfolio and storefront compile Tailwind using their own source directories and the shared UI source, and import shared global styles from `@portfolio/ui/styles.css`. The Storybook app loads the shared UI stylesheet and stories directly from `packages/ui`. TypeScript settings are inherited through the configuration workspace.
 
 Follow [AGENTS.md](./AGENTS.md) and the [frontend skill](./.github/skills/frontend/SKILL.md) for implementation and validation conventions. See the official [npm workspaces documentation](https://docs.npmjs.com/cli/using-npm/workspaces/) and [Tailwind source detection documentation](https://tailwindcss.com/docs/detecting-classes-in-source-files) for the underlying configuration.
 
@@ -111,7 +115,7 @@ The storefront fetches catalog data from DummyJSON carts using Axios and TanStac
 
 ## Deployment
 
-`npm run build` creates separate app outputs under `apps/portfolio/dist/` and `apps/storefront/dist/`. After a successful CI run for a push to `main`, the deployment workflow stages those outputs into this GitHub Pages artifact layout and deploys it:
+`npm run build` creates outputs under `packages/ui/dist/`, `apps/portfolio/dist/`, `apps/storefront/dist/`, and `apps/storybook/dist/`. After a successful CI run for a push to `main`, the deployment workflow stages the app outputs into this GitHub Pages artifact layout and deploys it:
 
 ```text
 dist/
@@ -123,10 +127,13 @@ dist/
   demo/
     index.html                # Storefront at /portfolio/demo/
     assets/
+  storybook/
+    index.html                # Storybook at /portfolio/storybook/
+    assets/
 ```
 
-The [CI workflow](./.github/workflows/ci.yml) installs dependencies, lints, tests, type-checks, and builds on pull requests and pushes to `main`. After CI succeeds for a push to `main`, the [deployment workflow](./.github/workflows/deploy.yml) builds both apps, stages the Pages artifact, and deploys it. Installation uses the existing `NODE_AUTH_TOKEN` repository secret. No hosting changes or additional services are required.
+The [CI workflow](./.github/workflows/ci.yml) installs dependencies, lints, tests, type-checks, and builds on pull requests and pushes to `main`. After CI succeeds for a push to `main`, the [deployment workflow](./.github/workflows/deploy.yml) builds both apps, stages the Pages artifact, and deploys it. All shared packages are local workspaces, so installation does not require a package registry token. No hosting changes or additional services are required.
 
-The apps use `/portfolio/` and `/portfolio/demo/` as their Vite and router bases. Preserve these paths when deploying this repository to the existing Pages project site. GitHub Pages provides one site-level custom 404 document, so unmatched direct URLs fall back to the portfolio. The storefront's only content route is its root; adding nested content routes later requires a corresponding hosting rewrite or routing strategy.
+The portfolio and storefront use `/portfolio/` and `/portfolio/demo/` as their Vite and router bases. The Storybook build uses `/portfolio/storybook/`. Preserve these paths when deploying this repository to the existing Pages project site. GitHub Pages provides one site-level custom 404 document, so unmatched direct URLs fall back to the portfolio. The storefront's only content route is its root; adding nested content routes later requires a corresponding hosting rewrite or routing strategy.
 
 This is a monorepo with two independently buildable apps and one combined Pages deployment. It does not use runtime microfrontend composition.

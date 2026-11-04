@@ -1,4 +1,2 @@
-@import 'tailwindcss' source('../../');
-@import '@portfolio/styles';
-@source '../../../../../node_modules/@kylemarco/shared-ui';
-@custom-variant dark (&:where(.dark, .dark *));
+@import 'tailwindcss';
+@import '@portfolio/ui/index.css';

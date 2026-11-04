@@ -1,0 +1,10 @@
+:root {
+  --ui-radius-sm: 0.375rem;
+  --ui-radius-md: 0.75rem;
+  --ui-radius-lg: 1rem;
+  --ui-shadow-card: 0 10px 24px rgb(28 25 23 / 6%);
+  --ui-shadow-dialog: 0 24px 64px rgb(0 0 0 / 20%);
+  --ui-duration-fast: 180ms;
+  --ui-duration-normal: 220ms;
+  --ui-ease-out: ease-out;
+}

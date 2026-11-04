@@ -1,0 +1,18 @@
+@utility scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--ui-border-default) var(--ui-surface-muted);
+
+  &::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--ui-surface-muted);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--ui-border-default);
+    border-radius: var(--ui-radius-lg);
+  }
+}

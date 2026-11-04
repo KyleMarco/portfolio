@@ -1,0 +1,15 @@
+@utility motion-enter {
+  animation: var(--animate-content-enter);
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@utility motion-backdrop-enter {
+  animation: var(--animate-dialog-backdrop-enter);
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}

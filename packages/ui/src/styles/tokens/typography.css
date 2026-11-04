@@ -1,0 +1,6 @@
+:root {
+  --ui-font-sans: Inter, 'Segoe UI', Roboto, sans-serif;
+  --ui-font-weight-normal: 400;
+  --ui-font-weight-semibold: 600;
+  --ui-line-height-normal: 1.5;
+}

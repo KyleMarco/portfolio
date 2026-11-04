@@ -1,0 +1,16 @@
+/* Opt in on the root element or on a themed subtree. */
+[data-ui-theme='dark'] {
+  color-scheme: dark;
+  --ui-surface-canvas: var(--ui-color-stone-950);
+  --ui-surface-default: var(--ui-color-stone-900);
+  --ui-surface-muted: var(--ui-color-stone-700);
+  --ui-text-default: var(--ui-color-stone-100);
+  --ui-text-muted: var(--ui-color-stone-400);
+  --ui-border-default: var(--ui-color-stone-500);
+  --ui-action-background: var(--ui-color-stone-100);
+  --ui-action-hover: var(--ui-color-stone-300);
+  --ui-action-text: var(--ui-color-stone-950);
+  --ui-focus-color: var(--ui-color-stone-300);
+  --ui-disabled-background: var(--ui-color-stone-700);
+  --ui-disabled-text: var(--ui-color-stone-400);
+}

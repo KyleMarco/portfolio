@@ -1,4 +1,5 @@
-@import 'tailwindcss' source('../../');
-@import '@portfolio/styles';
-@source '../../../../../node_modules/@kylemarco/shared-ui';
+@import 'tailwindcss';
+@import '@portfolio/ui/index.css';
+
+/* The UI package's compiled CSS does not retain Tailwind's custom variants. */
 @custom-variant dark (&:where(.dark, .dark *));

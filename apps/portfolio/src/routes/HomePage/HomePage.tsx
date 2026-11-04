@@ -117,7 +117,7 @@ export default function HomePage() {
         <img
           src={`${import.meta.env.BASE_URL}images/profile.jpg`}
           alt={`Portrait of ${profile.firstName} ${profile.lastName}`}
-          className="profile-image-flip hidden xl:block my-auto h-48 w-48 rounded-full border border-stone-200 object-cover object-center sm:h-56 sm:w-56 lg:mx-0 lg:h-64 lg:w-64 lg:justify-self-end dark:border-stone-700"
+          className="profile-image-flip hidden lg:!block my-auto h-48 w-48 rounded-full border border-stone-200 object-cover object-center sm:h-56 sm:w-56 lg:mx-0 lg:h-64 lg:w-64 lg:justify-self-end dark:border-stone-700"
         />
       </section>
 

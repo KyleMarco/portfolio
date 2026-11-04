@@ -11,13 +11,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@kylemarco/shared-ui": "^1.0.1",
+    "@portfolio/ui": "*",
+    "@tanstack/react-virtual": "^3.14.25",
     "i18next": "^26.5.11",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "react-i18next": "^17.1.9",
-    "react-router-dom": "^7.18.4",
-    "@portfolio/styles": "*"
+    "react-router-dom": "^7.18.4"
   },
   "devDependencies": {
     "@testing-library/react": "^16.3.3",

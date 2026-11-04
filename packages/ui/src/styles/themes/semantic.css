@@ -1,0 +1,55 @@
+/* Inline mappings resolve runtime variables on the element using the utility. */
+@theme inline {
+  --color-ui-canvas: var(--ui-surface-canvas);
+  --color-ui-surface: var(--ui-surface-default);
+  --color-ui-surface-muted: var(--ui-surface-muted);
+  --color-ui-text: var(--ui-text-default);
+  --color-ui-text-muted: var(--ui-text-muted);
+  --color-ui-border: var(--ui-border-default);
+  --color-ui-action: var(--ui-action-background);
+  --color-ui-action-hover: var(--ui-action-hover);
+  --color-ui-on-action: var(--ui-action-text);
+  --color-ui-focus: var(--ui-focus-color);
+  --color-ui-disabled: var(--ui-disabled-background);
+  --color-ui-on-disabled: var(--ui-disabled-text);
+
+  --font-ui-sans: var(--ui-font-sans);
+  --spacing-ui-1: var(--ui-space-1);
+  --spacing-ui-2: var(--ui-space-2);
+  --spacing-ui-3: var(--ui-space-3);
+  --spacing-ui-4: var(--ui-space-4);
+  --spacing-ui-6: var(--ui-space-6);
+  --spacing-ui-8: var(--ui-space-8);
+  --radius-ui-sm: var(--ui-radius-sm);
+  --radius-ui-md: var(--ui-radius-md);
+  --radius-ui-lg: var(--ui-radius-lg);
+  --shadow-ui-card: var(--ui-shadow-card);
+  --shadow-ui-dialog: var(--ui-shadow-dialog);
+}
+
+@theme {
+  --animate-content-enter: content-enter 220ms ease-out both;
+  --animate-dialog-backdrop-enter: dialog-backdrop-enter 180ms ease-out both;
+
+  @keyframes content-enter {
+    from {
+      opacity: 0;
+      transform: translateY(0.35rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes dialog-backdrop-enter {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+@custom-variant dark (&:where(.dark, .dark *, [data-ui-theme='dark'], [data-ui-theme='dark'] *));

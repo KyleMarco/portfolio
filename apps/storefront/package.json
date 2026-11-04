@@ -11,7 +11,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@kylemarco/shared-ui": "^1.0.1",
+    "@portfolio/ui": "*",
+    "@tanstack/react-virtual": "^3.14.25",
     "i18next": "^26.5.11",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
@@ -20,8 +21,7 @@
     "@reduxjs/toolkit": "^2.13.0",
     "@tanstack/react-query": "^5.104.5",
     "axios": "^1.21.0",
-    "react-redux": "^9.3.0",
-    "@portfolio/styles": "*"
+    "react-redux": "^9.3.0"
   },
   "devDependencies": {
     "@testing-library/react": "^16.3.3",

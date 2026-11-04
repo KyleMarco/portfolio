@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "declaration": true,
+    "declarationMap": false,
+    "emitDeclarationOnly": true,
+    "rootDir": "src/shared/ui",
+    "outDir": "dist/types"
+  },
+  "include": ["src/shared/ui/**/*.ts", "src/shared/ui/**/*.tsx"],
+  "exclude": [
+    "src/shared/ui/**/*.stories.tsx",
+    "src/shared/ui/**/*.test.tsx",
+    "src/shared/ui/library.ts"
+  ]
+}

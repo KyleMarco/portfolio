@@ -1,0 +1,31 @@
+{
+  "name": "@portfolio/storybook",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "storybook dev --port 6006 --no-open",
+    "build": "storybook build --output-dir dist",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@portfolio/ui": "*",
+    "@tanstack/react-virtual": "^3.14.25",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-router-dom": "^7.18.4"
+  },
+  "devDependencies": {
+    "@portfolio/tsconfig": "*",
+    "@storybook/addon-docs": "^10.6.5",
+    "@storybook/react-vite": "^10.6.5",
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "storybook": "^10.6.5",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.4"
+  }
+}

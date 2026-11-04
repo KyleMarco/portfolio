@@ -12,7 +12,7 @@ import {
 } from '../../features/cart/cartSlice';
 import { useCartCatalog } from '../../features/cart/hooks/useCartCatalog';
 import { useCartMutations } from '../../features/cart/hooks/useCartMutations';
-import { Button, PopupDialog, useToast } from '@kylemarco/shared-ui';
+import { Button, PopupDialog, useToast } from '@portfolio/ui';
 
 type FilterValue = 'all' | 'available' | 'unavailable';
 const ITEMS_PER_PAGE = 10;

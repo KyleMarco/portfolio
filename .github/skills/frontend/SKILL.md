@@ -60,7 +60,7 @@ tests/
   fixtures/                     # Reusable test data, when needed
 ```
 
-Each app uses `src/app/` for application setup and `src/routes/` for route-level screens. Shared UI comes from the published `@kylemarco/shared-ui` package. Keep component and feature tests alongside their implementation. Keep feature-owned APIs, hooks, and types near their feature; share them only when needed across areas. Redux Toolkit, Axios, and TanStack Query belong to the storefront. The portfolio owns its theme and content. Configure each app's providers in its own `src/app/providers/`. Both apps consume `@portfolio/styles` and `@portfolio/tsconfig`; extract additional shared packages only when there are actual consumers.
+Each app uses `src/app/` for application setup and `src/routes/` for route-level screens. Shared UI and global styles come from the private `@portfolio/ui` workspace at `packages/ui`. Keep component and feature tests alongside their implementation. Keep feature-owned APIs, hooks, and types near their feature; share them only when needed across areas. Redux Toolkit, Axios, and TanStack Query belong to the storefront. The portfolio owns its theme and content. Configure each app's providers in its own `src/app/providers/`. Both apps consume `@portfolio/ui` and `@portfolio/tsconfig`; extract additional shared packages only when there are actual consumers.
 
 ## Procedure
 
