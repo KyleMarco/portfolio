@@ -29,7 +29,6 @@ apps/
 packages/
   styles/                     # @portfolio/styles: shared global CSS
   tsconfig/                   # @portfolio/tsconfig: shared compiler settings
-scripts/                      # Deployment assembly and its tests
 .github/workflows/            # Validation and GitHub Pages deployment
 package.json                  # Workspace scripts and repository tooling
 package-lock.json             # One lockfile for every workspace
@@ -54,7 +53,13 @@ npm links the private workspace packages automatically. Maintain only the root l
 
 ## Development
 
-Run these in separate terminals to work on both apps. Root scripts use Turbo filters to start the selected workspace:
+Run both development servers together:
+
+```sh
+npm run dev
+```
+
+To run only one app, start its server:
 
 ```sh
 npm run dev:portfolio
@@ -66,25 +71,26 @@ npm run dev:storefront
 | Portfolio  | `@portfolio/site`       | `http://localhost:5173/portfolio/`      |
 | Storefront | `@portfolio/storefront` | `http://localhost:5174/portfolio/demo/` |
 
-`npm run dev` starts the portfolio. Ports are fixed so cross-app links work consistently; Vite reports an error when a port is occupied. Development links open the other app's server, so start both servers before following those links. Turbo keeps development and preview tasks running without caching them.
+The root `dev` command starts both workspaces through Turbo. Ports are fixed so cross-app links work consistently; Vite reports an error when a port is occupied. Development links open the other app's server, so both servers need to be running before following those links. Turbo keeps development and preview tasks running without caching them.
 
 The portfolio registers its home and not-found routes. The about component remains available but is not registered, preserving the previous route setup. The storefront registers its catalog at its own base URL and provides its own not-found screen. Cross-app navigation uses normal links because these are separate applications.
 
 ## Checks and builds
 
-| Command                      | Purpose                                                                   |
-| ---------------------------- | ------------------------------------------------------------------------- |
-| `npm run lint`               | Run Oxlint across the repository                                          |
-| `npm run typecheck`          | Run both app type checks through Turbo                                    |
-| `npm run test`               | Run both Vitest suites through Turbo, then deployment assembly tests      |
-| `npm run build`              | Build both apps through Turbo, then assemble the deployable site          |
-| `npm run build:apps`         | Build apps through Turbo without assembling the deployment                |
-| `npm run preview`            | Serve the assembled production site at `http://localhost:4173/portfolio/` |
-| `npm run preview:storefront` | Preview only the storefront on port 4174                                  |
-| `npm run format`             | Format repository files                                                   |
-| `npm run format:check`       | Check formatting without modifying files                                  |
+| Command                      | Purpose                                                           |
+| ---------------------------- | ----------------------------------------------------------------- |
+| `npm run lint`               | Run Oxlint across the repository                                  |
+| `npm run typecheck`          | Run both app type checks through Turbo                            |
+| `npm run test`               | Run both Vitest suites through Turbo                              |
+| `npm run build`              | Build both apps into their own `apps/*/dist/` directories         |
+| `npm run build:portfolio`    | Build only the portfolio app                                      |
+| `npm run build:storefront`   | Build only the storefront app                                     |
+| `npm run preview`            | Preview the portfolio build at `http://localhost:4173/portfolio/` |
+| `npm run preview:storefront` | Preview the storefront build on port 4174                         |
+| `npm run format`             | Format repository files                                           |
+| `npm run format:check`       | Check formatting without modifying files                          |
 
-Turbo caches each app's `dist/` build output locally. The combined deployment assembly runs after both app builds and is not part of the Turbo cache. Build before previewing. Use the combined preview to verify navigation between apps. App-only previews serve only that app's build.
+Turbo caches each app's `dist/` build output locally. Build before previewing. To verify navigation between apps, run `npm run preview` and `npm run preview:storefront` in separate terminals; each preview serves its app's build.
 
 To run a command for one app:
 
@@ -105,7 +111,7 @@ The storefront fetches catalog data from DummyJSON carts using Axios and TanStac
 
 ## Deployment
 
-`npm run build` creates separate app outputs and assembles them into:
+`npm run build` creates separate app outputs under `apps/portfolio/dist/` and `apps/storefront/dist/`. After a successful CI run for a push to `main`, the deployment workflow stages those outputs into this GitHub Pages artifact layout and deploys it:
 
 ```text
 dist/
@@ -119,7 +125,7 @@ dist/
     assets/
 ```
 
-The [workflow](./.github/workflows/deploy.yml) installs dependencies, lints, tests, type-checks, and builds on pull requests and updates to `main`. Pushes to `main` and manual runs deploy the assembled output to GitHub Pages. Installation uses the existing `NODE_AUTH_TOKEN` repository secret. No hosting changes or additional services are required.
+The [CI workflow](./.github/workflows/ci.yml) installs dependencies, lints, tests, type-checks, and builds on pull requests and pushes to `main`. After CI succeeds for a push to `main`, the [deployment workflow](./.github/workflows/deploy.yml) builds both apps, stages the Pages artifact, and deploys it. Installation uses the existing `NODE_AUTH_TOKEN` repository secret. No hosting changes or additional services are required.
 
 The apps use `/portfolio/` and `/portfolio/demo/` as their Vite and router bases. Preserve these paths when deploying this repository to the existing Pages project site. GitHub Pages provides one site-level custom 404 document, so unmatched direct URLs fall back to the portfolio. The storefront's only content route is its root; adding nested content routes later requires a corresponding hosting rewrite or routing strategy.
 

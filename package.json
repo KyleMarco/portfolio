@@ -9,17 +9,20 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "npm run dev:portfolio",
+    "dev": "turbo run dev",
     "dev:portfolio": "turbo run dev --filter=@portfolio/site",
     "dev:storefront": "turbo run dev --filter=@portfolio/storefront",
-    "build": "npm run build:apps && node scripts/assemble-site.mjs",
-    "build:apps": "turbo run build --filter=@portfolio/site --filter=@portfolio/storefront",
-    "typecheck": "turbo run typecheck --filter=@portfolio/site --filter=@portfolio/storefront",
+    "build": "turbo run build",
+    "build:portfolio": "turbo run build --filter=@portfolio/site",
+    "build:storefront": "turbo run build --filter=@portfolio/storefront",
+    "typecheck": "turbo run typecheck",
     "lint": "oxlint .",
-    "test": "turbo run test --filter=@portfolio/site --filter=@portfolio/storefront && node --test scripts/assemble-site.test.mjs",
+    "test": "turbo run test",
+    "test:portfolio": "turbo run test --filter=@portfolio/site",
+    "test:storefront": "turbo run test --filter=@portfolio/storefront",
     "format": "prettier --write .",
     "format:check": "prettier --check . --ignore-path .gitignore --ignore-path .prettierignore",
-    "preview": "turbo run preview --filter=@portfolio/site -- --outDir ../../dist",
+    "preview": "turbo run preview --filter=@portfolio/site",
     "preview:storefront": "turbo run preview --filter=@portfolio/storefront"
   },
   "devDependencies": {

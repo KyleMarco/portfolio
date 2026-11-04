@@ -77,6 +77,6 @@ Each app uses `src/app/` for application setup and `src/routes/` for route-level
 - `npm run typecheck` — check both apps' TypeScript types.
 - `npm run build` — verify the production build.
 
-For focused checks use `npm run test --workspace=@portfolio/site` or `npm run test --workspace=@portfolio/storefront`. `npm run build` also assembles both app builds into the root `dist/` for the existing GitHub Pages workflow. Keep app base URLs and cross-app links consistent with `/portfolio/` and `/portfolio/demo/`.
+For focused checks use `npm run test --workspace=@portfolio/site` or `npm run test --workspace=@portfolio/storefront`. `npm run build` builds both apps into their workspace `dist/` directories. The GitHub Pages deployment workflow stages both outputs into the root deployment artifact. Keep app base URLs and cross-app links consistent with `/portfolio/` and `/portfolio/demo/`.
 
 Run the smallest relevant checks first; use lint and build when a change affects application behavior, types, or structure. Do not claim checks that were not run.
