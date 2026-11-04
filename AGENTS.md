@@ -16,4 +16,5 @@ Follow [`.github/skills/frontend/SKILL.md`](.github/skills/frontend/SKILL.md) fo
 
 - `npm run test` runs the unit test suite.
 - `npm run lint` runs Oxlint.
+- `npm run typecheck` checks both workspace apps.
 - `npm run build` creates the production build.

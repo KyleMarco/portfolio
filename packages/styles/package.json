@@ -1,0 +1,6 @@
+{
+  "name": "@portfolio/styles",
+  "private": true,
+  "version": "0.0.0",
+  "exports": "./globals.css"
+}

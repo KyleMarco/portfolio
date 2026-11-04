@@ -5,6 +5,8 @@ description: 'Use when implementing, debugging, refactoring, or reviewing this V
 
 # Frontend workflow
 
+This is an npm-workspaces monorepo. Apply the structure below within `apps/portfolio/` and `apps/storefront/`. Shared workspace packages live in `packages/`; apps must not import another app's source. Run repository commands from the root, which owns the single lockfile and shared lint/format configuration.
+
 Use this workflow for frontend changes in this repository. Follow the general repository practices in [AGENTS.md](../../../AGENTS.md); this file covers frontend architecture, implementation, and validation.
 
 ## Recommended folder structure
@@ -58,7 +60,7 @@ tests/
   fixtures/                     # Reusable test data, when needed
 ```
 
-This repository uses `src/app/` for application setup, `src/routes/` for route-level screens, and `src/shared/ui/` for reusable components. Keep component and feature tests alongside their implementation. Keep feature-owned APIs, hooks, and types near their feature; share them only when needed across areas. The project includes Redux Toolkit, Axios, and TanStack Query; use them when they fit the existing data flow and the task, not as mandatory additions to every feature. Configure shared application providers in `src/app/providers/`.
+Each app uses `src/app/` for application setup and `src/routes/` for route-level screens. Shared UI comes from the published `@kylemarco/shared-ui` package. Keep component and feature tests alongside their implementation. Keep feature-owned APIs, hooks, and types near their feature; share them only when needed across areas. Redux Toolkit, Axios, and TanStack Query belong to the storefront. The portfolio owns its theme and content. Configure each app's providers in its own `src/app/providers/`. Both apps consume `@portfolio/styles` and `@portfolio/tsconfig`; extract additional shared packages only when there are actual consumers.
 
 ## Procedure
 
@@ -72,6 +74,9 @@ This repository uses `src/app/` for application setup, `src/routes/` for route-l
 
 - `npm run test` — run the unit test suite.
 - `npm run lint` — run Oxlint.
+- `npm run typecheck` — check both apps' TypeScript types.
 - `npm run build` — verify the production build.
+
+For focused checks use `npm run test --workspace=@portfolio/site` or `npm run test --workspace=@portfolio/storefront`. `npm run build` also assembles both app builds into the root `dist/` for the existing GitHub Pages workflow. Keep app base URLs and cross-app links consistent with `/portfolio/` and `/portfolio/demo/`.
 
 Run the smallest relevant checks first; use lint and build when a change affects application behavior, types, or structure. Do not claim checks that were not run.
