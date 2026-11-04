@@ -1,6 +1,6 @@
 # Kyle Marco Cabiling — frontend monorepo
 
-An npm-workspaces monorepo containing a portfolio and a standalone storefront demo. Both apps use React, TypeScript, Vite, Tailwind CSS, React Router, and English/Filipino translations. They share global styles and TypeScript settings, with separate entry points, application providers, dependencies, and builds.
+An npm-workspaces monorepo orchestrated by Turborepo, containing a portfolio and a standalone storefront demo. Both apps use React, TypeScript, Vite, Tailwind CSS, React Router, and English/Filipino translations. They share global styles and TypeScript settings, with separate entry points, application providers, dependencies, and builds.
 
 ## Workspace layout
 
@@ -33,6 +33,7 @@ scripts/                      # Deployment assembly and its tests
 .github/workflows/            # Validation and GitHub Pages deployment
 package.json                  # Workspace scripts and repository tooling
 package-lock.json             # One lockfile for every workspace
+turbo.json                    # Task dependencies, cache outputs, and persistent tasks
 ```
 
 Keep app-specific features, APIs, state, tests, and translations inside their owning app. Apps must not import another app's source. Extract a workspace package when both apps actually need the same code. Shared buttons, dialogs, and toast notifications continue to come from the published `@kylemarco/shared-ui` package; its source is not part of this repository.
@@ -53,7 +54,7 @@ npm links the private workspace packages automatically. Maintain only the root l
 
 ## Development
 
-Run these in separate terminals to work on both apps:
+Run these in separate terminals to work on both apps. Root scripts use Turbo filters to start the selected workspace:
 
 ```sh
 npm run dev:portfolio
@@ -65,7 +66,7 @@ npm run dev:storefront
 | Portfolio  | `@portfolio/site`       | `http://localhost:5173/portfolio/`      |
 | Storefront | `@portfolio/storefront` | `http://localhost:5174/portfolio/demo/` |
 
-`npm run dev` starts the portfolio. Ports are fixed so cross-app links work consistently; Vite reports an error when a port is occupied. Development links open the other app's server, so start both servers before following those links.
+`npm run dev` starts the portfolio. Ports are fixed so cross-app links work consistently; Vite reports an error when a port is occupied. Development links open the other app's server, so start both servers before following those links. Turbo keeps development and preview tasks running without caching them.
 
 The portfolio registers its home and not-found routes. The about component remains available but is not registered, preserving the previous route setup. The storefront registers its catalog at its own base URL and provides its own not-found screen. Cross-app navigation uses normal links because these are separate applications.
 
@@ -74,16 +75,16 @@ The portfolio registers its home and not-found routes. The about component remai
 | Command                      | Purpose                                                                   |
 | ---------------------------- | ------------------------------------------------------------------------- |
 | `npm run lint`               | Run Oxlint across the repository                                          |
-| `npm run typecheck`          | Check both apps against their TypeScript configuration                    |
-| `npm run test`               | Run both apps' Vitest suites and deployment assembly tests                |
-| `npm run build`              | Build both apps and assemble the deployable site                          |
-| `npm run build:apps`         | Build apps without assembling the deployment                              |
+| `npm run typecheck`          | Run both app type checks through Turbo                                    |
+| `npm run test`               | Run both Vitest suites through Turbo, then deployment assembly tests      |
+| `npm run build`              | Build both apps through Turbo, then assemble the deployable site          |
+| `npm run build:apps`         | Build apps through Turbo without assembling the deployment                |
 | `npm run preview`            | Serve the assembled production site at `http://localhost:4173/portfolio/` |
 | `npm run preview:storefront` | Preview only the storefront on port 4174                                  |
 | `npm run format`             | Format repository files                                                   |
 | `npm run format:check`       | Check formatting without modifying files                                  |
 
-Build before previewing. Use the combined preview to verify navigation between apps. App-only previews serve only that app's build.
+Turbo caches each app's `dist/` build output locally. The combined deployment assembly runs after both app builds and is not part of the Turbo cache. Build before previewing. Use the combined preview to verify navigation between apps. App-only previews serve only that app's build.
 
 To run a command for one app:
 
