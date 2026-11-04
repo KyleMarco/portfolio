@@ -62,6 +62,8 @@ tests/
 
 Each app uses `src/app/` for application setup and `src/routes/` for route-level screens. Shared UI and global styles come from the private `@portfolio/ui` workspace at `packages/ui`. Keep component and feature tests alongside their implementation. Keep feature-owned APIs, hooks, and types near their feature; share them only when needed across areas. Redux Toolkit, Axios, and TanStack Query belong to the storefront. The portfolio owns its theme and content. Configure each app's providers in its own `src/app/providers/`. Both apps consume `@portfolio/ui` and `@portfolio/tsconfig`; extract additional shared packages only when there are actual consumers.
 
+The UI package exports source directly, with components, tests, and stories in `packages/ui/src/components/`. Use `@portfolio/ui` for core components, `@portfolio/ui/router` for React Router links, and `@portfolio/ui/virtualized` for TanStack Virtual views. Each app compiles Tailwind once and imports raw `@portfolio/ui/styles.css`, optionally opting into `@portfolio/ui/base.css`; register UI component sources with `@source`. Use semantic UI tokens for shared components and `data-ui-theme` on the document root for themes. Keep page-specific effects in the owning app. No UI package build is required.
+
 ## Procedure
 
 1. **Understand the change.** Identify the affected user-visible behavior and trace the relevant component, route, state, API, and tests. Clarify only if an unresolved requirement changes the implementation.

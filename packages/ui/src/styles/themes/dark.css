@@ -13,4 +13,6 @@
   --ui-focus-color: var(--ui-color-stone-300);
   --ui-disabled-background: var(--ui-color-stone-700);
   --ui-disabled-text: var(--ui-color-stone-400);
+  --ui-status-success: var(--ui-color-emerald-300);
+  --ui-status-error: var(--ui-color-rose-300);
 }

@@ -85,7 +85,7 @@ The portfolio registers its home and not-found routes. The about component remai
 | `npm run lint`               | Run Oxlint across the repository                                  |
 | `npm run typecheck`          | Type-check all apps, stories, and shared UI through Turbo         |
 | `npm run test`               | Run app and shared UI Vitest suites through Turbo                 |
-| `npm run build`              | Build the UI package and all apps through Turbo                   |
+| `npm run build`              | Build both apps and Storybook through Turbo                       |
 | `npm run build:portfolio`    | Build the portfolio and its workspace dependencies                |
 | `npm run build:storefront`   | Build the storefront and its workspace dependencies               |
 | `npm run build:storybook`    | Build Storybook and its workspace dependencies                    |
@@ -94,7 +94,7 @@ The portfolio registers its home and not-found routes. The about component remai
 | `npm run format`             | Format repository files                                           |
 | `npm run format:check`       | Check formatting without modifying files                          |
 
-Turbo caches each app and the shared UI package's `dist/` build output locally. Build before previewing. To verify navigation between apps, run `npm run preview` and `npm run preview:storefront` in separate terminals; each preview serves its app's build.
+Turbo caches each app's `dist/` build output locally. Build before previewing. To verify navigation between apps, run `npm run preview` and `npm run preview:storefront` in separate terminals; each preview serves its app's build.
 
 To run a command for one app:
 
@@ -103,7 +103,7 @@ npm run test --workspace=@portfolio/storefront
 npm run build --workspace=@portfolio/site
 ```
 
-The portfolio and storefront compile Tailwind using their own source directories and the shared UI source, and import shared global styles from `@portfolio/ui/styles.css`. The Storybook app loads the shared UI stylesheet and stories directly from `packages/ui`. TypeScript settings are inherited through the configuration workspace.
+The portfolio, storefront, and Storybook compile the source-first `@portfolio/ui` package directly. Each app imports Tailwind once, imports `@portfolio/ui/styles.css` and the optional `@portfolio/ui/base.css`, and explicitly registers shared component sources for Tailwind. Shared UI edits update through Vite without a package prebuild. Components, tests, and stories live in `packages/ui/src/components/`. TypeScript settings are inherited through the configuration workspace.
 
 Follow [AGENTS.md](./AGENTS.md) and the [frontend skill](./.github/skills/frontend/SKILL.md) for implementation and validation conventions. See the official [npm workspaces documentation](https://docs.npmjs.com/cli/using-npm/workspaces/) and [Tailwind source detection documentation](https://tailwindcss.com/docs/detecting-classes-in-source-files) for the underlying configuration.
 
@@ -115,7 +115,7 @@ The storefront fetches catalog data from DummyJSON carts using Axios and TanStac
 
 ## Deployment
 
-`npm run build` creates outputs under `packages/ui/dist/`, `apps/portfolio/dist/`, `apps/storefront/dist/`, and `apps/storybook/dist/`. After a successful CI run for a push to `main`, the deployment workflow stages the app outputs into this GitHub Pages artifact layout and deploys it:
+`npm run build` creates outputs under `apps/portfolio/dist/`, `apps/storefront/dist/`, and `apps/storybook/dist/`. The private UI package has no separate build output. After a successful CI run for a push to `main`, the deployment workflow stages the app outputs into this GitHub Pages artifact layout and deploys it:
 
 ```text
 dist/

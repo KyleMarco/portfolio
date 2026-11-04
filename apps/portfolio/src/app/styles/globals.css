@@ -1,5 +1,6 @@
 @import 'tailwindcss';
-@import '@portfolio/ui/index.css';
+@import '@portfolio/ui/styles.css';
+@import '@portfolio/ui/base.css' layer(base);
+@import './portfolio.css';
 
-/* The UI package's compiled CSS does not retain Tailwind's custom variants. */
-@custom-variant dark (&:where(.dark, .dark *));
+@source '../../../../../packages/ui/src/components';

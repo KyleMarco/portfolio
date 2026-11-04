@@ -2,7 +2,7 @@
   "extends": "@portfolio/tsconfig/base.json",
   "include": [
     ".storybook",
-    "../../packages/ui/src/shared/ui/**/*.stories.tsx",
-    "../../packages/ui/src/shared/ui/assets.d.ts"
+    "../../packages/ui/src/components/**/*.stories.tsx",
+    "../../packages/ui/src/components/assets.d.ts"
   ]
 }

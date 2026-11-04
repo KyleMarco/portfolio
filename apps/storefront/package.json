@@ -12,7 +12,6 @@
   },
   "dependencies": {
     "@portfolio/ui": "*",
-    "@tanstack/react-virtual": "^3.14.25",
     "i18next": "^26.5.11",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",

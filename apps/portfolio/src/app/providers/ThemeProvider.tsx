@@ -54,10 +54,11 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   useLayoutEffect(() => {
     document.documentElement.classList.toggle('dark', isDark);
+    document.documentElement.dataset.uiTheme = theme;
     document
       .querySelector<HTMLMetaElement>('meta[name="theme-color"]')
       ?.setAttribute('content', isDark ? '#11100e' : '#fbfaf7');
-  }, [isDark]);
+  }, [isDark, theme]);
 
   const toggleTheme = useCallback(() => {
     const nextTheme = isDark ? 'light' : 'dark';

@@ -1,2 +1,5 @@
 @import 'tailwindcss';
-@import '@portfolio/ui/index.css';
+@import '@portfolio/ui/styles.css';
+@import '@portfolio/ui/base.css' layer(base);
+
+@source '../../../../../packages/ui/src/components';

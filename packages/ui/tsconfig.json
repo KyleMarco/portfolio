@@ -1,5 +1,5 @@
 {
   "extends": "@portfolio/tsconfig/base.json",
-  "include": ["src/shared/ui/**/*.ts", "src/shared/ui/**/*.tsx"],
-  "exclude": ["src/shared/ui/**/*.stories.tsx", "src/shared/ui/**/*.test.tsx"]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "vitest.config.ts"],
+  "exclude": ["src/**/*.stories.tsx"]
 }

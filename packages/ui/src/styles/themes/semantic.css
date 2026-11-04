@@ -12,6 +12,8 @@
   --color-ui-focus: var(--ui-focus-color);
   --color-ui-disabled: var(--ui-disabled-background);
   --color-ui-on-disabled: var(--ui-disabled-text);
+  --color-ui-success: var(--ui-status-success);
+  --color-ui-error: var(--ui-status-error);
 
   --font-ui-sans: var(--ui-font-sans);
   --spacing-ui-1: var(--ui-space-1);
@@ -52,4 +54,4 @@
   }
 }
 
-@custom-variant dark (&:where(.dark, .dark *, [data-ui-theme='dark'], [data-ui-theme='dark'] *));
+@custom-variant dark (&:where([data-ui-theme='dark'], [data-ui-theme='dark'] *));

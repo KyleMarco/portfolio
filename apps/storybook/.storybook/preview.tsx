@@ -1,7 +1,27 @@
 import type { Preview } from '@storybook/react-vite';
-import '../../../packages/ui/src/styles/index.css';
+import { ThemePreview } from './ThemePreview';
+import './preview.css';
 
 const preview: Preview = {
+  initialGlobals: { theme: 'light' },
+  globalTypes: {
+    theme: {
+      description: 'UI color theme',
+      toolbar: {
+        title: 'Theme',
+        icon: 'circlehollow',
+        items: ['light', 'dark'],
+        dynamicTitle: true,
+      },
+    },
+  },
+  decorators: [
+    (Story, context) => (
+      <ThemePreview theme={context.globals.theme}>
+        <Story />
+      </ThemePreview>
+    ),
+  ],
   parameters: {
     backgrounds: {
       default: 'warm white',
