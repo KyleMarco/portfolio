@@ -40,6 +40,14 @@ turbo.json                    # Task dependencies, cache outputs, and persistent
 
 Keep app-specific features, APIs, state, tests, and translations inside their owning app. Apps must not import another app's source. Shared buttons, dialogs, toast notifications, and virtualized views come from the private `@portfolio/ui` workspace at `packages/ui`. The Storybook app at `apps/storybook` catalogs stories stored alongside those components.
 
+## Current app state
+
+- Portfolio: a personal landing page at `/portfolio/` that renders the home screen and a catch-all 404 view. The light/dark theme toggle and English/Filipino language selector are handled by the portfolio app shell.
+- Storefront: a standalone product catalog at `/portfolio/demo/` with product filters, pagination, and a cart drawer. It uses Redux for cart state, React Query for catalog fetches, and local fallback behavior when demo mutations fail.
+- Storybook: a component catalog for the shared UI package, used to review `Button`, `LinkButton`, `PopupDialog`, `Toast`, and virtualized list patterns in context.
+
+The portfolio's `AboutPage` remains in the codebase for future routing, but the current app shell does not register it. The active route set is the home page plus the not-found fallback.
+
 ## Install
 
 Use Node.js 22.22.2+ on the Node 22 release line, or a compatible newer LTS release. CI uses Node 22.
@@ -76,7 +84,7 @@ npm run dev:storybook
 
 The root `dev` command starts all three workspaces through Turbo. Ports are fixed so cross-app links work consistently; Vite and Storybook report an error when a port is occupied. Development links open the other app's server, so both app servers need to be running before following those links. Turbo keeps development and preview tasks running without caching them.
 
-The portfolio registers its home and not-found routes. The about component remains available but is not registered, preserving the previous route setup. The storefront registers its catalog at its own base URL and provides its own not-found screen. Cross-app navigation uses normal links because these are separate applications.
+The portfolio registers its home and not-found routes; the about component remains available but is not registered in the current shell. The storefront registers its catalog at its own base URL and provides its own not-found screen. Cross-app navigation uses normal links because these are separate applications.
 
 ## Checks and builds
 

@@ -9,6 +9,12 @@ This is an npm-workspaces monorepo. Apply the structure below within `apps/portf
 
 Use this workflow for frontend changes in this repository. Follow the general repository practices in [AGENTS.md](../../../AGENTS.md); this file covers frontend architecture, implementation, and validation.
 
+## Current repo state
+
+- Portfolio: active home route plus catch-all 404 at `/portfolio/`; the `AboutPage` remains present but is not currently registered in the app shell.
+- Storefront: standalone demo at `/portfolio/demo/` with catalog filters, pagination, cart state, and demo-data resilience in the cart interactions.
+- Storybook: shared UI component catalog at `/portfolio/storybook/` for reviewing variant and interaction patterns used by the apps.
+
 ## Recommended folder structure
 
 For new modules, organize code by responsibility and keep feature-specific implementation together. Add optional folders only when they have real code to own; do not create empty or speculative folders.

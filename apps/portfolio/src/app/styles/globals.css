@@ -1,6 +1,3 @@
 @import 'tailwindcss';
-@import '@portfolio/ui/styles.css';
-@import '@portfolio/ui/base.css' layer(base);
 @import './portfolio.css';
-
-@source '../../../../../packages/ui/src/components';
+@custom-variant dark (&:where(.dark, .dark *));

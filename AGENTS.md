@@ -4,6 +4,12 @@
 
 Follow [`.github/skills/frontend/SKILL.md`](.github/skills/frontend/SKILL.md) for frontend architecture, implementation, and validation.
 
+## Current repository state
+
+- The portfolio app currently renders the home page and a catch-all 404 route at `/portfolio/`; the `AboutPage` component still exists in the codebase but is not registered in the active app shell.
+- The storefront demo is the catalog app at `/portfolio/demo/` and includes product filters, cart state, and demo-data fallback behavior.
+- The Storybook app catalogs the shared UI package at `/portfolio/storybook/` and serves the component documentation and examples used by the repo.
+
 ## General practices
 
 - Read relevant code and tests before changing behavior.

@@ -2,6 +2,8 @@
 
 This private, source-first workspace contains reusable React components, theme tokens, tests, and colocated Storybook stories. The Vite apps compile its TypeScript and CSS directly; no UI build or watcher is required.
 
+Current shared exports cover the core interaction primitives used throughout the repo: `Button`, `PopupDialog`, `ToastProvider`, `useToast`, `LinkButton`, and `VirtualizedList`.
+
 ```tsx
 import { Button, PopupDialog, ToastProvider, useToast } from '@portfolio/ui';
 import { LinkButton } from '@portfolio/ui/router';
