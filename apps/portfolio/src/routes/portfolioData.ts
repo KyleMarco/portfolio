@@ -174,7 +174,7 @@ export const contactCards = [
   },
   {
     id: 'github',
-    value: 'github.com/KyleMarco',
-    href: 'https://github.com/KyleMarco',
+    value: 'github.com/kylemarcoc',
+    href: 'https://github.com/kylemarcoc',
   },
 ];
