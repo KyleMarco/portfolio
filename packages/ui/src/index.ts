@@ -1,6 +1,7 @@
 export { Button, type ButtonProps, type ButtonVariant } from './components/Button';
 export { PopupDialog, type PopupDialogProps } from './components/PopupDialog';
 export { Text, type TextProps, type TextVariant } from './components/Text';
+export { TextInput, type TextInputProps } from './components/TextInput';
 export {
   ToastProvider,
   useToast,
