@@ -113,7 +113,7 @@ npm run build --workspace=@portfolio/site
 
 The portfolio, storefront, and Storybook compile the source-first `@portfolio/ui` package directly. Each app imports Tailwind once, imports `@portfolio/ui/styles.css` and the optional `@portfolio/ui/base.css`, and explicitly registers shared component sources for Tailwind. Shared UI edits update through Vite without a package prebuild. Components, tests, and stories live in `packages/ui/src/components/`. TypeScript settings are inherited through the configuration workspace.
 
-Follow [AGENTS.md](./AGENTS.md) and the [frontend skill](./.github/skills/frontend/SKILL.md) for implementation and validation conventions. See the official [npm workspaces documentation](https://docs.npmjs.com/cli/using-npm/workspaces/) and [Tailwind source detection documentation](https://tailwindcss.com/docs/detecting-classes-in-source-files) for the underlying configuration.
+Follow [AGENTS.md](./AGENTS.md) for frontend architecture, implementation, and validation conventions. See the official [npm workspaces documentation](https://docs.npmjs.com/cli/using-npm/workspaces/) and [Tailwind source detection documentation](https://tailwindcss.com/docs/detecting-classes-in-source-files) for the underlying configuration.
 
 ## App behavior
 
