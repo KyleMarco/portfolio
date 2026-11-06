@@ -53,6 +53,12 @@ See [README.md](README.md) for development URLs and deployment details, and
 
 - Use the React version installed in this repo (check the workspace `package.json`
   files and `package-lock.json`) and the idioms current for it. Avoid deprecated APIs.
+- Prefer JSX to create React elements, including intrinsic tags selected at runtime
+  through a capitalized variable. Use `createElement` only when JSX cannot express
+  the required operation.
+- In React 19-only components, accept `ref` as a prop instead of adding
+  `forwardRef`. Use `forwardRef` when needed to preserve React 18 compatibility;
+  for example, `@portfolio/ui` currently declares React 18 and 19 peer support.
 - Do not upgrade React or related dependencies unless asked.
 - Before using a newer React API, confirm the installed version supports it.
   `@portfolio/ui` ships source directly to the apps, so shared components must work
