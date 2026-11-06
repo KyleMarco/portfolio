@@ -1,5 +1,11 @@
 # Repository guidance
 
+This file contains project-specific instructions. Codex also loads personal
+defaults from `AGENTS.md` in its home directory (`~/.codex` by default, or
+`CODEX_HOME` when set). These repository instructions take precedence over those
+defaults where they conflict. Keep reusable personal preferences in the global
+file and durable project rules here.
+
 ## Workspace and tooling
 
 This is an npm-workspaces monorepo orchestrated by Turborepo. Run commands from the
@@ -17,9 +23,6 @@ single root `package-lock.json`. Add dependencies to their owning workspace with
 
 See [README.md](README.md) for development URLs and deployment details, and
 [packages/ui/README.md](packages/ui/README.md) for shared component integration.
-
-In PowerShell, set environment variables with `$env:NAME = 'value'`; the
-`NAME=value command` form is not valid there.
 
 ## Frontend architecture
 
@@ -85,15 +88,8 @@ In PowerShell, set environment variables with `$env:NAME = 'value'`; the
   failed demo add/clear mutation still updates the local cart. Keep these distinct
   behaviors and the stock limits. The cart intentionally resets on reload.
 
-## General practices
+## Frontend validation
 
-- Read relevant code and tests before changing behavior. Check the working tree
-  and preserve unrelated user edits and deletions.
-- Prefer focused changes; avoid new dependencies or architectural patterns without
-  a clear need.
-- Preserve accessibility, responsive layouts, loading, empty, and error states.
-  Retain keyboard navigation, dialog focus trapping/restoration, and reduced-motion
-  behavior when changing interactions.
 - Add or update tests for meaningful behavior changes using existing Vitest and
   React Testing Library patterns. Prefer observable behavior and accessible
   queries; mock remote APIs for deterministic tests.
@@ -124,11 +120,7 @@ Start with affected checks:
   app dev servers and URLs.
 
 Run lint, tests, typecheck, and build for changes spanning apps, shared UI exports,
-tooling, or deployment. For documentation-only changes, check formatting and confirm
-that relative links still resolve; application checks are unnecessary.
-
-Report checks actually run, their results, and relevant limitations. Distinguish
-existing failures from regressions caused by the change.
+tooling, or deployment.
 
 ## Agents and skills
 
