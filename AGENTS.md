@@ -18,6 +18,9 @@ single root `package-lock.json`. Add dependencies to their owning workspace with
 See [README.md](README.md) for development URLs and deployment details, and
 [packages/ui/README.md](packages/ui/README.md) for shared component integration.
 
+In PowerShell, set environment variables with `$env:NAME = 'value'`; the
+`NAME=value command` form is not valid there.
+
 ## Frontend architecture
 
 - Apps must not import another app's source. Keep application providers, routes,
@@ -33,32 +36,54 @@ See [README.md](README.md) for development URLs and deployment details, and
 - `@portfolio/ui` exports source directly; it has no separate build step. Shared
   components, tests, and stories live in `packages/ui/src/components`. Update
   relevant stories when adding component variants or changing public behavior.
-- Use shared semantic `--ui-*` tokens for shared components. Consumers compile
-  Tailwind once, import the UI stylesheet explicitly, and register component
-  sources with `@source`. The optional UI base stylesheet applies document
-  defaults. Keep portfolio-specific styling in the portfolio app. Preserve the
-  document's `data-ui-theme` integration for shared UI and portaled components.
+  Storybook configuration lives in `apps/storybook/.storybook`.
+- Shared components use semantic `--ui-*` tokens. Keep portfolio-specific styling in
+  the portfolio app.
+- Styling integration (details in [packages/ui/README.md](packages/ui/README.md)):
+  - Consumers compile Tailwind once, import the UI stylesheet explicitly, and
+    register component sources with `@source`.
+  - The optional UI base stylesheet applies document defaults.
+  - Preserve the document's `data-ui-theme` integration for shared UI and portaled
+    components.
 
-## Current repository state
+## React
 
-- The portfolio renders home and catch-all 404 routes at `/portfolio/`.
-  `AboutPage` exists but is not registered. Do not expose inactive routes or hidden
-  sections incidentally while refactoring.
+- Use the React version installed in this repo (check the workspace `package.json`
+  files and `package-lock.json`) and the idioms current for it. Avoid deprecated APIs.
+- Do not upgrade React or related dependencies unless asked.
+- Before using a newer React API, confirm the installed version supports it.
+  `@portfolio/ui` ships source directly to the apps, so shared components must work
+  with the `react` peer range declared in `packages/ui/package.json`.
+- Keep all workspaces on one React version, resolving to a single copy. When asked to
+  upgrade React, upgrade it in every workspace together and check compatibility of
+  `react-dom`, Redux Toolkit/`react-redux`, TanStack Query, and Testing Library.
+
+## Routing and deployment
+
+- The apps are served under separate Vite/router bases: portfolio `/portfolio/`,
+  storefront `/portfolio/demo/`, and Storybook `/portfolio/storybook/`. Preserve
+  these bases and cross-app links. The apps are separate, so cross-app navigation
+  uses normal links, not router links.
+- GitHub Pages has one site-level 404 fallback, which serves the portfolio, so deep
+  links under `/portfolio/demo/` or `/portfolio/storybook/` will not reach their own
+  app. Do not add a nested route without a hosting solution for that path, and flag
+  it in your summary.
+- For Pages build changes, inspect `.github/workflows/deploy.yml`: it stages the
+  portfolio at the artifact root, storefront under `demo/`, and Storybook under
+  `storybook/`, with `STORYBOOK_BASE_PATH=/portfolio/storybook/` during the build.
+
+## Behavior to preserve
+
+- Do not register inactive routes (such as unregistered page components) or expose
+  hidden sections incidentally while refactoring.
 - Portfolio content lives in `apps/portfolio/src/routes/portfolioData.ts`.
-  Keep English and Filipino UI translations in sync in each affected app's
+- Keep English and Filipino UI translations in sync in each affected app's
   `src/app/locales` directory.
-- Preserve the portfolio theme preference: follow the system until the user
-  chooses a theme, persist that choice when storage is available, and tolerate
-  unavailable local storage.
-- The storefront at `/portfolio/demo/` includes filters, pagination, and a cart.
-  Catalog fetch failures return an empty catalog; failed demo add/clear mutations
-  still update the local cart. Preserve these distinct fallback behaviors and
-  stock limits. The cart resets on reload.
-- Storybook catalogs shared UI at `/portfolio/storybook/`. Stories live in the UI
-  package; Storybook configuration lives in `apps/storybook/.storybook`.
-- Preserve Vite/router bases and cross-app links. These are separate apps, so
-  cross-app navigation uses normal links. GitHub Pages has one site-level 404
-  fallback, which serves the portfolio; new nested routes need a hosting strategy.
+- Portfolio theme: follow the system until the user chooses a theme, persist that
+  choice when storage is available, and tolerate unavailable local storage.
+- Storefront fallbacks: a catalog fetch failure returns an empty catalog, while a
+  failed demo add/clear mutation still updates the local cart. Keep these distinct
+  behaviors and the stock limits. The cart intentionally resets on reload.
 
 ## General practices
 
@@ -73,8 +98,9 @@ See [README.md](README.md) for development URLs and deployment details, and
   React Testing Library patterns. Prefer observable behavior and accessible
   queries; mock remote APIs for deterministic tests.
 - For visible UI changes, inspect the affected app or stories at relevant viewport
-  sizes and in both themes when supported. If browser verification is unavailable,
-  report that limitation.
+  sizes and in both themes when supported. Start dev servers in the background, wait
+  until they are ready, and stop them when finished. If browser verification is
+  unavailable, report that limitation.
 
 ## Project checks
 
@@ -86,30 +112,30 @@ See [README.md](README.md) for development URLs and deployment details, and
 | `npm run build`        | Portfolio, storefront, and Storybook production builds                |
 | `npm run format:check` | Repository-wide Prettier check                                        |
 
-Start with affected checks. For a focused suite, use
-`npm run test --workspace=@portfolio/site`,
-`npm run test --workspace=@portfolio/storefront`, or
-`npm run test --workspace=@portfolio/ui`. Storybook has no separate test script.
+Start with affected checks:
+
+- One workspace's tests: `npm run test --workspace=@portfolio/site`,
+  `npm run test --workspace=@portfolio/storefront`, or
+  `npm run test --workspace=@portfolio/ui`. Storybook has no separate test script.
+- One test file: `npm run test --workspace=<workspace-name> -- <path-to-test-file>`.
+- Format changed files only: `npx prettier --write <changed-files>`. Do not run the
+  repository-wide write command for a focused change.
+- Storybook dev server: `npm run dev:storybook`. See [README.md](README.md) for the
+  app dev servers and URLs.
 
 Run lint, tests, typecheck, and build for changes spanning apps, shared UI exports,
-tooling, or deployment. For documentation-only changes, check formatting and local
-links; application checks are unnecessary. Format only changed files rather than
-running the repository-wide write command for a focused change.
-
-For Pages build changes, inspect `.github/workflows/deploy.yml`: it stages the
-portfolio at the artifact root, storefront under `demo/`, and Storybook under
-`storybook/`, with `STORYBOOK_BASE_PATH=/portfolio/storybook/` during the build.
+tooling, or deployment. For documentation-only changes, check formatting and confirm
+that relative links still resolve; application checks are unnecessary.
 
 Report checks actually run, their results, and relevant limitations. Distinguish
 existing failures from regressions caused by the change.
 
 ## Agents and skills
 
-- Use a frontend implementation role for ordinary React/TypeScript work. Focused
-  review roles can check shared UI accessibility and regressions; a build role can
-  investigate workspace tooling and Pages artifacts when needed.
 - Keep durable repository rules in this file. Add a nested `AGENTS.md` only when a
-  subtree needs distinct instructions; avoid duplicating these rules.
-- Add optional skills for repeatable workflows, with narrow triggers and concrete
-  validation steps. Codex repository skills belong in `.agents/skills/<name>/SKILL.md`.
-  Reference only skill files that exist; this guidance is self-contained.
+  subtree needs distinct instructions, and do not repeat these rules there.
+- Repository skills live in `.agents/skills/<name>/SKILL.md` and are chosen by their
+  descriptions. They hold task procedures and validation steps; do not copy rules
+  from this file into them.
+- Custom agents live in `.codex/agents`. Keep each to its role and defer to this file
+  for repository rules.
