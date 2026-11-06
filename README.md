@@ -32,6 +32,7 @@ apps/
 packages/
   ui/                         # @portfolio/ui: component source, tests, styles, and stories
   tsconfig/                   # @portfolio/tsconfig: shared compiler settings
+docs/                         # Architecture, behavior, deployment, and validation guidance
 .agents/skills/               # Repository skills for coding agents
 .codex/agents/                # Custom Codex agents
 .github/workflows/            # Validation and GitHub Pages deployment
@@ -114,7 +115,7 @@ npm run build --workspace=@portfolio/site
 
 The portfolio, storefront, and Storybook compile the source-first `@portfolio/ui` package directly. Each app imports Tailwind once, imports `@portfolio/ui/styles.css` and the optional `@portfolio/ui/base.css`, and explicitly registers shared component sources for Tailwind. Shared UI edits update through Vite without a package prebuild. Components, tests, and stories live in `packages/ui/src/components/`. TypeScript settings are inherited through the configuration workspace. See [packages/ui/README.md](./packages/ui/README.md) for entry points, stylesheet imports, and theme integration.
 
-Follow [AGENTS.md](./AGENTS.md) for frontend architecture, implementation, and validation conventions. Repository skills live in `.agents/skills/` and custom agents in `.codex/agents/`. See the official [npm workspaces documentation](https://docs.npmjs.com/cli/using-npm/workspaces/) and [Tailwind source detection documentation](https://tailwindcss.com/docs/detecting-classes-in-source-files) for the underlying configuration.
+Follow [AGENTS.md](./AGENTS.md) for essential repository rules and required reading in the [architecture](./docs/architecture.md), [behavior](./docs/behavior.md), [deployment](./docs/deployment.md), and [validation](./docs/validation.md) guides. Repository skills live in `.agents/skills/` and custom agents in `.codex/agents/`. See the official [npm workspaces documentation](https://docs.npmjs.com/cli/using-npm/workspaces/) and [Tailwind source detection documentation](https://tailwindcss.com/docs/detecting-classes-in-source-files) for the underlying configuration.
 
 ## App behavior
 
