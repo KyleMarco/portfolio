@@ -32,7 +32,10 @@ apps/
 packages/
   ui/                         # @portfolio/ui: component source, tests, styles, and stories
   tsconfig/                   # @portfolio/tsconfig: shared compiler settings
+.agents/skills/               # Repository skills for coding agents
+.codex/agents/                # Custom Codex agents
 .github/workflows/            # Validation and GitHub Pages deployment
+AGENTS.md                     # Repository guidance for coding agents
 package.json                  # Workspace scripts and repository tooling
 package-lock.json             # One lockfile for every workspace
 turbo.json                    # Task dependencies, cache outputs, and persistent tasks
@@ -42,11 +45,9 @@ Keep app-specific features, APIs, state, tests, and translations inside their ow
 
 ## Current app state
 
-- Portfolio: a personal landing page at `/portfolio/` that renders the home screen and a catch-all 404 view. The light/dark theme toggle and English/Filipino language selector are handled by the portfolio app shell.
-- Storefront: a standalone product catalog at `/portfolio/demo/` with product filters, pagination, and a cart drawer. It uses Redux for cart state, React Query for catalog fetches, and local fallback behavior when demo mutations fail.
-- Storybook: a component catalog for the shared UI package, used to review `Button`, `LinkButton`, `PopupDialog`, `Toast`, and virtualized list patterns in context.
-
-The portfolio's `AboutPage` remains in the codebase for future routing, but the current app shell does not register it. The active route set is the home page plus the not-found fallback.
+- Portfolio: a personal landing page at `/portfolio/` that renders the home screen and a catch-all 404 view. The light/dark theme toggle and English/Filipino language selector are handled by the portfolio app shell. The `AboutPage` component remains in the codebase for future routing, but the app shell does not register it.
+- Storefront: a standalone product catalog at `/portfolio/demo/` with product filters, pagination, and a cart drawer. It uses Redux for cart state, React Query for catalog fetches, and local fallback behavior when demo mutations fail. It registers its catalog at its own base URL and provides its own not-found screen.
+- Storybook: a component catalog for the shared UI package, used to review `Button`, `LinkButton`, `PopupDialog`, toasts, and virtualized list patterns in context.
 
 ## Install
 
@@ -58,7 +59,7 @@ Run installation commands from the repository root:
 npm ci
 ```
 
-npm links local workspace packages automatically. Maintain only the root lockfile and use `npm install <dependency> --workspace=<workspace-name>` to add a dependency to its owning app.
+npm links local workspace packages automatically. Maintain only the root lockfile and use `npm install <dependency> --workspace=<workspace-name>` to add a dependency to its owning workspace.
 
 ## Development
 
@@ -82,9 +83,7 @@ npm run dev:storybook
 | Storefront | `@portfolio/storefront` | `http://localhost:5174/portfolio/demo/` |
 | Storybook  | `@portfolio/storybook`  | `http://localhost:6006/`                |
 
-The root `dev` command starts all three workspaces through Turbo. Ports are fixed so cross-app links work consistently; Vite and Storybook report an error when a port is occupied. Development links open the other app's server, so both app servers need to be running before following those links. Turbo keeps development and preview tasks running without caching them.
-
-The portfolio registers its home and not-found routes; the about component remains available but is not registered in the current shell. The storefront registers its catalog at its own base URL and provides its own not-found screen. Cross-app navigation uses normal links because these are separate applications.
+The root `dev` command starts all three workspaces through Turbo. Ports are fixed so cross-app links work consistently; Vite and Storybook report an error when a port is occupied. Development links open the other app's server, so both app servers need to be running before following those links. Turbo keeps development and preview tasks running without caching them. Cross-app navigation uses normal links because these are separate applications.
 
 ## Checks and builds
 
@@ -102,6 +101,8 @@ The portfolio registers its home and not-found routes; the about component remai
 | `npm run format`             | Format repository files                                           |
 | `npm run format:check`       | Check formatting without modifying files                          |
 
+For a focused change, format only the changed files with `npx prettier --write <changed-files>` instead of `npm run format`.
+
 Turbo caches each app's `dist/` build output locally. Build before previewing. To verify navigation between apps, run `npm run preview` and `npm run preview:storefront` in separate terminals; each preview serves its app's build.
 
 To run a command for one app:
@@ -111,9 +112,9 @@ npm run test --workspace=@portfolio/storefront
 npm run build --workspace=@portfolio/site
 ```
 
-The portfolio, storefront, and Storybook compile the source-first `@portfolio/ui` package directly. Each app imports Tailwind once, imports `@portfolio/ui/styles.css` and the optional `@portfolio/ui/base.css`, and explicitly registers shared component sources for Tailwind. Shared UI edits update through Vite without a package prebuild. Components, tests, and stories live in `packages/ui/src/components/`. TypeScript settings are inherited through the configuration workspace.
+The portfolio, storefront, and Storybook compile the source-first `@portfolio/ui` package directly. Each app imports Tailwind once, imports `@portfolio/ui/styles.css` and the optional `@portfolio/ui/base.css`, and explicitly registers shared component sources for Tailwind. Shared UI edits update through Vite without a package prebuild. Components, tests, and stories live in `packages/ui/src/components/`. TypeScript settings are inherited through the configuration workspace. See [packages/ui/README.md](./packages/ui/README.md) for entry points, stylesheet imports, and theme integration.
 
-Follow [AGENTS.md](./AGENTS.md) for frontend architecture, implementation, and validation conventions. See the official [npm workspaces documentation](https://docs.npmjs.com/cli/using-npm/workspaces/) and [Tailwind source detection documentation](https://tailwindcss.com/docs/detecting-classes-in-source-files) for the underlying configuration.
+Follow [AGENTS.md](./AGENTS.md) for frontend architecture, implementation, and validation conventions. Repository skills live in `.agents/skills/` and custom agents in `.codex/agents/`. See the official [npm workspaces documentation](https://docs.npmjs.com/cli/using-npm/workspaces/) and [Tailwind source detection documentation](https://tailwindcss.com/docs/detecting-classes-in-source-files) for the underlying configuration.
 
 ## App behavior
 
@@ -140,8 +141,8 @@ dist/
     assets/
 ```
 
-The [CI workflow](./.github/workflows/ci.yml) installs dependencies, lints, tests, type-checks, and builds on pull requests and pushes to `main`. After CI succeeds for a push to `main`, the [deployment workflow](./.github/workflows/deploy.yml) builds both apps, stages the Pages artifact, and deploys it. All shared packages are local workspaces, so installation does not require a package registry token. No hosting changes or additional services are required.
+The [CI workflow](./.github/workflows/ci.yml) installs dependencies, lints, tests, type-checks, and builds on pull requests and pushes to `main`. After CI succeeds for a push to `main`, the [deployment workflow](./.github/workflows/deploy.yml) builds both apps and Storybook (with `STORYBOOK_BASE_PATH=/portfolio/storybook/`), stages the Pages artifact, and deploys it. All shared packages are local workspaces, so installation does not require a package registry token. No hosting changes or additional services are required.
 
-The portfolio and storefront use `/portfolio/` and `/portfolio/demo/` as their Vite and router bases. The Storybook build uses `/portfolio/storybook/`. Preserve these paths when deploying this repository to the existing Pages project site. GitHub Pages provides one site-level custom 404 document, so unmatched direct URLs fall back to the portfolio. The storefront's only content route is its root; adding nested content routes later requires a corresponding hosting rewrite or routing strategy.
+The portfolio and storefront use `/portfolio/` and `/portfolio/demo/` as their Vite and router bases. The Storybook build uses `/portfolio/storybook/`. Preserve these paths when deploying this repository to the existing Pages project site. GitHub Pages provides one site-level custom 404 document, so unmatched direct URLs, including deep links under `/portfolio/demo/` and `/portfolio/storybook/`, fall back to the portfolio. The storefront's only content route is its root; adding nested content routes later requires a corresponding hosting rewrite or routing strategy.
 
 This is a monorepo with two independently buildable apps and one combined Pages deployment. It does not use runtime microfrontend composition.
