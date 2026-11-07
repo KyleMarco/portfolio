@@ -25,18 +25,16 @@ describe('App shared UI integration', () => {
     );
 
     const header = screen.getByRole('banner');
-    const main = screen.getByRole('main');
+    const page = screen.getByRole('region', { name: 'About me' });
     const footer = screen.getByRole('contentinfo');
-    expect(main.contains(header)).toBe(false);
-    expect(main.contains(footer)).toBe(false);
+    expect(page.contains(header)).toBe(false);
+    expect(page.contains(footer)).toBe(false);
     expect(
-      within(header).getByRole('link', { name: 'Kyle Marco Cabiling, home' }).getAttribute('href'),
-    ).toBe(import.meta.env.BASE_URL);
+      within(header).getByRole('button', { name: 'Kyle Marco Cabiling, home' }),
+    ).toBeTruthy();
     expect(within(header).queryByRole('navigation')).toBeNull();
-    expect(within(header).getAllByRole('link')).toHaveLength(1);
-    expect(within(footer).getByRole('link', { name: 'Back to top' }).getAttribute('href')).toBe(
-      '#top',
-    );
+    expect(within(header).queryAllByRole('link')).toHaveLength(0);
+    expect(within(footer).queryByRole('link', { name: 'Back to top' })).toBeNull();
 
     const toggle = within(header).getByRole('button', { name: 'Switch to dark mode' });
     toggle.focus();
@@ -71,12 +69,11 @@ describe('App shared UI integration', () => {
     const header = screen.getByRole('banner');
     expect(screen.getByRole('heading', { name: 'Page not found' })).toBeTruthy();
     expect(screen.getByRole('main').contains(header)).toBe(false);
-    const homeLink = within(header).getByRole('link', { name: 'Kyle Marco Cabiling, home' });
-    expect(homeLink.getAttribute('href')).toBe(import.meta.env.BASE_URL);
-    homeLink.focus();
-    expect(document.activeElement).toBe(homeLink);
+    const homeButton = within(header).getByRole('button', { name: 'Kyle Marco Cabiling, home' });
+    homeButton.focus();
+    expect(document.activeElement).toBe(homeButton);
     expect(within(header).queryByRole('navigation')).toBeNull();
-    expect(within(header).getAllByRole('link')).toHaveLength(1);
+    expect(within(header).queryAllByRole('link')).toHaveLength(0);
 
     fireEvent.click(within(header).getByRole('button', { name: 'Switch to dark mode' }));
     expect(document.documentElement.dataset.uiTheme).toBe('dark');
@@ -87,15 +84,9 @@ describe('App shared UI integration', () => {
       await within(header).findByRole('button', { name: 'Lumipat sa maliwanag na mode' }),
     ).toBeTruthy();
 
-    fireEvent.click(
-      within(header).getByRole('link', {
-        name: i18n.t('navigation.homeLabel', { name: 'Kyle Marco Cabiling' }),
-      }),
-    );
+    fireEvent.click(screen.getByRole('link', { name: i18n.t('notFound.home') }));
     expect(window.location.pathname).toBe(import.meta.env.BASE_URL);
-    expect(within(header).getByText('Kyle Marco Cabiling')).toBeTruthy();
-    expect(within(header).queryByRole('navigation')).toBeNull();
-    expect(within(header).getAllByRole('link')).toHaveLength(1);
+    expect(screen.getByRole('heading', { name: i18n.t('home.aboutTitle') })).toBeTruthy();
     expect(screen.queryByRole('heading', { name: i18n.t('notFound.title') })).toBeNull();
     expect(document.documentElement.dataset.uiTheme).toBe('dark');
     expect(within(header).getByRole<HTMLSelectElement>('combobox').value).toBe('fil');

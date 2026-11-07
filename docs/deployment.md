@@ -5,7 +5,7 @@ or deployment workflows. See [AGENTS.md](../AGENTS.md) for the repository entry
 point and other required guides. See [README.md](../README.md#deployment) for build
 outputs and the deployment artifact layout.
 
-- The apps are served under separate Vite/router bases: portfolio `/portfolio/`,
+- The apps are served under separate Vite/router bases: portfolio `/`,
   storefront `/portfolio/demo/`, and Storybook `/portfolio/storybook/`. Preserve
   these bases and cross-app links. The apps are separate, so cross-app navigation
   uses normal links, not router links.
@@ -63,10 +63,10 @@ the portfolio's `index.html` to the site-level `404.html`.
 Check the built site at its deployed base and record any verification that could
 not be completed:
 
-- Open `/portfolio/`, `/portfolio/demo/`, and `/portfolio/storybook/` directly and
-  reload each. Check the browser console and network panel for missing scripts,
-  styles, images, or base-path errors. Open a component story as well as the
-  Storybook manager.
+- Open `/`, `/portfolio/demo/`, and `/portfolio/storybook/` directly and reload
+  each. Check the browser console and network panel for missing scripts, styles,
+  images, or base-path errors. Open a component story as well as the Storybook
+  manager.
 - Follow the storefront's home link. Open the résumé and verify portfolio images
   and contact links. Keep inactive portfolio sections hidden during these checks.
 - Switch English/Filipino in both apps. Verify the portfolio theme toggle and
@@ -84,8 +84,8 @@ not be completed:
 The two Vite preview servers validate their own app builds, but production
 cross-app links stay on the same origin and do not switch preview ports. To check
 the combined artifact locally, use a static host that mounts the staged directory
-at `/portfolio/` and supports the site's 404 behavior. A server that rewrites every
-unknown URL to its own index can hide Pages routing failures.
+at `/` and supports the site's 404 behavior. A server that rewrites every unknown
+URL to its own index can hide Pages routing failures.
 
 ## Failed releases and rollback
 

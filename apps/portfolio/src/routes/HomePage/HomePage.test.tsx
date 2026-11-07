@@ -123,10 +123,7 @@ describe('HomePage', () => {
       expect(document.activeElement).toBe(link);
     }
 
-    const backToTop = screen.getByRole('link', { name: 'Back to top' });
-    expect(backToTop.getAttribute('href')).toBe('#top');
-    backToTop.focus();
-    expect(document.activeElement).toBe(backToTop);
+    expect(screen.queryByRole('link', { name: 'Back to top' })).toBeNull();
   });
 
   it('reveals offscreen sections once and clears their state on unmount', () => {

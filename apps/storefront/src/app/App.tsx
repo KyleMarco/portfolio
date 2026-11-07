@@ -13,7 +13,7 @@ export default function App() {
           className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4"
         >
           <a
-            href={import.meta.env.DEV ? 'http://localhost:5173/portfolio/' : '/portfolio/'}
+            href={import.meta.env.DEV ? 'http://localhost:5173/' : '/'}
             className="underline"
           >
             {t('navigation.homeLabel', { name: 'Kyle Marco Cabiling' })}
