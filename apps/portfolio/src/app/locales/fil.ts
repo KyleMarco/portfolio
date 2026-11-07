@@ -78,6 +78,9 @@ export const fil: LocaleShape<typeof en> = {
       resumeLink: 'Tingnan ang PDF ng résumé',
       backToTop: 'Bumalik sa itaas',
     },
+    footer: {
+      poweredBy: 'Pinapagana ng',
+    },
     portfolio: {
       profile: {
         role: 'Software Developer',

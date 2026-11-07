@@ -29,14 +29,11 @@ describe('App shared UI integration', () => {
     const footer = screen.getByRole('contentinfo');
     expect(main.contains(header)).toBe(false);
     expect(main.contains(footer)).toBe(false);
-    const navigation = within(header).getByRole('navigation', { name: 'Main navigation' });
-    for (const [name, href] of [
-      ['About', '#about'],
-      ['Experience', '#experience'],
-      ['Contact', '#contact'],
-    ]) {
-      expect(within(navigation).getByRole('link', { name }).getAttribute('href')).toBe(href);
-    }
+    expect(
+      within(header).getByRole('link', { name: 'Kyle Marco Cabiling, home' }).getAttribute('href'),
+    ).toBe(import.meta.env.BASE_URL);
+    expect(within(header).queryByRole('navigation')).toBeNull();
+    expect(within(header).getAllByRole('link')).toHaveLength(1);
     expect(within(footer).getByRole('link', { name: 'Back to top' }).getAttribute('href')).toBe(
       '#top',
     );
@@ -60,5 +57,47 @@ describe('App shared UI integration', () => {
       await screen.findByRole('button', { name: 'Lumipat sa maliwanag na mode' }),
     ).toBeTruthy();
     expect(screen.queryByRole('link', { name: 'View selected work' })).toBeNull();
+  });
+
+  it('keeps the name and global controls on the 404 page and when returning home', async () => {
+    window.history.replaceState({}, '', `${import.meta.env.BASE_URL}missing-page`);
+    window.localStorage.setItem('portfolio-theme', 'light');
+    render(
+      <AppProviders>
+        <App />
+      </AppProviders>,
+    );
+
+    const header = screen.getByRole('banner');
+    expect(screen.getByRole('heading', { name: 'Page not found' })).toBeTruthy();
+    expect(screen.getByRole('main').contains(header)).toBe(false);
+    const homeLink = within(header).getByRole('link', { name: 'Kyle Marco Cabiling, home' });
+    expect(homeLink.getAttribute('href')).toBe(import.meta.env.BASE_URL);
+    homeLink.focus();
+    expect(document.activeElement).toBe(homeLink);
+    expect(within(header).queryByRole('navigation')).toBeNull();
+    expect(within(header).getAllByRole('link')).toHaveLength(1);
+
+    fireEvent.click(within(header).getByRole('button', { name: 'Switch to dark mode' }));
+    expect(document.documentElement.dataset.uiTheme).toBe('dark');
+    fireEvent.change(within(header).getByRole('combobox', { name: 'Language' }), {
+      target: { value: 'fil' },
+    });
+    expect(
+      await within(header).findByRole('button', { name: 'Lumipat sa maliwanag na mode' }),
+    ).toBeTruthy();
+
+    fireEvent.click(
+      within(header).getByRole('link', {
+        name: i18n.t('navigation.homeLabel', { name: 'Kyle Marco Cabiling' }),
+      }),
+    );
+    expect(window.location.pathname).toBe(import.meta.env.BASE_URL);
+    expect(within(header).getByText('Kyle Marco Cabiling')).toBeTruthy();
+    expect(within(header).queryByRole('navigation')).toBeNull();
+    expect(within(header).getAllByRole('link')).toHaveLength(1);
+    expect(screen.queryByRole('heading', { name: i18n.t('notFound.title') })).toBeNull();
+    expect(document.documentElement.dataset.uiTheme).toBe('dark');
+    expect(within(header).getByRole<HTMLSelectElement>('combobox').value).toBe('fil');
   });
 });

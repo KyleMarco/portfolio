@@ -7,6 +7,10 @@ and other required guides.
 - Do not register inactive routes (such as unregistered page components) or expose
   hidden sections incidentally while refactoring.
 - Portfolio content lives in `apps/portfolio/src/routes/portfolioData.ts`.
+- Portfolio header: show the profile name as a home link instead of section navigation.
+  Keep the name, theme, and language controls available on both the home and not-found routes.
+- Portfolio footer: show the profile, back-to-top link, and a translated “Powered By”
+  label with React, TypeScript, Vite, and Tailwind CSS badges.
 - Keep English and Filipino UI translations in sync in each affected app's
   `src/app/locales` directory.
 - Portfolio theme: follow the system until the user chooses a theme, persist that

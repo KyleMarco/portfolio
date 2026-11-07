@@ -38,7 +38,7 @@ function SectionHeading({ eyebrow, title, id }: { eyebrow: string; title: string
 
 export default function HomePage() {
   const { t, i18n } = useTranslation();
-  const mainRef = useRef<HTMLElement>(null);
+  const mainRef = useRef<HTMLDivElement>(null);
   const locale = i18n.resolvedLanguage?.startsWith('fil') ? 'fil-PH' : 'en-PH';
   const dateFormatter = new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric' });
   const formatMonthYear = (date: { year: number; month: number }) =>
@@ -83,15 +83,15 @@ export default function HomePage() {
 
   return (
     <Container
+      ref={mainRef}
       size="full"
-      className="my-0! max-w-6xl! px-5! py-0! sm:px-8! lg:px-10! [--ui-focus-color:var(--color-stone-950)] dark:[--ui-focus-color:var(--color-stone-100)]"
+      className="relative isolate my-0! max-w-6xl! px-5! py-0! sm:px-8! lg:px-10! [--ui-focus-color:var(--color-stone-950)] dark:[--ui-focus-color:var(--color-stone-100)]"
     >
-      <main ref={mainRef} className="relative isolate">
-        <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-          <div className="motion-drift absolute -left-48 -top-52 h-[32rem] w-[32rem] rounded-full bg-amber-300/25 blur-3xl dark:bg-amber-600/10" />
-          <div className="motion-drift [animation-delay:-9s] absolute -right-52 top-[35%] h-[38rem] w-[38rem] rounded-full bg-rose-200/20 blur-3xl dark:bg-blue-600/10" />
-        </div>
-        <section
+      <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+        <div className="motion-drift absolute -left-48 -top-52 h-[32rem] w-[32rem] rounded-full bg-amber-300/25 blur-3xl dark:bg-amber-600/10" />
+        <div className="motion-drift [animation-delay:-9s] absolute -right-52 top-[35%] h-[38rem] w-[38rem] rounded-full bg-rose-200/20 blur-3xl dark:bg-blue-600/10" />
+      </div>
+      <section
           data-scroll-reveal
           aria-labelledby="hero-title"
           className="motion-reveal grid gap-12 pb-20 pt-16 sm:pb-28 sm:pt-24 lg:grid-cols-[1.35fr_0.65fr] lg:items-end lg:gap-20 lg:pt-32"
@@ -133,9 +133,8 @@ export default function HomePage() {
             alt={t('home.portraitAlt', { name: `${profile.firstName} ${profile.lastName}` })}
             className="motion-flip hidden lg:!block my-auto h-48 w-48 rounded-full border border-stone-200 object-cover object-center sm:h-56 sm:w-56 lg:mx-0 lg:h-64 lg:w-64 lg:justify-self-end dark:border-stone-700"
           />
-        </section>
-
-        <section
+      </section>
+      <section
           data-scroll-reveal
           id="about"
           aria-labelledby="about-title"
@@ -238,9 +237,8 @@ export default function HomePage() {
               ))}
             </div>
           </div>
-        </section>
-
-        <section
+      </section>
+      <section
           data-scroll-reveal
           id="experience"
           aria-labelledby="experience-title"
@@ -322,9 +320,8 @@ export default function HomePage() {
               </article>
             ))}
           </div>
-        </section>
-
-        <section
+      </section>
+      <section
           data-scroll-reveal
           id="contact"
           aria-labelledby="contact-title"
@@ -336,7 +333,7 @@ export default function HomePage() {
           >
             {t('home.contactTitle')}
           </h2>
-          <div className="mb-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mb-4 grid gap-4 grid-cols-2">
             {contactCards.map((card) => (
               <Card
                 key={card.id}
@@ -369,24 +366,7 @@ export default function HomePage() {
               {t('home.resumeLink')}
             </Link>
           </p>
-        </section>
-      </main>
-
-      <Footer className="mt-0! bg-transparent! [--ui-border-default:var(--color-stone-200)] dark:[--ui-border-default:var(--color-stone-800)]">
-        <div className="flex flex-col gap-2 text-xs text-stone-500 sm:flex-row sm:items-center sm:justify-between dark:text-stone-400">
-          <span>
-            {profile.firstName} {profile.lastName} <span aria-hidden="true">·</span>{' '}
-            {t('portfolio.profile.footerRole')}
-          </span>
-          <Link
-            href="#top"
-            className="w-fit font-medium decoration-stone-300 hover:decoration-stone-900 focus-visible:outline-offset-4! [--ui-action-background:var(--color-stone-700)] [--ui-action-hover:var(--ui-action-background)] dark:decoration-stone-700 dark:hover:decoration-stone-300 dark:[--ui-action-background:var(--color-stone-300)]"
-          >
-            {t('home.backToTop')}
-            <ArrowUp aria-hidden="true" focusable="false" className="ml-1 inline-block h-4 w-4" />
-          </Link>
-        </div>
-      </Footer>
+      </section>
     </Container>
   );
 }

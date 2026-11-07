@@ -50,7 +50,11 @@ register shared component sources with Tailwind. The portfolio's `globals.css`
 only loads these styles and registers the component sources. Shared opt-in motion
 utilities provide its animations; the page owns scroll observation and layout,
 and the theme button scopes its token overrides through Tailwind classes. The
-portfolio uses shared `Header` and `Footer` landmarks. A shared `Container` wraps
+portfolio uses shared `Header` and `Footer` landmarks. Its `src/app/layout/AppLayout.tsx`
+owns the page wrapper and renders `AppHeader` before the route outlet; the router
+only configures routes and the deployment base. `AppHeader` shows the profile name,
+theme controls, and language selection, while each page owns its `main` landmark.
+A shared `Container` wraps
 the home page and owns its width and responsive gutters. Semantic sections own
 headings, navigation targets, and reveal behavior; shared `Card` components group
 individual employer entries and contact items. Employer cards use a muted surface

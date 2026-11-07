@@ -137,7 +137,7 @@ export const skillGroups = [
       'NPM',
     ],
   },
-  { id: 'ai', skills: ['GitHub Copilot', 'Codex'] },
+  { id: 'ai', skills: ['Copilot', 'Codex', 'Claude'] },
 ] as const;
 
 export const education = [

@@ -63,6 +63,9 @@ export const en = {
       resumeLink: 'View résumé PDF',
       backToTop: 'Back to top',
     },
+    footer: {
+      poweredBy: 'Powered By',
+    },
     portfolio: {
       profile: {
         role: 'Software Developer',
