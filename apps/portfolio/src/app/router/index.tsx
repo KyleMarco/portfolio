@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Button } from '@portfolio/ui';
 import { useTranslation } from 'react-i18next';
 import { HomePage, NotFoundPage } from '../../routes';
 import { useTheme } from '../providers/themeContext';
@@ -9,11 +10,8 @@ function AppRouter() {
 
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL}>
-      <div
-        id="top"
-        className="min-h-screen bg-[#fbfaf7] text-stone-950 [color-scheme:light] dark:bg-stone-950 dark:text-stone-100 dark:[color-scheme:dark]"
-      >
-        <header className="sticky top-0 z-10 border-b border-stone-200 bg-[#fbfaf7] dark:border-stone-800 dark:bg-stone-950">
+      <div id="top" className="min-h-screen bg-ui-canvas text-stone-950 dark:text-stone-100">
+        <header className="sticky top-0 z-10 border-b border-stone-200 bg-ui-canvas dark:border-stone-800">
           <nav
             aria-label={t('navigation.label')}
             className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-5 py-4 sm:gap-5 sm:px-8 lg:px-10"
@@ -39,12 +37,19 @@ function AppRouter() {
               </a>
             </div>
             <div className="flex items-center gap-2 sm:gap-3">
-              <button
-                type="button"
+              <Button
+                variant="secondary"
+                size="icon"
                 aria-label={t(isDark ? 'navigation.switchToLight' : 'navigation.switchToDark')}
                 aria-pressed={isDark}
                 onClick={toggleTheme}
-                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-stone-300 bg-[#faf9f6] text-stone-700 transition-colors hover:bg-stone-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-950 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-200 dark:hover:bg-stone-800 dark:focus-visible:outline-stone-100"
+                className={[
+                  '[--ui-surface-muted:#faf9f6] dark:[--ui-surface-muted:var(--color-stone-900)]',
+                  '[--ui-surface-canvas:var(--color-stone-100)] dark:[--ui-surface-canvas:var(--color-stone-800)]',
+                  '[--ui-text-default:var(--color-stone-700)] dark:[--ui-text-default:var(--color-stone-200)]',
+                  '[--ui-border-default:var(--color-stone-300)] dark:[--ui-border-default:var(--color-stone-700)]',
+                  '[--ui-focus-color:var(--color-stone-950)] dark:[--ui-focus-color:var(--color-stone-100)]',
+                ].join(' ')}
               >
                 {isDark ? (
                   <svg aria-hidden="true" viewBox="0 0 20 20" fill="none" className="h-4 w-4">
@@ -67,7 +72,7 @@ function AppRouter() {
                     />
                   </svg>
                 )}
-              </button>
+              </Button>
               <label className="sr-only" htmlFor="language-select">
                 {t('navigation.language')}
               </label>

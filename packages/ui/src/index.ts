@@ -1,4 +1,4 @@
-export { Button, type ButtonProps, type ButtonVariant } from './components/Button';
+export { Button, type ButtonProps, type ButtonSize, type ButtonVariant } from './components/Button';
 export { PopupDialog, type PopupDialogProps } from './components/PopupDialog';
 export { Text, type TextProps, type TextVariant } from './components/Text';
 export { TextArea, type TextAreaProps } from './components/TextArea';

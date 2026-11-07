@@ -1,6 +1,6 @@
 import type { ComponentPropsWithRef } from 'react';
 import { Link } from 'react-router-dom';
-import { buttonStyles, type ButtonVariant } from '../buttonStyles';
+import { buttonSizeStyles, buttonStyles, type ButtonVariant } from '../buttonStyles';
 
 export type LinkButtonVariant = ButtonVariant;
 
@@ -9,5 +9,10 @@ export type LinkButtonProps = ComponentPropsWithRef<typeof Link> & {
 };
 
 export function LinkButton({ variant = 'primary', className = '', ...props }: LinkButtonProps) {
-  return <Link {...props} className={`${buttonStyles[variant]} ${className}`.trim()} />;
+  return (
+    <Link
+      {...props}
+      className={`${buttonStyles[variant]} ${buttonSizeStyles.default} ${className}`.trim()}
+    />
+  );
 }

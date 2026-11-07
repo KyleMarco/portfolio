@@ -45,10 +45,12 @@ installation and Node version; CI uses Node 22. Keep the single root
   - Preserve the document's `data-ui-theme` integration for shared UI and portaled
     components.
 
-The storefront and Storybook currently import the shared UI styles. The portfolio
-uses its own `portfolio.css` and class-based dark variant; it does not currently
-import the UI styles. When integrating a shared component there, include the
-styles and source registration described in the UI README.
+All three apps import the shared UI styles and optional base stylesheet, and
+register shared component sources with Tailwind. The portfolio's `globals.css`
+only loads these styles and registers the component sources. Shared opt-in motion
+utilities provide its animations; the page owns scroll observation and layout,
+and the theme button scopes its token overrides through Tailwind classes. Its
+theme provider sets `data-ui-theme` and retains the `dark` class.
 
 ## Build configuration
 

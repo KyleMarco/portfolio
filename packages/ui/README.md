@@ -45,7 +45,39 @@ The main stylesheet provides tokens, semantic Tailwind mappings, themes, and mot
 
 Set `data-ui-theme="light"` or `data-ui-theme="dark"` on the document root. Both shared component colors and the Tailwind `dark:` variant follow that attribute. Tokens also support themed subtrees; portaled dialogs inherit their theme from the document root. Override semantic `--ui-*` variables in app styles to customize a brand.
 
-The storefront and Storybook already include these imports. The portfolio uses its own stylesheet; add the shared styles and source registration when integrating shared components there.
+All three apps include these imports and source registration. The portfolio uses
+the shared `Button` for its theme toggle and `LinkButton` for route actions. Its
+theme button scopes token overrides with Tailwind arbitrary-property classes,
+including `dark:` overrides. Page layout and scroll observation stay in the app.
+
+`Button` defaults to `size="default"` and also supports `size="icon"` for a compact,
+round icon control. Supply an accessible name with `aria-label` when its content
+is only an icon. Both sizes share the same variant, focus, disabled, and
+reduced-motion styles. `ButtonSize` is exported from `@portfolio/ui`.
+
+### Motion utilities
+
+Motion is opt-in through utility classes; importing the stylesheet does not
+animate elements on its own. Storybook's **Shared UI / Motion** stories show the
+drift, flip, and reveal effects in both themes.
+
+| Utility                 | Behavior                                                            |
+| ----------------------- | ------------------------------------------------------------------- |
+| `motion-enter`          | Content entry over 220ms                                            |
+| `motion-backdrop-enter` | Backdrop fade over 180ms                                            |
+| `motion-reveal`         | Fade and upward entry over 650ms, controlled by `data-reveal-state` |
+| `motion-drift`          | Continuous drift and scale over an alternating 18s cycle            |
+| `motion-flip`           | Continuous perspective rotation over a 2s cycle                     |
+
+For `motion-reveal`, set `data-reveal-state="hidden"` only after observation is
+available, then set it to `"visible"` when the element enters the viewport. An
+unset state leaves content visible. The app owns its observer and cleanup; the
+utility only supplies the styles. Reduced motion disables all of these effects
+and keeps reveal content visible even if its state is still `"hidden"`.
+
+Use `[animation-delay:-9s]` alongside `motion-drift` to offset a second element by
+half a cycle. Animation definitions live in `src/styles/utilities/motion.css`;
+app-specific positioning and colors stay with their consuming elements.
 
 ## Accessibility responsibilities
 

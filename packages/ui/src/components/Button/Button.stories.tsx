@@ -34,3 +34,16 @@ export const Submit: Story = {
     children: 'Submit form',
   },
 };
+
+export const Icon: Story = {
+  args: {
+    size: 'icon',
+    variant: 'secondary',
+    'aria-label': 'Toggle theme',
+    children: (
+      <svg aria-hidden="true" viewBox="0 0 20 20" fill="none" className="size-4">
+        <circle cx="10" cy="10" r="3.5" stroke="currentColor" strokeWidth="1.5" />
+      </svg>
+    ),
+  },
+};

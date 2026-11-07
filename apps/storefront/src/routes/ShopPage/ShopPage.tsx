@@ -55,7 +55,7 @@ function ProductPagination({
           onClick={() => onPageChange(page - 1)}
           disabled={page === 1}
           aria-label={t('shop.previousPage')}
-          className="relative inline-flex h-9 w-9 items-center justify-center rounded-l-md border border-stone-300 bg-[#fbfaf7] text-stone-900 transition hover:bg-[#f2f0eb] focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-stone-950 disabled:cursor-not-allowed disabled:opacity-40"
+          className="relative inline-flex h-9 w-9 items-center justify-center rounded-l-md border border-stone-300 bg-ui-canvas text-stone-900 transition hover:bg-ui-surface-muted focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-stone-950 disabled:cursor-not-allowed disabled:opacity-40"
         >
           <svg aria-hidden="true" viewBox="0 0 20 20" fill="none" className="h-4 w-4">
             <path
@@ -79,7 +79,7 @@ function ProductPagination({
               pageNumber === page ? 'inline-flex' : 'hidden sm:inline-flex',
               page === pageNumber
                 ? 'z-10 border-stone-950 bg-stone-950 text-white'
-                : 'border-stone-300 bg-[#fbfaf7] text-stone-900 hover:bg-[#f2f0eb]',
+                : 'border-stone-300 bg-ui-canvas text-stone-900 hover:bg-ui-surface-muted',
             ].join(' ')}
           >
             {pageNumber}
@@ -90,7 +90,7 @@ function ProductPagination({
           onClick={() => onPageChange(page + 1)}
           disabled={page === totalPages}
           aria-label={t('shop.nextPage')}
-          className="relative -ml-px inline-flex h-9 w-9 items-center justify-center rounded-r-md border border-stone-300 bg-[#fbfaf7] text-stone-900 transition hover:bg-[#f2f0eb] focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-stone-950 disabled:cursor-not-allowed disabled:opacity-40"
+          className="relative -ml-px inline-flex h-9 w-9 items-center justify-center rounded-r-md border border-stone-300 bg-ui-canvas text-stone-900 transition hover:bg-ui-surface-muted focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-stone-950 disabled:cursor-not-allowed disabled:opacity-40"
         >
           <svg aria-hidden="true" viewBox="0 0 20 20" fill="none" className="h-4 w-4">
             <path
@@ -224,7 +224,7 @@ export default function ShopPage() {
 
   return (
     <main className="mx-auto max-w-7xl px-3 py-6 sm:px-6 sm:py-10 lg:px-8">
-      <header className="mb-6 rounded-3xl border border-stone-200 bg-[#f2f0eb] p-4 text-stone-950 shadow-lg shadow-stone-900/5 sm:mb-8 sm:rounded-[2rem] sm:p-8">
+      <header className="mb-6 rounded-3xl border border-stone-200 bg-ui-surface-muted p-4 text-stone-950 shadow-lg shadow-stone-900/5 sm:mb-8 sm:rounded-[2rem] sm:p-8">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="mb-2 text-xs font-bold uppercase tracking-[0.25em] text-stone-500">
@@ -238,7 +238,7 @@ export default function ShopPage() {
             </p>
           </div>
 
-          <div className="w-fit max-w-full break-words rounded-2xl border border-stone-300 bg-[#fbfaf7] px-4 py-3 text-sm text-stone-800">
+          <div className="w-fit max-w-full break-words rounded-2xl border border-stone-300 bg-ui-canvas px-4 py-3 text-sm text-stone-800">
             {t('shop.cartCount', { count: totalItems })} •{' '}
             {discountedTotal < totalPrice && (
               <span className="mr-1 line-through">${totalPrice.toFixed(2)}</span>
@@ -249,7 +249,7 @@ export default function ShopPage() {
       </header>
 
       {isLoading && (
-        <div className="mb-6 rounded-2xl border border-stone-200 bg-[#fbfaf7] p-4 text-stone-700">
+        <div className="mb-6 rounded-2xl border border-stone-200 bg-ui-canvas p-4 text-stone-700">
           {t('shop.loading')}
         </div>
       )}
@@ -274,7 +274,7 @@ export default function ShopPage() {
               'rounded-full border px-4 py-2 text-sm font-medium transition',
               filter === option
                 ? 'border-stone-950 bg-stone-950 text-white'
-                : 'border-stone-300 bg-[#fbfaf7] text-stone-900 hover:bg-[#f2f0eb]',
+                : 'border-stone-300 bg-ui-canvas text-stone-900 hover:bg-ui-surface-muted',
             ].join(' ')}
           >
             {option === 'all'
@@ -310,7 +310,7 @@ export default function ShopPage() {
               <article
                 key={item.id}
                 data-interactive-card
-                className="overflow-hidden rounded-3xl border border-stone-200 bg-[#fbfaf7] shadow-lg shadow-stone-900/5"
+                className="overflow-hidden rounded-3xl border border-stone-200 bg-ui-canvas shadow-lg shadow-stone-900/5"
               >
                 <div className="group relative overflow-hidden">
                   <img
@@ -367,7 +367,7 @@ export default function ShopPage() {
                       <select
                         value={quantity}
                         onChange={(event) => handleQuantityChange(item.id, event.target.value)}
-                        className="rounded-lg border border-stone-300 bg-[#fbfaf7] px-2 py-1.5 text-stone-900 focus:border-stone-700 focus:outline-none focus:ring-2 focus:ring-stone-700/20"
+                        className="rounded-lg border border-stone-300 bg-ui-canvas px-2 py-1.5 text-stone-900 focus:border-stone-700 focus:outline-none focus:ring-2 focus:ring-stone-700/20"
                         disabled={!item.available || remainingQuantity === 0}
                       >
                         {Array.from(
@@ -429,7 +429,7 @@ export default function ShopPage() {
           <circle cx="18" cy="20" r="1" fill="currentColor" />
         </svg>
         {totalItems > 0 && (
-          <span className="absolute -right-1 -top-1 flex h-6 min-w-6 items-center justify-center rounded-full bg-rose-600 px-1 text-xs font-bold text-white ring-2 ring-[#fbfaf7]">
+          <span className="absolute -right-1 -top-1 flex h-6 min-w-6 items-center justify-center rounded-full bg-rose-600 px-1 text-xs font-bold text-white ring-2 ring-ui-canvas">
             {totalItems}
           </span>
         )}
@@ -444,7 +444,7 @@ export default function ShopPage() {
           returnFocusRef={cartTriggerRef}
           overlayClassName="flex justify-end"
           backdropClassName="bg-stone-950/50"
-          panelClassName="flex h-full w-full max-w-xl flex-col bg-[#fbfaf7] shadow-2xl"
+          panelClassName="flex h-full w-full max-w-xl flex-col bg-ui-canvas shadow-2xl"
         >
           <div className="flex items-center justify-between gap-3 border-b border-stone-200 p-4 sm:p-6">
             <div>
@@ -473,7 +473,7 @@ export default function ShopPage() {
                 type="button"
                 onClick={closeCart}
                 aria-label={t('shop.closeCart')}
-                className="flex h-10 w-10 items-center justify-center rounded-full text-stone-600 transition hover:bg-[#f2f0eb] hover:text-stone-950 focus-visible:outline-2 focus-visible:outline-stone-950"
+                className="flex h-10 w-10 items-center justify-center rounded-full text-stone-600 transition hover:bg-ui-surface-muted hover:text-stone-950 focus-visible:outline-2 focus-visible:outline-stone-950"
               >
                 <svg aria-hidden="true" viewBox="0 0 20 20" fill="none" className="h-5 w-5">
                   <path
@@ -489,7 +489,7 @@ export default function ShopPage() {
 
           <div className="min-h-0 flex-1 overflow-y-auto p-4 sm:p-6">
             {cartProducts.length === 0 ? (
-              <div className="rounded-2xl border border-dashed border-stone-300 bg-[#f2f0eb] p-6 text-center text-stone-600">
+              <div className="rounded-2xl border border-dashed border-stone-300 bg-ui-surface-muted p-6 text-center text-stone-600">
                 {t('shop.empty')}
               </div>
             ) : (
@@ -498,7 +498,7 @@ export default function ShopPage() {
                   <li
                     key={item.id}
                     data-interactive-card
-                    className="flex gap-3 rounded-2xl border border-stone-200 bg-[#f2f0eb] p-3"
+                    className="flex gap-3 rounded-2xl border border-stone-200 bg-ui-surface-muted p-3"
                   >
                     <img
                       src={item.image}
@@ -535,7 +535,7 @@ export default function ShopPage() {
                                 }),
                               )
                             }
-                            className="h-8 w-8 rounded-full border border-stone-300 bg-[#fbfaf7] text-lg text-stone-900 hover:border-stone-400 focus-visible:outline-2 focus-visible:outline-stone-950"
+                            className="h-8 w-8 rounded-full border border-stone-300 bg-ui-canvas text-lg text-stone-900 hover:border-stone-400 focus-visible:outline-2 focus-visible:outline-stone-950"
                           >
                             −
                           </button>
@@ -553,7 +553,7 @@ export default function ShopPage() {
                               )
                             }
                             disabled={item.cartQuantity >= item.quantity}
-                            className="h-8 w-8 rounded-full border border-stone-300 bg-[#fbfaf7] text-lg text-stone-900 hover:border-stone-400 focus-visible:outline-2 focus-visible:outline-stone-950 disabled:cursor-not-allowed disabled:opacity-50"
+                            className="h-8 w-8 rounded-full border border-stone-300 bg-ui-canvas text-lg text-stone-900 hover:border-stone-400 focus-visible:outline-2 focus-visible:outline-stone-950 disabled:cursor-not-allowed disabled:opacity-50"
                           >
                             +
                           </button>

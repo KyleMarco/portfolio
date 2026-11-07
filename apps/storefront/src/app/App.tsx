@@ -7,7 +7,7 @@ export default function App() {
 
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL}>
-      <div className="min-h-screen bg-[#fbfaf7] text-stone-950 [color-scheme:light]">
+      <div className="min-h-screen bg-ui-canvas text-stone-950 [color-scheme:light]">
         <nav
           aria-label={t('navigation.label')}
           className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4"
