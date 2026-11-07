@@ -12,6 +12,17 @@ installation and Node version; CI uses Node 22. Keep the single root
 `package-lock.json`. Add dependencies to their owning workspace with
 `npm install <dependency> --workspace=<workspace-name>`.
 
+The root manifest temporarily overrides the docgen plugin's `glob` dependency to
+`^14.0.2` for Storybook. This addresses the
+[glob cancellation advisory](https://github.com/advisories/GHSA-3g3m-2fjr-6pw4)
+and resolves a patched version of `minimatch` for its
+[resource consumption advisory](https://github.com/advisories/GHSA-g3hv-75wg-m249)
+(verified November 7, 2026). The plugin's latest release, 0.9.1, excludes the
+installed TypeScript 7.0.2 from its peer range. Remove the override when Storybook's
+docgen dependency supports patched dependencies and the installed TypeScript
+version. Validate with an online `npm audit --json --offline=false`; offline audit
+output does not establish that registry advisories were checked.
+
 | Location            | Workspace               | Responsibility                                          |
 | ------------------- | ----------------------- | ------------------------------------------------------- |
 | `apps/portfolio`    | `@portfolio/site`       | Personal portfolio, content, theme, and translations    |
