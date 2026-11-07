@@ -4,15 +4,16 @@ This private, source-first workspace contains reusable React components, theme t
 
 ## Entry points
 
-| Import                      | Exports                                                                                                     | Optional peer    |
-| --------------------------- | ----------------------------------------------------------------------------------------------------------- | ---------------- |
-| `@portfolio/ui`             | `Button`, `FileUpload`, `Link`, `Text`, `TextArea`, `TextInput`, `PopupDialog`, `ToastProvider`, `useToast` | None             |
-| `@portfolio/ui/router`      | `LinkButton`                                                                                                | React Router     |
-| `@portfolio/ui/virtualized` | `VirtualizedList`, `VirtualizedGrid`, `VirtualizedTable`, their hooks and types                             | TanStack Virtual |
+| Import                      | Exports                                                                                                                 | Optional peer    |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ---------------- |
+| `@portfolio/ui`             | `Button`, `Dropdown`, `FileUpload`, `Link`, `Text`, `TextArea`, `TextInput`, `PopupDialog`, `ToastProvider`, `useToast` | None             |
+| `@portfolio/ui/router`      | `LinkButton`                                                                                                            | React Router     |
+| `@portfolio/ui/virtualized` | `VirtualizedList`, `VirtualizedGrid`, `VirtualizedTable`, their hooks and types                                         | TanStack Virtual |
 
 ```tsx
 import {
   Button,
+  Dropdown,
   FileUpload,
   Link,
   PopupDialog,
@@ -46,6 +47,25 @@ It uses browser navigation and needs no router provider. Use `LinkButton` from
 <Link href="https://example.com" target="_blank" rel="noopener noreferrer">
   Visit example.com (opens in a new tab)
 </Link>
+```
+
+### Dropdown selection
+
+`Dropdown` renders a themed native `<select>` and exports `DropdownProps`. It
+accepts native select props, including `value`, `defaultValue`, `onChange`,
+`required`, `disabled`, `multiple`, `name`, `form`, and `ref`. Supply `<option>`
+and optional `<optgroup>` children; the browser handles keyboard navigation and
+the picker. With `multiple` or a `size` greater than one, it renders a native
+listbox. Use an empty-value option for a placeholder and `required` for native
+validation. Consumers own labels, help text, and validation messages.
+
+```tsx
+<label htmlFor="language">Language</label>
+<Dropdown id="language" name="language" defaultValue="" required>
+  <option value="" disabled>Choose a language</option>
+  <option value="en">English</option>
+  <option value="fil">Filipino</option>
+</Dropdown>
 ```
 
 ### File selection
@@ -129,7 +149,7 @@ app-specific positioning and colors stay with their consuming elements.
 
 ## Accessibility responsibilities
 
-`TextInput`, `TextArea`, and `FileUpload` provide field styling and native props. Consumers supply a visible label, a stable `id`, and any help or error text. Connect messages with `aria-describedby` and set `aria-invalid` for invalid values; the components do not generate labels or validate input.
+`TextInput`, `TextArea`, `Dropdown`, and `FileUpload` provide field styling and native props. Consumers supply a visible label, a stable `id`, and any help or error text. Connect messages with `aria-describedby` and set `aria-invalid` for invalid values; the components do not generate labels or validate input.
 
 `PopupDialog` renders into `document.body` and manages keyboard focus, Escape dismissal, and body scroll locking. Supply a heading whose `id` matches `labelledBy`, a translated `closeLabel`, and an `onClose` handler. Use `initialFocusRef` and `returnFocusRef` when the default focus targets do not fit the interaction. Keep a visible close control in the dialog content and verify focus restoration when its trigger can unmount.
 
