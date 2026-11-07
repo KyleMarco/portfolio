@@ -4,15 +4,16 @@ This private, source-first workspace contains reusable React components, theme t
 
 ## Entry points
 
-| Import                      | Exports                                                                                                                 | Optional peer    |
-| --------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ---------------- |
-| `@portfolio/ui`             | `Button`, `Dropdown`, `FileUpload`, `Link`, `Text`, `TextArea`, `TextInput`, `PopupDialog`, `ToastProvider`, `useToast` | None             |
-| `@portfolio/ui/router`      | `LinkButton`                                                                                                            | React Router     |
-| `@portfolio/ui/virtualized` | `VirtualizedDropdown`, `VirtualizedList`, `VirtualizedGrid`, `VirtualizedTable`, their hooks and types                  | TanStack Virtual |
+| Import                      | Exports                                                                                                                              | Optional peer    |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ---------------- |
+| `@portfolio/ui`             | `Button`, `Container`, `Dropdown`, `FileUpload`, `Link`, `Text`, `TextArea`, `TextInput`, `PopupDialog`, `ToastProvider`, `useToast` | None             |
+| `@portfolio/ui/router`      | `LinkButton`                                                                                                                         | React Router     |
+| `@portfolio/ui/virtualized` | `VirtualizedDropdown`, `VirtualizedList`, `VirtualizedGrid`, `VirtualizedTable`, their hooks and types                               | TanStack Virtual |
 
 ```tsx
 import {
   Button,
+  Container,
   Dropdown,
   FileUpload,
   Link,
@@ -32,6 +33,25 @@ React and React DOM are peers; see `package.json` for the supported ranges. Reac
 UI icons use `lucide-react` with named imports. Decorative icons are hidden from
 assistive technology; icon-only controls need an accessible name on the control.
 Toast icons are decorative so live regions announce only the message.
+
+### Content containers
+
+`Container` renders a centered, full-width `<div>` with a maximum width. It exports
+`ContainerProps` and `ContainerSize` and accepts native div props, including
+`className`, `style`, and `ref`. The `size` prop selects `sm` (48rem), `md` (64rem),
+`lg` (80rem, the default), or `full` (no maximum width). Horizontal padding uses
+the shared spacing tokens: 1rem by default, 1.5rem at the `sm` breakpoint, and 2rem
+at `lg`. Full-width containers retain this padding. Vertical spacing and semantic
+landmarks belong to the consumer.
+
+```tsx
+<main>
+  <Container size="md" className="py-ui-8">
+    <h1>Account settings</h1>
+    <Text as="p">Manage your profile and preferences.</Text>
+  </Container>
+</main>
+```
 
 ### Links
 
