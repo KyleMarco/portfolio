@@ -10,7 +10,10 @@ const meta = {
   },
   args: {
     children: (
-      <Container className="flex flex-wrap items-center justify-between gap-ui-4 py-ui-6">
+      <Container
+        className="flex flex-wrap items-center justify-between gap-ui-4"
+        style={{ marginBlock: 0, paddingBlock: 0 }}
+      >
         <Text as="p" className="mb-0">
           Built with care.
         </Text>
@@ -31,7 +34,10 @@ export const Default: Story = {};
 export const Columns: Story = {
   args: {
     children: (
-      <Container className="grid gap-ui-8 py-ui-8 sm:grid-cols-3">
+      <Container
+        className="grid gap-ui-8 sm:grid-cols-3"
+        style={{ marginBlock: 0, paddingBlock: 0 }}
+      >
         <div>
           <p className="mb-ui-2 font-semibold">Portfolio</p>
           <Text as="p" className="mb-0">
@@ -57,7 +63,10 @@ export const PageLayout: Story = {
   render: (args) => (
     <div id="top" className="flex min-h-[32rem] flex-col bg-ui-canvas">
       <Header>
-        <Container className="flex flex-wrap items-center justify-between gap-ui-4 py-ui-4">
+        <Container
+          className="flex flex-wrap items-center justify-between gap-ui-4"
+          style={{ marginBlock: 0, paddingBlock: 0 }}
+        >
           <Link href="#top" className="text-lg font-semibold">
             Portfolio
           </Link>
@@ -67,7 +76,7 @@ export const PageLayout: Story = {
         </Container>
       </Header>
       <main id="content" className="flex-1">
-        <Container className="py-ui-8">
+        <Container>
           <h1 className="mb-ui-4 text-3xl font-semibold">A place for your work</h1>
           <Text as="p">
             Compose a page with shared landmarks and responsive content containers.

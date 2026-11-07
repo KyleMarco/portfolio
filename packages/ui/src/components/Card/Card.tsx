@@ -15,7 +15,7 @@ export function Card({ variant = 'outlined', className = '', ...props }: CardPro
   return (
     <div
       {...props}
-      className={`min-w-0 rounded-ui-lg border border-ui-border bg-ui-surface p-ui-6 font-ui-sans text-ui-text ${variants[variant]} ${className}`.trim()}
+      className={`my-ui-4 min-w-0 rounded-ui-lg border border-ui-border bg-ui-surface p-ui-4 font-ui-sans text-ui-text sm:p-ui-6 ${variants[variant]} ${className}`.trim()}
     />
   );
 }

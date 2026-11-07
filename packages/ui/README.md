@@ -44,12 +44,13 @@ Toast icons are decorative so live regions announce only the message.
 `className`, `style`, and `ref`. The `size` prop selects `sm` (48rem), `md` (64rem),
 `lg` (80rem, the default), or `full` (no maximum width). Horizontal padding uses
 the shared spacing tokens: 1rem by default, 1.5rem at the `sm` breakpoint, and 2rem
-at `lg`. Full-width containers retain this padding. Vertical spacing and semantic
-landmarks belong to the consumer.
+at `lg`. Full-width containers retain this padding. Containers also have 1.5rem
+vertical padding and 1.5rem top and bottom margins. Consumers own semantic
+landmarks and can customize spacing through native `style` props.
 
 ```tsx
 <main>
-  <Container size="md" className="py-ui-8">
+  <Container size="md">
     <h1>Account settings</h1>
     <Text as="p">Manage your profile and preferences.</Text>
   </Container>
@@ -62,12 +63,18 @@ landmarks belong to the consumer.
 surfaces, text, and a bottom or top border respectively. They export `HeaderProps`
 and `FooterProps` and accept native element props, including `children`, `className`,
 `style`, and `ref`. They add no navigation, text, positioning, or interactions.
-Consumers own content, translations, spacing, and responsive layout; compose with
-`Container` to align content with the rest of the page.
+Headers have 1rem vertical padding and a 1.5rem bottom margin. Footers have 1.5rem
+vertical padding and a 2rem top margin. Consumers own content, translations, and
+responsive layout; compose with `Container` for responsive horizontal gutters.
+Reset a nested container's vertical spacing to avoid adding it to the landmark's
+padding, as shown below.
 
 ```tsx
 <Header>
-  <Container className="flex flex-wrap items-center justify-between gap-ui-4 py-ui-4">
+  <Container
+    className="flex flex-wrap items-center justify-between gap-ui-4"
+    style={{ marginBlock: 0, paddingBlock: 0 }}
+  >
     <Link href="#top">Portfolio</Link>
     <nav aria-label="Primary navigation">
       <Link href="#contact">Contact</Link>
@@ -76,7 +83,7 @@ Consumers own content, translations, spacing, and responsive layout; compose wit
 </Header>
 <main>{/* Page content */}</main>
 <Footer>
-  <Container className="py-ui-6">
+  <Container style={{ marginBlock: 0, paddingBlock: 0 }}>
     <Text as="p" className="mb-0">Built with care.</Text>
   </Container>
 </Footer>
@@ -92,14 +99,16 @@ a complete page layout; use its Theme toolbar to review both themes.
 `Card` renders a themed `<div>` for related content and exports `CardProps` and
 `CardVariant`. It accepts native div props, including `className`, `style`, and
 `ref`. Both variants use the shared surface, text, border, radius, and spacing
-tokens, with 1.5rem padding. The default `variant="outlined"` has a border;
+tokens, with 1rem padding below `sm`, 1.5rem padding at `sm` and above, and 1rem
+top and bottom margins. The default `variant="outlined"` has a border;
 `variant="elevated"` adds the shared card shadow.
 
 Supply headings, content, and actions as children. The card adds no interactive
 role or Tab stop; use a `Link` or `Button` inside it for navigation or actions.
-Consumers own semantic landmarks and responsive grid layouts. Storybook includes
-both variants, composed actions, and a responsive grid, with the Theme toolbar
-available for light/dark previews.
+Consumers own semantic landmarks and responsive grid layouts. When a grid owns
+the gaps, use `style={{ marginBlock: 0 }}` on cards to avoid extra vertical space.
+Storybook includes both variants, composed actions, and a responsive grid, with
+the Theme toolbar available for light/dark previews.
 
 ```tsx
 <Card variant="elevated">

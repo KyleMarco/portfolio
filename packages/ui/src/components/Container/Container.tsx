@@ -17,7 +17,7 @@ export function Container({ size = 'lg', className = '', ...props }: ContainerPr
   return (
     <div
       {...props}
-      className={`mx-auto w-full px-ui-4 sm:px-ui-6 lg:px-ui-8 ${sizes[size]} ${className}`.trim()}
+      className={`mx-auto my-ui-6 w-full px-ui-4 py-ui-6 sm:px-ui-6 lg:px-ui-8 ${sizes[size]} ${className}`.trim()}
     />
   );
 }

@@ -53,10 +53,10 @@ export const ResponsiveGrid: Story = {
   render: (args) => (
     <div className="grid gap-ui-4 sm:grid-cols-2 lg:grid-cols-3">
       {['Design', 'Development', 'Accessibility'].map((title) => (
-        <Card {...args} key={title}>
+        <Card {...args} key={title} style={{ ...args.style, marginBlock: 0 }}>
           <h2 className="mb-ui-2 text-lg font-semibold">{title}</h2>
           <Text as="p" className="mb-0">
-            Cards fill their grid cell and let content determine their height.
+            The grid owns the gaps; card margins are reset so spacing stays consistent.
           </Text>
         </Card>
       ))}

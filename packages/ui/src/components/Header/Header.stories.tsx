@@ -10,7 +10,10 @@ const meta = {
   },
   args: {
     children: (
-      <Container className="flex flex-wrap items-center justify-between gap-ui-4 py-ui-4">
+      <Container
+        className="flex flex-wrap items-center justify-between gap-ui-4"
+        style={{ marginBlock: 0, paddingBlock: 0 }}
+      >
         <Link href="#home" className="text-lg font-semibold">
           Portfolio
         </Link>
@@ -32,7 +35,10 @@ export const Default: Story = {};
 export const WithActions: Story = {
   args: {
     children: (
-      <Container className="flex flex-wrap items-center justify-between gap-ui-4 py-ui-4">
+      <Container
+        className="flex flex-wrap items-center justify-between gap-ui-4"
+        style={{ marginBlock: 0, paddingBlock: 0 }}
+      >
         <Link href="#home" className="text-lg font-semibold">
           Workspace
         </Link>

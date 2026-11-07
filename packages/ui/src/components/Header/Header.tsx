@@ -6,7 +6,7 @@ export function Header({ className = '', ...props }: HeaderProps) {
   return (
     <header
       {...props}
-      className={`border-b border-ui-border bg-ui-surface font-ui-sans text-ui-text ${className}`.trim()}
+      className={`mb-ui-6 border-b border-ui-border bg-ui-surface py-ui-4 font-ui-sans text-ui-text ${className}`.trim()}
     />
   );
 }

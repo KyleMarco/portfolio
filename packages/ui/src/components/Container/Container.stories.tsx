@@ -17,10 +17,9 @@ const meta = {
   args: {
     children: (
       <div className="rounded-ui-lg border border-ui-border bg-ui-surface p-ui-4">
-        <Text as="p">Centered content with responsive horizontal padding.</Text>
+        <Text as="p">Centered content with responsive gutters and vertical spacing.</Text>
       </div>
     ),
-    className: 'py-ui-8',
   },
 } satisfies Meta<typeof Container>;
 
