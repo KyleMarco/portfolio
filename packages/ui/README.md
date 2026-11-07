@@ -4,15 +4,16 @@ This private, source-first workspace contains reusable React components, theme t
 
 ## Entry points
 
-| Import                      | Exports                                                                                                                              | Optional peer    |
-| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ---------------- |
-| `@portfolio/ui`             | `Button`, `Container`, `Dropdown`, `FileUpload`, `Link`, `Text`, `TextArea`, `TextInput`, `PopupDialog`, `ToastProvider`, `useToast` | None             |
-| `@portfolio/ui/router`      | `LinkButton`                                                                                                                         | React Router     |
-| `@portfolio/ui/virtualized` | `VirtualizedDropdown`, `VirtualizedList`, `VirtualizedGrid`, `VirtualizedTable`, their hooks and types                               | TanStack Virtual |
+| Import                      | Exports                                                                                                                                      | Optional peer    |
+| --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- |
+| `@portfolio/ui`             | `Button`, `Card`, `Container`, `Dropdown`, `FileUpload`, `Link`, `Text`, `TextArea`, `TextInput`, `PopupDialog`, `ToastProvider`, `useToast` | None             |
+| `@portfolio/ui/router`      | `LinkButton`                                                                                                                                 | React Router     |
+| `@portfolio/ui/virtualized` | `VirtualizedDropdown`, `VirtualizedList`, `VirtualizedGrid`, `VirtualizedTable`, their hooks and types                                       | TanStack Virtual |
 
 ```tsx
 import {
   Button,
+  Card,
   Container,
   Dropdown,
   FileUpload,
@@ -51,6 +52,28 @@ landmarks belong to the consumer.
     <Text as="p">Manage your profile and preferences.</Text>
   </Container>
 </main>
+```
+
+### Cards
+
+`Card` renders a themed `<div>` for related content and exports `CardProps` and
+`CardVariant`. It accepts native div props, including `className`, `style`, and
+`ref`. Both variants use the shared surface, text, border, radius, and spacing
+tokens, with 1.5rem padding. The default `variant="outlined"` has a border;
+`variant="elevated"` adds the shared card shadow.
+
+Supply headings, content, and actions as children. The card adds no interactive
+role or Tab stop; use a `Link` or `Button` inside it for navigation or actions.
+Consumers own semantic landmarks and responsive grid layouts. Storybook includes
+both variants, composed actions, and a responsive grid, with the Theme toolbar
+available for light/dark previews.
+
+```tsx
+<Card variant="elevated">
+  <h2 className="mb-ui-2 text-lg font-semibold">Project overview</h2>
+  <Text as="p">Review the latest updates from your team.</Text>
+  <Link href="mailto:hello@example.com">Contact the team</Link>
+</Card>
 ```
 
 ### Links
