@@ -1,4 +1,9 @@
 export {
+  VirtualizedDropdown,
+  type VirtualizedDropdownProps,
+  type VirtualizedDropdownOption,
+} from './VirtualizedDropdown';
+export {
   VirtualizedList,
   useVirtualizedList,
   type UseVirtualizedListOptions,

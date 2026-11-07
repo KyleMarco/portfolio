@@ -8,7 +8,7 @@ This private, source-first workspace contains reusable React components, theme t
 | --------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ---------------- |
 | `@portfolio/ui`             | `Button`, `Dropdown`, `FileUpload`, `Link`, `Text`, `TextArea`, `TextInput`, `PopupDialog`, `ToastProvider`, `useToast` | None             |
 | `@portfolio/ui/router`      | `LinkButton`                                                                                                            | React Router     |
-| `@portfolio/ui/virtualized` | `VirtualizedList`, `VirtualizedGrid`, `VirtualizedTable`, their hooks and types                                         | TanStack Virtual |
+| `@portfolio/ui/virtualized` | `VirtualizedDropdown`, `VirtualizedList`, `VirtualizedGrid`, `VirtualizedTable`, their hooks and types                  | TanStack Virtual |
 
 ```tsx
 import {
@@ -67,6 +67,77 @@ validation. Consumers own labels, help text, and validation messages.
   <option value="fil">Filipino</option>
 </Dropdown>
 ```
+
+### Virtualized dropdown selection
+
+`VirtualizedDropdown` from `@portfolio/ui/virtualized` provides a custom single-select
+combobox for large, flat option arrays. It exports `VirtualizedDropdownProps` and
+`VirtualizedDropdownOption`. Each option has a unique string `value`, a string
+`label` used for display and typeahead, and an optional `disabled` flag. It uses
+the existing optional TanStack Virtual peer and renders the visible options plus
+overscan and the active option. The core `@portfolio/ui` entry point remains
+independent of virtualization.
+
+The shared `useVirtualizedList` hook also accepts TanStack's optional
+`rangeExtractor` and `initialRect` settings for custom collection renderers.
+
+```tsx
+import { VirtualizedDropdown } from '@portfolio/ui/virtualized';
+
+const records = Array.from({ length: 10000 }, (_, index) => ({
+  value: String(index + 1),
+  label: `Record ${index + 1}`,
+}));
+
+export function RecordPicker() {
+  return (
+    <div>
+      <label htmlFor="record">Record</label>
+      <VirtualizedDropdown
+        id="record"
+        name="record"
+        options={records}
+        defaultValue="5000"
+        placeholder="Choose a record"
+        required
+      />
+    </div>
+  );
+}
+```
+
+Use `value` and `onValueChange(value)` for controlled selection, or `defaultValue`
+for internal state. Keep the options array stable when possible. Button props,
+including `ref`, `className`, `style`, and accessible names/descriptions, apply to
+the trigger. Supply a visible label and an `id`, or an accessible name through
+ARIA. Translate `placeholder`, `emptyMessage`, and option labels in the consumer.
+`height` caps the popup at 240px by default; `optionHeight` defaults to a fixed
+40px and `overscan` to five rows. Long labels truncate visually but retain their
+full accessible text and a native tooltip.
+
+Arrow keys open and navigate the list, skipping disabled options. Home/End jump
+to the first/last enabled option. Typing matches option labels; repeated letters
+cycle matches, and the search buffer resets after 700ms. Enter, Space, or Tab
+commits the active option; Tab continues normal focus navigation. Escape, clicking
+the trigger again, or moving focus/clicking outside dismisses without committing.
+DOM focus stays on the trigger, and the active option remains mounted for
+`aria-activedescendant` even while pointer scrolling moves it outside the viewport.
+
+`name` and `form` connect a visually hidden native select containing only the empty
+and selected values to form submission. `required` uses native constraint
+validation, focuses the visible trigger on failure, and displays the browser's
+localized validation message. Use nonempty values for required choices. The form
+proxy stays out of the accessibility tree and Tab order. Native form reset restores
+an uncontrolled default, retains a controlled value, and respects canceled resets.
+`onInvalid` receives the proxy select's validation event. Consumers can also supply
+`aria-invalid` and `aria-describedby` for application validation.
+
+The popup inherits the trigger's theme subtree, opens above when space below is
+insufficient, and adjusts its height to the viewport. Its ancestors must allow
+overflow because it renders in the component tree. Storybook includes 10,000-option,
+controlled, form, disabled, invalid, empty, and long-label examples. Custom combobox
+screen-reader behavior still needs manual verification with the assistive
+technologies supported by the consuming application.
 
 ### File selection
 
