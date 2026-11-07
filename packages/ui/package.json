@@ -45,5 +45,8 @@
     "react-router-dom": "^7.18.4",
     "typescript": "^7.0.2",
     "vitest": "^5.0.5"
+  },
+  "dependencies": {
+    "lucide-react": "^1.70.0"
   }
 }

@@ -51,6 +51,32 @@ describe('standalone storefront', () => {
       userId: 1,
       products: [{ id: 1, quantity: 1 }],
     });
+
+    const increase = within(dialog).getByRole('button', {
+      name: 'Increase quantity of Test product',
+    });
+    for (let count = 1; count < 5; count += 1) {
+      fireEvent.click(increase);
+    }
+    expect(increase.hasAttribute('disabled')).toBe(true);
+    expect(within(dialog).getByText('5 items in cart')).toBeTruthy();
+
+    fireEvent.change(screen.getByRole('combobox', { name: 'Language' }), {
+      target: { value: 'fil' },
+    });
+    fireEvent.click(
+      within(dialog).getByRole('button', { name: 'Bawasan ang dami ng Test product' }),
+    );
+    expect(
+      within(dialog)
+        .getByRole('button', { name: 'Dagdagan ang dami ng Test product' })
+        .hasAttribute('disabled'),
+    ).toBe(false);
+    expect(within(dialog).getByText('4 item sa cart')).toBeTruthy();
+
+    fireEvent.change(screen.getByRole('combobox', { name: 'Wika' }), {
+      target: { value: 'en' },
+    });
     fireEvent.click(within(dialog).getByRole('button', { name: 'Clear all' }));
     expect(await within(dialog).findByText('Your cart is empty.')).toBeTruthy();
     expect(vi.mocked(cartApi.deleteCart).mock.calls[0][0]).toBe(1);

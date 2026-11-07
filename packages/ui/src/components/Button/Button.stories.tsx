@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { Sun } from 'lucide-react';
 import { Button } from '@portfolio/ui';
 
 const meta = {
@@ -40,10 +41,6 @@ export const Icon: Story = {
     size: 'icon',
     variant: 'secondary',
     'aria-label': 'Toggle theme',
-    children: (
-      <svg aria-hidden="true" viewBox="0 0 20 20" fill="none" className="size-4">
-        <circle cx="10" cy="10" r="3.5" stroke="currentColor" strokeWidth="1.5" />
-      </svg>
-    ),
+    children: <Sun aria-hidden="true" focusable="false" className="size-4" />,
   },
 };

@@ -43,6 +43,8 @@ export const fil: LocaleShape<typeof en> = {
       available: 'May stock',
       unavailable: 'Walang stock',
       qty: 'Dami',
+      decreaseQuantity: 'Bawasan ang dami ng {{name}}',
+      increaseQuantity: 'Dagdagan ang dami ng {{name}}',
       discount: '{{percent}}% bawas',
       maxReached: 'Naabot ang limitasyon',
       add: 'Idagdag sa cart',

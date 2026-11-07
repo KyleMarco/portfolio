@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { ChevronLeft, ChevronRight, Minus, Plus, ShoppingCart, X } from 'lucide-react';
 import type { AppDispatch, RootState } from '../../app/store';
 import {
   addToCart,
@@ -57,15 +58,7 @@ function ProductPagination({
           aria-label={t('shop.previousPage')}
           className="relative inline-flex h-9 w-9 items-center justify-center rounded-l-md border border-stone-300 bg-ui-canvas text-stone-900 transition hover:bg-ui-surface-muted focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-stone-950 disabled:cursor-not-allowed disabled:opacity-40"
         >
-          <svg aria-hidden="true" viewBox="0 0 20 20" fill="none" className="h-4 w-4">
-            <path
-              d="m12.5 4.5-5 5.5 5 5.5"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="1.75"
-            />
-          </svg>
+          <ChevronLeft aria-hidden="true" focusable="false" className="h-4 w-4" />
         </button>
         {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
           <button
@@ -92,15 +85,7 @@ function ProductPagination({
           aria-label={t('shop.nextPage')}
           className="relative -ml-px inline-flex h-9 w-9 items-center justify-center rounded-r-md border border-stone-300 bg-ui-canvas text-stone-900 transition hover:bg-ui-surface-muted focus-visible:z-10 focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-stone-950 disabled:cursor-not-allowed disabled:opacity-40"
         >
-          <svg aria-hidden="true" viewBox="0 0 20 20" fill="none" className="h-4 w-4">
-            <path
-              d="m7.5 4.5 5 5.5-5 5.5"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="1.75"
-            />
-          </svg>
+          <ChevronRight aria-hidden="true" focusable="false" className="h-4 w-4" />
         </button>
       </div>
     </nav>
@@ -417,17 +402,7 @@ export default function ShopPage() {
         aria-expanded={isCartOpen}
         className="fixed bottom-5 right-5 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-stone-950 text-white shadow-xl shadow-stone-950/25 transition hover:bg-stone-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950 sm:bottom-8 sm:right-8 sm:h-16 sm:w-16"
       >
-        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" className="h-7 w-7">
-          <path
-            d="M3 4h2l2.2 11.1a2 2 0 0 0 2 1.6h8.9a2 2 0 0 0 2-1.6L22 8H6"
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="1.8"
-          />
-          <circle cx="10" cy="20" r="1" fill="currentColor" />
-          <circle cx="18" cy="20" r="1" fill="currentColor" />
-        </svg>
+        <ShoppingCart aria-hidden="true" focusable="false" className="h-7 w-7" />
         {totalItems > 0 && (
           <span className="absolute -right-1 -top-1 flex h-6 min-w-6 items-center justify-center rounded-full bg-rose-600 px-1 text-xs font-bold text-white ring-2 ring-ui-canvas">
             {totalItems}
@@ -475,14 +450,7 @@ export default function ShopPage() {
                 aria-label={t('shop.closeCart')}
                 className="flex h-10 w-10 items-center justify-center rounded-full text-stone-600 transition hover:bg-ui-surface-muted hover:text-stone-950 focus-visible:outline-2 focus-visible:outline-stone-950"
               >
-                <svg aria-hidden="true" viewBox="0 0 20 20" fill="none" className="h-5 w-5">
-                  <path
-                    d="m5 5 10 10M15 5 5 15"
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeWidth="1.75"
-                  />
-                </svg>
+                <X aria-hidden="true" focusable="false" className="h-5 w-5" />
               </button>
             </div>
           </div>
@@ -527,6 +495,7 @@ export default function ShopPage() {
                         <div className="flex items-center gap-2">
                           <button
                             type="button"
+                            aria-label={t('shop.decreaseQuantity', { name: item.name })}
                             onClick={() =>
                               dispatch(
                                 updateCartQuantity({
@@ -535,15 +504,16 @@ export default function ShopPage() {
                                 }),
                               )
                             }
-                            className="h-8 w-8 rounded-full border border-stone-300 bg-ui-canvas text-lg text-stone-900 hover:border-stone-400 focus-visible:outline-2 focus-visible:outline-stone-950"
+                            className="flex h-8 w-8 items-center justify-center rounded-full border border-stone-300 bg-ui-canvas text-lg text-stone-900 hover:border-stone-400 focus-visible:outline-2 focus-visible:outline-stone-950"
                           >
-                            −
+                            <Minus aria-hidden="true" focusable="false" className="h-4 w-4" />
                           </button>
                           <span className="min-w-8 text-center text-sm font-semibold text-stone-900">
                             {item.cartQuantity}
                           </span>
                           <button
                             type="button"
+                            aria-label={t('shop.increaseQuantity', { name: item.name })}
                             onClick={() =>
                               dispatch(
                                 updateCartQuantity({
@@ -553,9 +523,9 @@ export default function ShopPage() {
                               )
                             }
                             disabled={item.cartQuantity >= item.quantity}
-                            className="h-8 w-8 rounded-full border border-stone-300 bg-ui-canvas text-lg text-stone-900 hover:border-stone-400 focus-visible:outline-2 focus-visible:outline-stone-950 disabled:cursor-not-allowed disabled:opacity-50"
+                            className="flex h-8 w-8 items-center justify-center rounded-full border border-stone-300 bg-ui-canvas text-lg text-stone-900 hover:border-stone-400 focus-visible:outline-2 focus-visible:outline-stone-950 disabled:cursor-not-allowed disabled:opacity-50"
                           >
-                            +
+                            <Plus aria-hidden="true" focusable="false" className="h-4 w-4" />
                           </button>
                         </div>
 

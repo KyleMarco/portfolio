@@ -1,5 +1,6 @@
 import { useLayoutEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { ArrowUp, ArrowUpRight } from 'lucide-react';
 import { contactCards, education, experiences, profile, skillGroups } from '../portfolioData';
 
 function SectionHeading({ eyebrow, title, id }: { eyebrow: string; title: string; id?: string }) {
@@ -102,15 +103,7 @@ export default function HomePage() {
               className="inline-flex min-h-12 items-center justify-center gap-3 bg-stone-950 px-5 text-sm font-medium text-white transition-colors hover:bg-stone-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950 motion-reduce:transition-none dark:bg-stone-100 dark:text-stone-950 dark:hover:bg-stone-300 dark:focus-visible:outline-stone-100"
             >
               {t('home.contact')}
-              <svg
-                aria-hidden="true"
-                focusable="false"
-                viewBox="0 0 20 20"
-                fill="none"
-                className="h-4 w-4"
-              >
-                <path d="M6 14 14 6M6 6h8v8" stroke="currentColor" strokeWidth="1.5" />
-              </svg>
+              <ArrowUpRight aria-hidden="true" focusable="false" className="h-4 w-4" />
             </a>
           </div>
         </div>
@@ -344,15 +337,7 @@ export default function HomePage() {
             className="w-fit font-medium text-stone-700 underline decoration-stone-300 underline-offset-4 hover:decoration-stone-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-stone-950 dark:text-stone-300 dark:decoration-stone-700 dark:hover:decoration-stone-300 dark:focus-visible:outline-stone-100"
           >
             {t('home.backToTop')}
-            <svg
-              aria-hidden="true"
-              focusable="false"
-              viewBox="0 0 20 20"
-              fill="none"
-              className="ml-1 inline-block h-4 w-4"
-            >
-              <path d="M10 15V5m0 0L6 9m4-4 4 4" stroke="currentColor" strokeWidth="1.5" />
-            </svg>
+            <ArrowUp aria-hidden="true" focusable="false" className="ml-1 inline-block h-4 w-4" />
           </a>
         </div>
       </footer>

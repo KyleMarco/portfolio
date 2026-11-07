@@ -33,6 +33,8 @@ export const en = {
       available: 'Available',
       unavailable: 'Unavailable',
       qty: 'Qty',
+      decreaseQuantity: 'Decrease quantity of {{name}}',
+      increaseQuantity: 'Increase quantity of {{name}}',
       discount: '{{percent}}% off',
       maxReached: 'Maximum reached',
       add: 'Add to cart',

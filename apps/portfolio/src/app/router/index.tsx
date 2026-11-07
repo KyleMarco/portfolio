@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Button } from '@portfolio/ui';
 import { useTranslation } from 'react-i18next';
+import { Moon, Sun } from 'lucide-react';
 import { HomePage, NotFoundPage } from '../../routes';
 import { useTheme } from '../providers/themeContext';
 
@@ -52,25 +53,9 @@ function AppRouter() {
                 ].join(' ')}
               >
                 {isDark ? (
-                  <svg aria-hidden="true" viewBox="0 0 20 20" fill="none" className="h-4 w-4">
-                    <circle cx="10" cy="10" r="3.5" stroke="currentColor" strokeWidth="1.5" />
-                    <path
-                      d="M10 2.5v1.25m0 12.5v1.25m7.5-7.5h-1.25m-12.5 0H2.5m12.803-5.303-.884.884m-8.838 8.838-.884.884m10.606 0-.884-.884m-8.838-8.838-.884-.884"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeWidth="1.5"
-                    />
-                  </svg>
+                  <Sun aria-hidden="true" focusable="false" className="h-4 w-4" />
                 ) : (
-                  <svg aria-hidden="true" viewBox="0 0 20 20" fill="none" className="h-4 w-4">
-                    <path
-                      d="M16.2 12.5A6.8 6.8 0 0 1 7.5 3.8a6.8 6.8 0 1 0 8.7 8.7Z"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="1.5"
-                    />
-                  </svg>
+                  <Moon aria-hidden="true" focusable="false" className="h-4 w-4" />
                 )}
               </Button>
               <label className="sr-only" htmlFor="language-select">

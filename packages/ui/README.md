@@ -28,6 +28,10 @@ import { VirtualizedList } from '@portfolio/ui/virtualized';
 
 React and React DOM are peers; see `package.json` for the supported ranges. React Router is needed only for the router entry point, and TanStack Virtual only for the virtualized entry point. The root entry point imports neither. `Button` and `LinkButton` share primary and secondary styles and accept native element props, including refs; `LinkButton` also accepts router props. `TextInput` and `TextArea` accept native field props, including refs, and use shared theme tokens for their field, focus, disabled, and invalid states.
 
+UI icons use `lucide-react` with named imports. Decorative icons are hidden from
+assistive technology; icon-only controls need an accessible name on the control.
+Toast icons are decorative so live regions announce only the message.
+
 ### Links
 
 `Link` renders a themed, underlined native `<a>` and exports `LinkProps`. It accepts

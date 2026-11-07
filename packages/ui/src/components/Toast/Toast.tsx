@@ -1,4 +1,5 @@
 import { useCallback, useMemo, useState, type ReactNode } from 'react';
+import { Check, Info, TriangleAlert, type LucideIcon } from 'lucide-react';
 import { ToastContext, type ToastContextValue, type ToastVariant } from './toastContext';
 
 type ToastItem = {
@@ -65,29 +66,33 @@ function ToastViewport({ toasts }: ToastViewportProps) {
     info: 'bg-ui-action text-ui-on-action',
   };
 
-  const symbols: Record<ToastVariant, string> = {
-    success: '✓',
-    error: '!',
-    info: 'i',
+  const icons: Record<ToastVariant, LucideIcon> = {
+    success: Check,
+    error: TriangleAlert,
+    info: Info,
   };
 
   return (
     <div className="pointer-events-none fixed right-5 top-5 z-50 flex flex-col gap-3">
-      {toasts.map((toast) => (
-        <div
-          key={toast.id}
-          role="status"
-          aria-live="polite"
-          className={`pointer-events-auto flex items-center gap-3 rounded-ui-lg border bg-ui-surface px-4 py-3 text-sm font-medium shadow-ui-card ring-1 backdrop-blur-sm ${variants[toast.variant]}`}
-        >
-          <span
-            className={`flex h-6 w-6 items-center justify-center rounded-full text-base font-bold ${iconStyles[toast.variant]}`}
+      {toasts.map((toast) => {
+        const Icon = icons[toast.variant];
+
+        return (
+          <div
+            key={toast.id}
+            role="status"
+            aria-live="polite"
+            className={`pointer-events-auto flex items-center gap-3 rounded-ui-lg border bg-ui-surface px-4 py-3 text-sm font-medium shadow-ui-card ring-1 backdrop-blur-sm ${variants[toast.variant]}`}
           >
-            {symbols[toast.variant]}
-          </span>
-          <span>{toast.message}</span>
-        </div>
-      ))}
+            <span
+              className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full ${iconStyles[toast.variant]}`}
+            >
+              <Icon aria-hidden="true" focusable="false" className="h-4 w-4" />
+            </span>
+            <span>{toast.message}</span>
+          </div>
+        );
+      })}
     </div>
   );
 }

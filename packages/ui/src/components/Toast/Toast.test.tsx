@@ -34,9 +34,9 @@ describe('ToastProvider', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Info' }));
 
     expect(screen.getAllByRole('status').map((status) => status.textContent)).toEqual([
-      '✓Saved successfully',
-      '!Could not save',
-      'iUpdate available',
+      'Saved successfully',
+      'Could not save',
+      'Update available',
     ]);
   });
 
