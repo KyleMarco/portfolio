@@ -10,22 +10,22 @@
   },
   "dependencies": {
     "@portfolio/ui": "*",
-    "@tanstack/react-virtual": "^3.14.25",
+    "@tanstack/react-virtual": "^3.14.26",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
-    "react-router-dom": "^7.18.4"
+    "react-router-dom": "^7.18.5"
   },
   "devDependencies": {
     "@portfolio/tsconfig": "*",
-    "@storybook/addon-docs": "^10.6.5",
-    "@storybook/react-vite": "^10.6.5",
-    "@tailwindcss/vite": "^4.3.3",
+    "@storybook/addon-docs": "^10.6.6",
+    "@storybook/react-vite": "^10.6.6",
+    "@tailwindcss/vite": "^4.3.5",
     "@types/node": "^26.6.6",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
-    "storybook": "^10.6.5",
-    "tailwindcss": "^4.3.3",
+    "storybook": "^10.6.6",
+    "tailwindcss": "^4.3.5",
     "typescript": "^7.0.2",
-    "vite": "^8.3.4"
+    "vite": "^8.3.6"
   }
 }
