@@ -49,8 +49,13 @@ All three apps import the shared UI styles and optional base stylesheet, and
 register shared component sources with Tailwind. The portfolio's `globals.css`
 only loads these styles and registers the component sources. Shared opt-in motion
 utilities provide its animations; the page owns scroll observation and layout,
-and the theme button scopes its token overrides through Tailwind classes. Its
-theme provider sets `data-ui-theme` and retains the `dark` class.
+and the theme button scopes its token overrides through Tailwind classes. The
+portfolio uses shared `Header` and `Footer` landmarks. A shared `Container` wraps
+the home page and owns its width and responsive gutters. Semantic sections own
+headings, navigation targets, and reveal behavior; shared `Card` components group
+individual employer entries and contact items. Employer cards use a muted surface
+within the page container. Its theme provider sets `data-ui-theme` and retains the
+`dark` class.
 
 ## Build configuration
 

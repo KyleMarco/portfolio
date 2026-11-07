@@ -44,7 +44,10 @@ export const en = {
     home: {
       heroEyebrow: 'Frontend development',
       since2017: 'Since 2017',
-      currentlyAt: 'Currently at',
+      currentExperience: 'Currently at <company>{{company}}</company> as a <role>{{role}}</role>.',
+      previousExperience:
+        'Previously, I was a {{felixRole}} at <felix>{{felixCompany}}</felix>, and an {{fujitsuRole}} at <fujitsu>{{fujitsuCompany}}</fujitsu>',
+      portraitAlt: 'Portrait of {{name}}',
       heroDescription:
         'I turn Figma designs into responsive React interfaces and connect them to REST APIs.',
       contact: 'Email me',

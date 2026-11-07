@@ -57,7 +57,11 @@ export const fil: LocaleShape<typeof en> = {
     home: {
       heroEyebrow: 'Frontend development',
       since2017: 'Mula 2017',
-      currentlyAt: 'Kasalukuyang nasa',
+      currentExperience:
+        'Kasalukuyang nasa <company>{{company}}</company> bilang <role>{{role}}</role>.',
+      previousExperience:
+        'Dati akong {{felixRole}} sa <felix>{{felixCompany}}</felix>, at {{fujitsuRole}} sa <fujitsu>{{fujitsuCompany}}</fujitsu>',
+      portraitAlt: 'Larawan ni {{name}}',
       heroDescription:
         'Ginagawa kong responsive na React interface ang mga disenyo sa Figma at ikinokonekta ang mga ito sa REST API.',
       contact: 'Mag-email sa akin',

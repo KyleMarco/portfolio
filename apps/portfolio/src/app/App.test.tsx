@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
 import App from './App';
 import i18n from './i18n';
@@ -24,7 +24,24 @@ describe('App shared UI integration', () => {
       </AppProviders>,
     );
 
-    const toggle = screen.getByRole('button', { name: 'Switch to dark mode' });
+    const header = screen.getByRole('banner');
+    const main = screen.getByRole('main');
+    const footer = screen.getByRole('contentinfo');
+    expect(main.contains(header)).toBe(false);
+    expect(main.contains(footer)).toBe(false);
+    const navigation = within(header).getByRole('navigation', { name: 'Main navigation' });
+    for (const [name, href] of [
+      ['About', '#about'],
+      ['Experience', '#experience'],
+      ['Contact', '#contact'],
+    ]) {
+      expect(within(navigation).getByRole('link', { name }).getAttribute('href')).toBe(href);
+    }
+    expect(within(footer).getByRole('link', { name: 'Back to top' }).getAttribute('href')).toBe(
+      '#top',
+    );
+
+    const toggle = within(header).getByRole('button', { name: 'Switch to dark mode' });
     toggle.focus();
     expect(document.activeElement).toBe(toggle);
     expect(toggle.getAttribute('aria-pressed')).toBe('false');
