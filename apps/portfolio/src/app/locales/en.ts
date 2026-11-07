@@ -60,7 +60,7 @@ export const en = {
       expertise: 'Technical expertise',
       technologies: 'Technologies',
       contactTitle: 'Contact',
-      resumeLink: 'View résumé PDF',
+      resumeLink: 'Resume (PDF)',
       backToTop: 'Back to top',
     },
     footer: {

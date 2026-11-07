@@ -75,7 +75,7 @@ export const fil: LocaleShape<typeof en> = {
       expertise: 'Kasanayang teknikal',
       technologies: 'Mga teknolohiya',
       contactTitle: 'Makipag-ugnayan',
-      resumeLink: 'Tingnan ang PDF ng résumé',
+      resumeLink: 'Resume (PDF)',
       backToTop: 'Bumalik sa itaas',
     },
     footer: {

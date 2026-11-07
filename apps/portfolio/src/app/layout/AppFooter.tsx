@@ -1,5 +1,4 @@
-import { Container, Footer, Link } from '@portfolio/ui';
-import { ArrowUp } from 'lucide-react';
+import { Container, Footer } from '@portfolio/ui';
 import { profile } from '../../routes/portfolioData';
 import { useTranslation } from 'react-i18next';
 

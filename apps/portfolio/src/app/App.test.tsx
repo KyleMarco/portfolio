@@ -1,5 +1,5 @@
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import App from './App';
 import i18n from './i18n';
 import { AppProviders } from './providers/AppProviders';
@@ -10,6 +10,7 @@ afterEach(async () => {
   window.history.replaceState({}, '', '/');
   document.documentElement.classList.remove('dark');
   delete document.documentElement.dataset.uiTheme;
+  vi.restoreAllMocks();
   await i18n.changeLanguage('en');
 });
 
@@ -29,11 +30,10 @@ describe('App shared UI integration', () => {
     const footer = screen.getByRole('contentinfo');
     expect(page.contains(header)).toBe(false);
     expect(page.contains(footer)).toBe(false);
-    expect(
-      within(header).getByRole('button', { name: 'Kyle Marco Cabiling, home' }),
-    ).toBeTruthy();
+    const homeLink = within(header).getByRole('link', { name: 'Kyle Marco Cabiling, home' });
+    expect(homeLink.getAttribute('href')).toBe(import.meta.env.BASE_URL);
     expect(within(header).queryByRole('navigation')).toBeNull();
-    expect(within(header).queryAllByRole('link')).toHaveLength(0);
+    expect(within(header).getAllByRole('link')).toHaveLength(1);
     expect(within(footer).queryByRole('link', { name: 'Back to top' })).toBeNull();
 
     const toggle = within(header).getByRole('button', { name: 'Switch to dark mode' });
@@ -69,11 +69,11 @@ describe('App shared UI integration', () => {
     const header = screen.getByRole('banner');
     expect(screen.getByRole('heading', { name: 'Page not found' })).toBeTruthy();
     expect(screen.getByRole('main').contains(header)).toBe(false);
-    const homeButton = within(header).getByRole('button', { name: 'Kyle Marco Cabiling, home' });
-    homeButton.focus();
-    expect(document.activeElement).toBe(homeButton);
+    const homeLink = within(header).getByRole('link', { name: 'Kyle Marco Cabiling, home' });
+    homeLink.focus();
+    expect(document.activeElement).toBe(homeLink);
     expect(within(header).queryByRole('navigation')).toBeNull();
-    expect(within(header).queryAllByRole('link')).toHaveLength(0);
+    expect(within(header).getAllByRole('link')).toHaveLength(1);
 
     fireEvent.click(within(header).getByRole('button', { name: 'Switch to dark mode' }));
     expect(document.documentElement.dataset.uiTheme).toBe('dark');
@@ -84,7 +84,9 @@ describe('App shared UI integration', () => {
       await within(header).findByRole('button', { name: 'Lumipat sa maliwanag na mode' }),
     ).toBeTruthy();
 
-    fireEvent.click(screen.getByRole('link', { name: i18n.t('notFound.home') }));
+    vi.spyOn(window, 'scrollTo').mockImplementation(() => {});
+    fireEvent.click(homeLink);
+    expect(window.scrollTo).toHaveBeenCalledWith({ top: 0, behavior: 'smooth' });
     expect(window.location.pathname).toBe(import.meta.env.BASE_URL);
     expect(screen.getByRole('heading', { name: i18n.t('home.aboutTitle') })).toBeTruthy();
     expect(screen.queryByRole('heading', { name: i18n.t('notFound.title') })).toBeNull();

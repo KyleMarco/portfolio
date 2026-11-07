@@ -86,11 +86,15 @@ describe('HomePage', () => {
     expect(screen.getByRole('heading', { name: 'Contact' })).toBeTruthy();
 
     expect(screen.queryByRole('link', { name: 'View selected work' })).toBeNull();
-    const resumeLink = screen.getByRole('link', { name: 'View résumé PDF' });
+    const hero = screen.getByRole('region', {
+      name: `${profile.firstName} ${profile.lastName}`,
+    });
+    const resumeLink = within(hero).getByRole('link', { name: 'Resume (PDF)' });
     expect(resumeLink.getAttribute('href')).toBe(
       `${import.meta.env.BASE_URL}Marco_Senior_Frontend_Developer_Resume.pdf`,
     );
     expect(resumeLink.getAttribute('target')).toBe('_blank');
+    expect(resumeLink.querySelector('svg')?.getAttribute('aria-hidden')).toBe('true');
     expect(screen.getByRole('heading', { name: experiences[0].company })).toBeTruthy();
     const experienceSection = within(screen.getByRole('region', { name: 'Experience' }));
     expect(experienceSection.getAllByRole('article')).toHaveLength(experiences.length);

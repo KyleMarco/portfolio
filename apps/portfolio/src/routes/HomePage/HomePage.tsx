@@ -1,6 +1,6 @@
 import { useLayoutEffect, useRef, type ReactNode } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { ArrowUp, ArrowUpRight } from 'lucide-react';
+import { ArrowUp, ArrowUpRight, FileText } from 'lucide-react';
 import { Card, Container, Footer, Link, Text } from '@portfolio/ui';
 import { contactCards, education, experiences, profile, skillGroups } from '../portfolioData';
 
@@ -125,6 +125,15 @@ export default function HomePage() {
               >
                 {t('home.contact')}
                 <ArrowUpRight aria-hidden="true" focusable="false" className="h-4 w-4" />
+              </Link>
+              <Link
+                href={`${import.meta.env.BASE_URL}Marco_Senior_Frontend_Developer_Resume.pdf`}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex min-h-12 items-center justify-center gap-2 border border-stone-400 px-5 text-sm font-medium text-stone-800 no-underline! hover:bg-stone-100 focus-visible:outline-offset-4! dark:border-stone-600 dark:text-stone-100 dark:hover:bg-stone-800"
+              >
+                <FileText aria-hidden="true" focusable="false" className="h-4 w-4" />
+                {t('home.resumeLink')}
               </Link>
             </div>
           </div>
@@ -356,16 +365,6 @@ export default function HomePage() {
               </Card>
             ))}
           </div>
-          <p className="text-sm text-stone-500 dark:text-stone-400">
-            <Link
-              href={`${import.meta.env.BASE_URL}Marco_Senior_Frontend_Developer_Resume.pdf`}
-              target="_blank"
-              rel="noreferrer"
-              className="font-medium decoration-stone-300 hover:decoration-stone-900 focus-visible:outline-offset-4! [--ui-action-background:var(--color-stone-800)] [--ui-action-hover:var(--ui-action-background)] dark:decoration-stone-700 dark:hover:decoration-stone-300 dark:[--ui-action-background:var(--color-stone-200)]"
-            >
-              {t('home.resumeLink')}
-            </Link>
-          </p>
       </section>
     </Container>
   );
