@@ -4,19 +4,27 @@ This private, source-first workspace contains reusable React components, theme t
 
 ## Entry points
 
-| Import                      | Exports                                                                   | Optional peer    |
-| --------------------------- | ------------------------------------------------------------------------- | ---------------- |
-| `@portfolio/ui`             | `Button`, `Text`, `TextInput`, `PopupDialog`, `ToastProvider`, `useToast` | None             |
-| `@portfolio/ui/router`      | `LinkButton`                                                              | React Router     |
-| `@portfolio/ui/virtualized` | `VirtualizedList`                                                         | TanStack Virtual |
+| Import                      | Exports                                                                               | Optional peer    |
+| --------------------------- | ------------------------------------------------------------------------------------- | ---------------- |
+| `@portfolio/ui`             | `Button`, `Text`, `TextArea`, `TextInput`, `PopupDialog`, `ToastProvider`, `useToast` | None             |
+| `@portfolio/ui/router`      | `LinkButton`                                                                          | React Router     |
+| `@portfolio/ui/virtualized` | `VirtualizedList`                                                                     | TanStack Virtual |
 
 ```tsx
-import { Button, PopupDialog, Text, TextInput, ToastProvider, useToast } from '@portfolio/ui';
+import {
+  Button,
+  PopupDialog,
+  Text,
+  TextArea,
+  TextInput,
+  ToastProvider,
+  useToast,
+} from '@portfolio/ui';
 import { LinkButton } from '@portfolio/ui/router';
 import { VirtualizedList } from '@portfolio/ui/virtualized';
 ```
 
-React and React DOM are peers; see `package.json` for the supported ranges. React Router is needed only for the router entry point, and TanStack Virtual only for the virtualized entry point. The root entry point imports neither. `Button` and `LinkButton` share primary and secondary styles and accept native element props, including refs; `LinkButton` also accepts router props. `TextInput` accepts native input props, including refs, and uses shared theme tokens for its field, focus, disabled, and invalid states.
+React and React DOM are peers; see `package.json` for the supported ranges. React Router is needed only for the router entry point, and TanStack Virtual only for the virtualized entry point. The root entry point imports neither. `Button` and `LinkButton` share primary and secondary styles and accept native element props, including refs; `LinkButton` also accepts router props. `TextInput` and `TextArea` accept native field props, including refs, and use shared theme tokens for their field, focus, disabled, and invalid states.
 
 ## Styling
 
