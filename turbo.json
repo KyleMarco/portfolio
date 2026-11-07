@@ -3,6 +3,7 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
+      "env": ["STORYBOOK_BASE_PATH"],
       "outputs": ["dist/**"]
     },
     "dev": {

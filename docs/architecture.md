@@ -45,6 +45,24 @@ installation and Node version; CI uses Node 22. Keep the single root
   - Preserve the document's `data-ui-theme` integration for shared UI and portaled
     components.
 
+The storefront and Storybook currently import the shared UI styles. The portfolio
+uses its own `portfolio.css` and class-based dark variant; it does not currently
+import the UI styles. When integrating a shared component there, include the
+styles and source registration described in the UI README.
+
+## Build configuration
+
+- Root scripts in [package.json](../package.json) select workspace tasks;
+  [turbo.json](../turbo.json) defines dependencies, cached outputs, and environment
+  inputs. Keep build output under each app's `dist/` directory.
+- Declare environment variables that affect build output in Turbo's `env` inputs
+  so they reach tasks in strict mode and participate in cache keys.
+  `STORYBOOK_BASE_PATH` controls Storybook's asset base and is a build input.
+- Browser configuration and static build output are public. Keep credentials out
+  of client code, public assets, and build-time values bundled into the client.
+- Follow [Deployment](deployment.md) when changing bases or build inputs and
+  [Validation](validation.md) for checks spanning workspace boundaries.
+
 ## React
 
 - Use the React version installed in this repo (check the workspace `package.json`

@@ -8,7 +8,7 @@ This private, source-first workspace contains reusable React components, theme t
 | --------------------------- | ------------------------------------------------------------------------------------- | ---------------- |
 | `@portfolio/ui`             | `Button`, `Text`, `TextArea`, `TextInput`, `PopupDialog`, `ToastProvider`, `useToast` | None             |
 | `@portfolio/ui/router`      | `LinkButton`                                                                          | React Router     |
-| `@portfolio/ui/virtualized` | `VirtualizedList`                                                                     | TanStack Virtual |
+| `@portfolio/ui/virtualized` | `VirtualizedList`, `VirtualizedGrid`, `VirtualizedTable`, their hooks and types       | TanStack Virtual |
 
 ```tsx
 import {
@@ -31,7 +31,7 @@ React and React DOM are peers; see `package.json` for the supported ranges. Reac
 Each consuming app imports Tailwind once, followed by the UI stylesheet, and registers component sources with `@source`:
 
 ```css
-/* apps/portfolio/src/app/styles/globals.css */
+/* apps/storefront/src/app/styles/globals.css */
 @import 'tailwindcss';
 @import '@portfolio/ui/styles.css';
 /* Optional: document defaults and shared interactive-card behavior */
@@ -44,6 +44,14 @@ Each consuming app imports Tailwind once, followed by the UI stylesheet, and reg
 The main stylesheet provides tokens, semantic Tailwind mappings, themes, and motion/scrollbar utilities. The optional base stylesheet applies document defaults and shared interactive-card behavior. JavaScript imports never apply global styles implicitly, and page-level styling stays in the app.
 
 Set `data-ui-theme="light"` or `data-ui-theme="dark"` on the document root. Both shared component colors and the Tailwind `dark:` variant follow that attribute. Tokens also support themed subtrees; portaled dialogs inherit their theme from the document root. Override semantic `--ui-*` variables in app styles to customize a brand.
+
+The storefront and Storybook already include these imports. The portfolio uses its own stylesheet; add the shared styles and source registration when integrating shared components there.
+
+## Accessibility responsibilities
+
+`TextInput` and `TextArea` provide field styling and native props. Consumers supply a visible label, a stable `id`, and any help or error text. Connect messages with `aria-describedby` and set `aria-invalid` for invalid values; the components do not generate labels or validate input.
+
+`PopupDialog` renders into `document.body` and manages keyboard focus, Escape dismissal, and body scroll locking. Supply a heading whose `id` matches `labelledBy`, a translated `closeLabel`, and an `onClose` handler. Use `initialFocusRef` and `returnFocusRef` when the default focus targets do not fit the interaction. Keep a visible close control in the dialog content and verify focus restoration when its trigger can unmount.
 
 ## Structure and checks
 
