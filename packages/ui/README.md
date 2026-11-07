@@ -224,6 +224,17 @@ app-specific positioning and colors stay with their consuming elements.
 
 `PopupDialog` renders into `document.body` and manages keyboard focus, Escape dismissal, and body scroll locking. Supply a heading whose `id` matches `labelledBy`, a translated `closeLabel`, and an `onClose` handler. Use `initialFocusRef` and `returnFocusRef` when the default focus targets do not fit the interaction. Keep a visible close control in the dialog content and verify focus restoration when its trigger can unmount.
 
+`onClose` can be an inline callback: updating it preserves the current dialog focus
+and scroll lock. Escape and backdrop clicks use the latest callback. The
+**Editable Content** story demonstrates typing into a controlled field while its
+parent rerenders.
+
+Default initial focus and Tab wrapping skip disabled, hidden, inert, and
+negative-tab-index controls. When `initialFocusRef` targets a heading or focus is
+on the panel, Tab moves to the first available control and Shift+Tab moves to the
+last. With no available controls, Tab keeps focus on the panel. The **Keyboard
+Focus** story demonstrates heading focus and a disabled action.
+
 ## Structure and checks
 
 Public exports live in `src/index.ts`; components, tests, and stories live in `src/components/`; tokens, themes, and utilities live in `src/styles/`. Import public package entry points from apps rather than reaching into package internals.

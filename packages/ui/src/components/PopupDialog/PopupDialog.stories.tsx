@@ -1,12 +1,18 @@
-import { useCallback, useRef, useState, type ComponentProps } from 'react';
+import { useRef, useState, type ComponentProps } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Button, PopupDialog } from '@portfolio/ui';
+import { Button, PopupDialog, TextInput } from '@portfolio/ui';
 
-function PopupDialogExample(props: ComponentProps<typeof PopupDialog>) {
+function PopupDialogExample({
+  editable = false,
+  focusHeading = false,
+  ...props
+}: ComponentProps<typeof PopupDialog> & { editable?: boolean; focusHeading?: boolean }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [name, setName] = useState('');
   const triggerRef = useRef<HTMLButtonElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
-  const closeDialog = useCallback(() => setIsOpen(false), []);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const closeDialog = () => setIsOpen(false);
 
   return (
     <>
@@ -17,14 +23,27 @@ function PopupDialogExample(props: ComponentProps<typeof PopupDialog>) {
         <PopupDialog
           {...props}
           onClose={closeDialog}
-          initialFocusRef={closeRef}
+          initialFocusRef={focusHeading ? headingRef : closeRef}
           returnFocusRef={triggerRef}
         >
-          <h2 id={props.labelledBy}>Account settings</h2>
+          <h2 id={props.labelledBy} ref={headingRef} tabIndex={focusHeading ? -1 : undefined}>
+            Account settings
+          </h2>
           <p>{props.children}</p>
+          {editable && (
+            <label className="my-4 block">
+              Display name
+              <TextInput value={name} onChange={(event) => setName(event.target.value)} />
+            </label>
+          )}
           <Button ref={closeRef} onClick={closeDialog}>
             Close dialog
           </Button>
+          {focusHeading && (
+            <Button disabled tabIndex={0}>
+              Unavailable action
+            </Button>
+          )}
         </PopupDialog>
       )}
     </>
@@ -51,3 +70,11 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
+
+export const EditableContent: Story = {
+  render: (args) => <PopupDialogExample {...args} editable />,
+};
+
+export const KeyboardFocus: Story = {
+  render: (args) => <PopupDialogExample {...args} editable focusHeading />,
+};

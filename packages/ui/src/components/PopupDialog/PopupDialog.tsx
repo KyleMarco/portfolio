@@ -1,6 +1,35 @@
 import { useEffect, useRef, type ReactNode, type RefObject } from 'react';
 import { createPortal } from 'react-dom';
 
+function getTabbableElements(dialog: HTMLElement | null): HTMLElement[] {
+  const candidates = dialog?.querySelectorAll<HTMLElement>(
+    'button, [href], input, select, textarea, [tabindex]',
+  );
+
+  return Array.from(candidates ?? []).filter((element) => {
+    if (
+      element.tabIndex < 0 ||
+      element.matches(':disabled, input[type="hidden"]') ||
+      element.closest('[hidden], [inert]')
+    ) {
+      return false;
+    }
+
+    const { visibility } = window.getComputedStyle(element);
+    if (visibility === 'hidden' || visibility === 'collapse') {
+      return false;
+    }
+
+    for (let ancestor: HTMLElement | null = element; ancestor; ancestor = ancestor.parentElement) {
+      if (window.getComputedStyle(ancestor).display === 'none') {
+        return false;
+      }
+    }
+
+    return true;
+  });
+}
+
 export type PopupDialogProps = {
   children: ReactNode;
   labelledBy: string;
@@ -31,13 +60,19 @@ export function PopupDialog({
     const previousFocus = returnFocusRef?.current ?? document.activeElement;
     document.body.style.overflow = 'hidden';
 
-    const focusableElements = dialogRef.current?.querySelectorAll<HTMLElement>(
-      'button:not([disabled]):not([tabindex="-1"]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
-    );
-    const firstFocusableElement = focusableElements?.[0];
+    const [firstFocusableElement] = getTabbableElements(dialogRef.current);
     const initialFocus = initialFocusRef?.current ?? firstFocusableElement ?? dialogRef.current;
     initialFocus?.focus();
 
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      if (previousFocus instanceof HTMLElement) {
+        previousFocus.focus();
+      }
+    };
+  }, [initialFocusRef, returnFocusRef]);
+
+  useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         onClose();
@@ -48,15 +83,14 @@ export function PopupDialog({
         return;
       }
 
-      const currentFocusableElements = dialogRef.current?.querySelectorAll<HTMLElement>(
-        'button:not([disabled]):not([tabindex="-1"]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
-      );
-      const firstElement = currentFocusableElements?.[0];
-      const lastElement = currentFocusableElements?.[currentFocusableElements.length - 1];
+      const currentFocusableElements = getTabbableElements(dialogRef.current);
+      const firstElement = currentFocusableElements[0];
+      const lastElement = currentFocusableElements[currentFocusableElements.length - 1];
 
       if (!firstElement || !lastElement) {
         event.preventDefault();
-      } else if (!dialogRef.current?.contains(document.activeElement)) {
+        dialogRef.current?.focus();
+      } else if (!currentFocusableElements.some((element) => element === document.activeElement)) {
         event.preventDefault();
         const nextElement = event.shiftKey ? lastElement : firstElement;
         nextElement.focus();
@@ -72,13 +106,9 @@ export function PopupDialog({
     window.addEventListener('keydown', handleKeyDown);
 
     return () => {
-      document.body.style.overflow = previousOverflow;
       window.removeEventListener('keydown', handleKeyDown);
-      if (previousFocus instanceof HTMLElement) {
-        previousFocus.focus();
-      }
     };
-  }, [initialFocusRef, onClose, returnFocusRef]);
+  }, [onClose]);
 
   return createPortal(
     <div className={`motion-backdrop-enter fixed inset-0 z-50 ${overlayClassName}`}>
