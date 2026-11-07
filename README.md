@@ -44,7 +44,7 @@ Keep app-specific features, APIs, state, tests, and translations inside their ow
 
 ## Current app state
 
-- Portfolio: a personal landing page at `/` that renders the home screen and a catch-all 404 view. The light/dark theme toggle and English/Filipino language selector are handled by the portfolio app shell. The `AboutPage` component remains in the codebase for future routing, but the app shell does not register it.
+- Portfolio: a personal landing page at `/portfolio/` on the deployed GitHub Pages project site. Its root route renders the home screen and a catch-all 404 view. The light/dark theme toggle and English/Filipino language selector are handled by the portfolio app shell. The `AboutPage` component remains in the codebase for future routing, but the app shell does not register it.
 - Storefront: a standalone product catalog at `/portfolio/demo/` with product filters, pagination, and a cart drawer. It uses Redux for cart state, React Query for catalog fetches, and local fallback behavior when demo mutations fail. It registers its catalog at its own base URL and provides its own not-found screen.
 - Storybook: a component catalog for the shared UI package, used to review buttons, text, form fields, dialogs, toasts, and virtualized lists, grids, and tables in context.
 
@@ -129,7 +129,7 @@ The storefront fetches catalog data from DummyJSON carts using Axios and TanStac
 
 ```text
 dist/
-  index.html                  # Portfolio at /
+  index.html                  # Portfolio at /portfolio/ on GitHub Pages
   404.html                    # GitHub Pages fallback
   assets/
   images/
@@ -144,6 +144,6 @@ dist/
 
 The [CI workflow](./.github/workflows/ci.yml) installs dependencies, lints, tests, type-checks, and builds on pull requests and pushes to `main`. After CI succeeds for a push to `main`, the [deployment workflow](./.github/workflows/deploy.yml) checks out the exact commit validated by CI, builds both apps and Storybook (with `STORYBOOK_BASE_PATH=/portfolio/storybook/`), stages the Pages artifact, and deploys it. Turbo declares that variable as a build input so the default Storybook build and the Pages build have different cache keys. Shared packages are local workspaces and do not require a registry token. Configure the repository's Pages source as GitHub Actions and satisfy any `github-pages` environment protection rules before releasing. See the [deployment guide](./docs/deployment.md) for release checks and rollback.
 
-The portfolio uses `/`; the storefront uses `/portfolio/demo/` and the Storybook build uses `/portfolio/storybook/`. Preserve these paths when deploying this repository to the existing Pages project site. GitHub Pages provides one site-level custom 404 document, so unmatched direct URLs, including deep links under `/portfolio/demo/` and `/portfolio/storybook/`, fall back to the portfolio. The storefront's only content route is its root; adding nested content routes later requires a corresponding hosting rewrite or routing strategy.
+This repository is deployed as the GitHub Pages project site `https://kylemarcoc.github.io/portfolio/`. The portfolio uses `/portfolio/`, the storefront uses `/portfolio/demo/`, and the Storybook build uses `/portfolio/storybook/`. The artifact is staged at the site root; GitHub Pages serves it under the repository's `/portfolio/` prefix. GitHub Pages provides one site-level custom 404 document, so unmatched direct URLs, including deep links under `/portfolio/demo/` and `/portfolio/storybook/`, fall back to the portfolio. The storefront's only content route is its root; adding nested content routes later requires a corresponding hosting rewrite or routing strategy.
 
 This is a monorepo with two independently buildable apps and one combined Pages deployment. It does not use runtime microfrontend composition.

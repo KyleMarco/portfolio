@@ -5,7 +5,7 @@ or deployment workflows. See [AGENTS.md](../AGENTS.md) for the repository entry
 point and other required guides. See [README.md](../README.md#deployment) for build
 outputs and the deployment artifact layout.
 
-- The apps are served under separate Vite/router bases: portfolio `/`,
+- The apps are served under separate Vite/router bases: portfolio `/portfolio/`,
   storefront `/portfolio/demo/`, and Storybook `/portfolio/storybook/`. Preserve
   these bases and cross-app links. The apps are separate, so cross-app navigation
   uses normal links, not router links.
@@ -63,7 +63,7 @@ the portfolio's `index.html` to the site-level `404.html`.
 Check the built site at its deployed base and record any verification that could
 not be completed:
 
-- Open `/`, `/portfolio/demo/`, and `/portfolio/storybook/` directly and reload
+- Open `/portfolio/`, `/portfolio/demo/`, and `/portfolio/storybook/` directly and reload
   each. Check the browser console and network panel for missing scripts, styles,
   images, or base-path errors. Open a component story as well as the Storybook
   manager.
