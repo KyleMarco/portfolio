@@ -1,9 +1,4 @@
-import {
-  forwardRef,
-  type ComponentPropsWithRef,
-  type ComponentPropsWithoutRef,
-  type ReactElement,
-} from 'react';
+import { type ComponentPropsWithRef, type ReactElement } from 'react';
 
 export type TextVariant = 'body' | 'caption' | 'label';
 
@@ -15,7 +10,7 @@ type TextOwnProps<T extends TextElement> = {
 };
 
 export type TextProps<T extends TextElement = 'span'> = TextOwnProps<T> &
-  Omit<ComponentPropsWithoutRef<T>, keyof TextOwnProps<T>>;
+  Omit<ComponentPropsWithRef<T>, keyof TextOwnProps<T>>;
 
 const variants: Record<TextVariant, string> = {
   body: 'font-ui-sans text-base leading-normal text-ui-text',
@@ -23,23 +18,12 @@ const variants: Record<TextVariant, string> = {
   label: 'font-ui-sans text-sm font-semibold leading-normal text-ui-text',
 };
 
-const TextBase = forwardRef<HTMLElement, TextProps>(function Text(
-  { as, variant = 'body', className = '', ...props },
-  ref,
-) {
+function TextBase({ as, variant = 'body', className = '', ...props }: TextProps<'span'>) {
   const Component = (as ?? 'span') as 'span';
 
-  return (
-    <Component
-      {...props}
-      ref={ref as never}
-      className={`${variants[variant]} ${className}`.trim()}
-    />
-  );
-});
+  return <Component {...props} className={`${variants[variant]} ${className}`.trim()} />;
+}
 
-type PolymorphicText = <T extends TextElement = 'span'>(
-  props: TextProps<T> & { ref?: ComponentPropsWithRef<T>['ref'] },
-) => ReactElement | null;
+type PolymorphicText = <T extends TextElement = 'span'>(props: TextProps<T>) => ReactElement | null;
 
 export const Text = TextBase as PolymorphicText;

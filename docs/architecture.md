@@ -52,9 +52,8 @@ installation and Node version; CI uses Node 22. Keep the single root
 - Prefer JSX to create React elements, including intrinsic tags selected at runtime
   through a capitalized variable. Use `createElement` only when JSX cannot express
   the required operation.
-- In React 19-only components, accept `ref` as a prop instead of adding
-  `forwardRef`. Use `forwardRef` when needed to preserve React 18 compatibility;
-  for example, `@portfolio/ui` currently declares React 18 and 19 peer support.
+- Components in this repo target React 19. Accept `ref` as a prop and do not use
+  `forwardRef`.
 - Do not upgrade React or related dependencies unless asked.
 - Before using a newer React API, confirm the installed version supports it.
   `@portfolio/ui` ships source directly to the apps, so shared components must work

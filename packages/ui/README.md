@@ -16,7 +16,7 @@ import { LinkButton } from '@portfolio/ui/router';
 import { VirtualizedList } from '@portfolio/ui/virtualized';
 ```
 
-React and React DOM are peers; see `package.json` for the supported ranges. React Router is needed only for the router entry point, and TanStack Virtual only for the virtualized entry point. The root entry point imports neither. `Button` and `LinkButton` share primary and secondary styles and forward native element props, including refs; `LinkButton` also forwards router props. `TextInput` forwards native input props, including refs, and uses shared theme tokens for its field, focus, disabled, and invalid states.
+React and React DOM are peers; see `package.json` for the supported ranges. React Router is needed only for the router entry point, and TanStack Virtual only for the virtualized entry point. The root entry point imports neither. `Button` and `LinkButton` share primary and secondary styles and accept native element props, including refs; `LinkButton` also accepts router props. `TextInput` accepts native input props, including refs, and uses shared theme tokens for its field, focus, disabled, and invalid states.
 
 ## Styling
 
