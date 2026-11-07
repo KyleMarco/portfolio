@@ -19,7 +19,8 @@ and other required guides.
   resolves to an empty array. This follows the empty catalog path rather than
   Query's error state. A failed demo add/clear mutation still updates the local
   cart; add also shows the success toast. Preserve these behaviors and the stock
-  limits unless explicitly changing the demo contract. The cart resets on reload;
+  limits unless explicitly changing the demo contract. Missing or sold-out products
+  cannot be added; quantity updates remove a line when no stock remains. The cart resets on reload;
   it has no persistent cart, checkout, or payment flow.
 
 ## Interaction and accessibility

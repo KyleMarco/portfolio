@@ -50,6 +50,10 @@ const cartSlice = createSlice({
       }
 
       const maxQuantity = getMaxQuantity(itemId);
+      if (maxQuantity <= 0) {
+        return;
+      }
+
       const existingItem = state.items.find((item) => item.itemId === itemId);
 
       if (existingItem) {
@@ -74,14 +78,14 @@ const cartSlice = createSlice({
         return;
       }
 
-      const requestedQuantity = Math.floor(quantity);
+      const requestedQuantity = Math.min(Math.floor(quantity), getMaxQuantity(itemId));
 
       if (requestedQuantity <= 0) {
         state.items = state.items.filter((item) => item.itemId !== itemId);
         return;
       }
 
-      existingItem.quantity = Math.min(requestedQuantity, getMaxQuantity(itemId));
+      existingItem.quantity = requestedQuantity;
     },
     clearCart: (state) => {
       state.items = [];

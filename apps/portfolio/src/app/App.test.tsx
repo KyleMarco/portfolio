@@ -11,10 +11,35 @@ afterEach(async () => {
   document.documentElement.classList.remove('dark');
   delete document.documentElement.dataset.uiTheme;
   vi.restoreAllMocks();
+  vi.unstubAllGlobals();
   await i18n.changeLanguage('en');
 });
 
 describe('App shared UI integration', () => {
+  it('respects reduced motion when the profile home link scrolls to the top', () => {
+    window.history.replaceState({}, '', import.meta.env.BASE_URL);
+    vi.stubGlobal(
+      'matchMedia',
+      vi.fn((query: string) =>
+        Object.assign(new EventTarget(), {
+          matches: query === '(prefers-reduced-motion: reduce)',
+        }),
+      ),
+    );
+    vi.spyOn(window, 'scrollTo').mockImplementation(() => {});
+    render(
+      <AppProviders>
+        <App />
+      </AppProviders>,
+    );
+
+    fireEvent.click(
+      within(screen.getByRole('banner')).getByRole('link', { name: 'Kyle Marco Cabiling, home' }),
+    );
+
+    expect(window.scrollTo).toHaveBeenCalledExactlyOnceWith({ top: 0, behavior: 'auto' });
+  });
+
   it('keeps the theme control accessible, translated, and persistent', async () => {
     window.history.replaceState({}, '', import.meta.env.BASE_URL);
     window.localStorage.setItem('portfolio-theme', 'light');
