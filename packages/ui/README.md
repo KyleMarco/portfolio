@@ -4,11 +4,11 @@ This private, source-first workspace contains reusable React components, theme t
 
 ## Entry points
 
-| Import                      | Exports                                                                                                                                      | Optional peer    |
-| --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- |
-| `@portfolio/ui`             | `Button`, `Card`, `Container`, `Dropdown`, `FileUpload`, `Link`, `Text`, `TextArea`, `TextInput`, `PopupDialog`, `ToastProvider`, `useToast` | None             |
-| `@portfolio/ui/router`      | `LinkButton`                                                                                                                                 | React Router     |
-| `@portfolio/ui/virtualized` | `VirtualizedDropdown`, `VirtualizedList`, `VirtualizedGrid`, `VirtualizedTable`, their hooks and types                                       | TanStack Virtual |
+| Import                      | Exports                                                                                                                                                          | Optional peer    |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- |
+| `@portfolio/ui`             | `Button`, `Card`, `Container`, `Dropdown`, `FileUpload`, `Footer`, `Header`, `Link`, `Text`, `TextArea`, `TextInput`, `PopupDialog`, `ToastProvider`, `useToast` | None             |
+| `@portfolio/ui/router`      | `LinkButton`                                                                                                                                                     | React Router     |
+| `@portfolio/ui/virtualized` | `VirtualizedDropdown`, `VirtualizedList`, `VirtualizedGrid`, `VirtualizedTable`, their hooks and types                                                           | TanStack Virtual |
 
 ```tsx
 import {
@@ -17,6 +17,8 @@ import {
   Container,
   Dropdown,
   FileUpload,
+  Footer,
+  Header,
   Link,
   PopupDialog,
   Text,
@@ -53,6 +55,37 @@ landmarks belong to the consumer.
   </Container>
 </main>
 ```
+
+### Headers and footers
+
+`Header` and `Footer` render native `<header>` and `<footer>` elements with themed
+surfaces, text, and a bottom or top border respectively. They export `HeaderProps`
+and `FooterProps` and accept native element props, including `children`, `className`,
+`style`, and `ref`. They add no navigation, text, positioning, or interactions.
+Consumers own content, translations, spacing, and responsive layout; compose with
+`Container` to align content with the rest of the page.
+
+```tsx
+<Header>
+  <Container className="flex flex-wrap items-center justify-between gap-ui-4 py-ui-4">
+    <Link href="#top">Portfolio</Link>
+    <nav aria-label="Primary navigation">
+      <Link href="#contact">Contact</Link>
+    </nav>
+  </Container>
+</Header>
+<main>{/* Page content */}</main>
+<Footer>
+  <Container className="py-ui-6">
+    <Text as="p" className="mb-0">Built with care.</Text>
+  </Container>
+</Footer>
+```
+
+Place page-level headers and footers outside `main` and sectioning elements so
+they expose the banner and content-info landmarks. Label multiple navigation
+regions distinctly. Storybook includes navigation, actions, footer columns, and
+a complete page layout; use its Theme toolbar to review both themes.
 
 ### Cards
 
