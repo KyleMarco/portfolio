@@ -4,15 +4,16 @@ This private, source-first workspace contains reusable React components, theme t
 
 ## Entry points
 
-| Import                      | Exports                                                                               | Optional peer    |
-| --------------------------- | ------------------------------------------------------------------------------------- | ---------------- |
-| `@portfolio/ui`             | `Button`, `Text`, `TextArea`, `TextInput`, `PopupDialog`, `ToastProvider`, `useToast` | None             |
-| `@portfolio/ui/router`      | `LinkButton`                                                                          | React Router     |
-| `@portfolio/ui/virtualized` | `VirtualizedList`, `VirtualizedGrid`, `VirtualizedTable`, their hooks and types       | TanStack Virtual |
+| Import                      | Exports                                                                                             | Optional peer    |
+| --------------------------- | --------------------------------------------------------------------------------------------------- | ---------------- |
+| `@portfolio/ui`             | `Button`, `FileUpload`, `Text`, `TextArea`, `TextInput`, `PopupDialog`, `ToastProvider`, `useToast` | None             |
+| `@portfolio/ui/router`      | `LinkButton`                                                                                        | React Router     |
+| `@portfolio/ui/virtualized` | `VirtualizedList`, `VirtualizedGrid`, `VirtualizedTable`, their hooks and types                     | TanStack Virtual |
 
 ```tsx
 import {
   Button,
+  FileUpload,
   PopupDialog,
   Text,
   TextArea,
@@ -25,6 +26,32 @@ import { VirtualizedList } from '@portfolio/ui/virtualized';
 ```
 
 React and React DOM are peers; see `package.json` for the supported ranges. React Router is needed only for the router entry point, and TanStack Virtual only for the virtualized entry point. The root entry point imports neither. `Button` and `LinkButton` share primary and secondary styles and accept native element props, including refs; `LinkButton` also accepts router props. `TextInput` and `TextArea` accept native field props, including refs, and use shared theme tokens for their field, focus, disabled, and invalid states.
+
+### File selection
+
+`FileUpload` renders a themed native `<input type="file">` and exports
+`FileUploadProps`. It supports native props such as `accept`, `multiple`, `required`,
+`disabled`, `name`, `form`, and `ref`. Read selected files from
+`event.currentTarget.files` in `onChange`, or submit them through the owning form.
+File inputs remain uncontrolled, so `type`, `value`, and `defaultValue` are excluded
+from its props. The browser supplies the picker button text and selected file names.
+The consuming app owns validation and uploading; `accept` is a picker hint.
+
+```tsx
+<label htmlFor="attachments">Attachments</label>
+<FileUpload
+  id="attachments"
+  name="attachments"
+  accept="image/*,.pdf"
+  multiple
+  aria-describedby="attachments-help"
+  onChange={(event) => {
+    const files = Array.from(event.currentTarget.files ?? []);
+    console.log(files);
+  }}
+/>
+<p id="attachments-help">Choose images or PDF documents.</p>
+```
 
 ## Styling
 
@@ -81,7 +108,7 @@ app-specific positioning and colors stay with their consuming elements.
 
 ## Accessibility responsibilities
 
-`TextInput` and `TextArea` provide field styling and native props. Consumers supply a visible label, a stable `id`, and any help or error text. Connect messages with `aria-describedby` and set `aria-invalid` for invalid values; the components do not generate labels or validate input.
+`TextInput`, `TextArea`, and `FileUpload` provide field styling and native props. Consumers supply a visible label, a stable `id`, and any help or error text. Connect messages with `aria-describedby` and set `aria-invalid` for invalid values; the components do not generate labels or validate input.
 
 `PopupDialog` renders into `document.body` and manages keyboard focus, Escape dismissal, and body scroll locking. Supply a heading whose `id` matches `labelledBy`, a translated `closeLabel`, and an `onClose` handler. Use `initialFocusRef` and `returnFocusRef` when the default focus targets do not fit the interaction. Keep a visible close control in the dialog content and verify focus restoration when its trigger can unmount.
 
